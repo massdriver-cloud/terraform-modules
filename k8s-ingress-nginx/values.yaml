@@ -1,0 +1,18 @@
+# enable HPA on controller
+controller:
+  resources:
+    requests:
+      cpu: 1000m
+      memory: 200Mi
+  autoscaling:
+    enabled: true
+    targetMemoryUtilizationPercentage: null
+  ingressClassResource:
+    default: true
+
+# ensure 0 downtime restarts https://medium.com/codecademy-engineering/kubernetes-nginx-and-zero-downtime-in-production-2c910c6a5ed8
+  lifecycle:
+    preStop:
+      exec:
+        command: ["/bin/sh", "-c", "sleep 5; /usr/local/openresty/nginx/sbin/nginx -c /etc/nginx/nginx.conf -s quit; while pgrep -x nginx; do sleep 1; done"]
+  terminationGracePeriodSeconds: 600
