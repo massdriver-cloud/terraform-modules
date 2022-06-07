@@ -1,0 +1,39 @@
+installCRDs: true
+
+extraArgs:
+  # When this flag is enabled, secrets will be automatically removed when the certificate resource is deleted
+  - --enable-certificate-owner-ref=true
+
+# fsGroup/runAsUser needed so container can read mounted serviceAccount tokens
+securityContext:
+  fsGroup: 1000
+  runAsUser: 1000
+  runAsNonRoot: true
+
+resources:
+  requests:
+    cpu: 10m
+    memory: 32Mi
+
+webhook:
+ resources:
+    requests:
+      cpu: 10m
+      memory: 32Mi
+
+cainjector:
+  resources:
+    requests:
+      cpu: 10m
+      memory: 32Mi
+
+startupapicheck:
+  resources:
+    requests:
+      cpu: 10m
+      memory: 32Mi
+
+ingressShim:
+  defaultIssuerName: letsencrypt-prod
+  defaultIssuerKind: ClusterIssuer
+  defaultIssuerGroup: cert-manager.io
