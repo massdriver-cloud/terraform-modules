@@ -33,6 +33,6 @@ resource "helm_release" "external-dns" {
     "${file("${path.module}/values.yaml")}",
     yamlencode(local.helm_values),
     yamlencode(var.helm_additional_values),
-    yamlencode({ domainFilters = each.value })
+    yamlencode({ domainFilters = [each.value] })
   ]
 }
