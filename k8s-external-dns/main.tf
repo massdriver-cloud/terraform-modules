@@ -8,7 +8,7 @@ locals {
     # there's a 1:1 requirement for hosted zone and provider. If multiple are passed in
     # NONE work...
     # https://github.com/kubernetes-sigs/external-dns/issues/1961
-    domainFilters    = split(",", var.domain_filters)
+    domainFilters    = length(var.domain_filter_list) > 0 ? var.domain_filter_list : split(",", var.domain_filters)
     provider         = var.dns_provider # https://github.com/kubernetes-sigs/external-dns/blob/5806e3474f2e13254498bd2af34302a4e283ae39/.github/labeler.yml
     additionalLabels = var.md_metadata.default_tags
   }
