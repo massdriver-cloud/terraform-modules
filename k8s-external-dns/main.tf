@@ -1,6 +1,10 @@
 locals {
   # k8s this should be the default calculated name anyway, but we want to enforce it just to be sure
   service_account_name = var.release == "external-dns" ? "external-dns" : "${var.release}-external-dns"
+  # there's a fun edge-case if you end up using multiple hosted zones!
+  # there's a 1:1 requirement for hosted zone and provider. If multiple are passed in
+  # NONE work...
+  # https://github.com/kubernetes-sigs/external-dns/issues/1961
   split_domain_filters = split(",", var.domain_filters)
   release_name_map = {
     for domain_filter in local.split_domain_filters :
