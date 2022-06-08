@@ -1,3 +1,7 @@
+# we don't want to check these in, the versions MD uses are very specific
+.terraform.lock.hcl
+
+
 
 # Created by https://www.toptal.com/developers/gitignore/api/terraform,osx,windows,linux
 # Edit at https://www.toptal.com/developers/gitignore?templates=terraform,osx,windows,linux
