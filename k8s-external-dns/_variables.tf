@@ -20,7 +20,13 @@ variable "namespace" {
 
 variable "domain_filters" {
   type        = string
-  description = "a comman-separated list of domains to allow"
+  description = "DEPRECATED: a comman-separated list of domains to allow"
+}
+
+variable "domain_filter_list" {
+  type        = list(any)
+  default     = []
+  description = "a list of domains to allow"
 }
 
 variable "helm_additional_values" {
