@@ -24,7 +24,7 @@ variable "domain_filters" {
 }
 
 variable "domain_filter_list" {
-  type        = list(any)
+  type        = list(string)
   default     = []
   description = "a list of domains to allow"
 }
