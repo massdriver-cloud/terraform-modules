@@ -5,7 +5,7 @@ resource "aws_cloudwatch_metric_alarm" "alarm" {
   count      = local.enable_alarms ? 1 : 0
   alarm_name = var.alarm_name
 
-  # We need to 'smulggle' our name_prefix for the package back to massdriver
+  # We need to 'smuggle' our name_prefix for the package back to massdriver
   # so we can show the alarms on the correct manifest in the UI
   alarm_description = jsonencode({
     name_prefix = var.md_metadata.name_prefix
