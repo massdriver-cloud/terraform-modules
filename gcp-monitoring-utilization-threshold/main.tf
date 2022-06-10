@@ -1,9 +1,9 @@
 locals {
-  has_gcp_alarm_channels = lookup(var.md_metadata.observability.alarm_channels, "gcp", null) != null
+  enable_alarms = lookup(var.md_metadata.observability.alarm_channels, "gcp", null) != null
 }
 
 resource "google_monitoring_alert_policy" "alert_policy" {
-  count        = local.has_gcp_alarm_channels ? 1 : 0
+  count        = local.enable_alarms ? 1 : 0
   display_name = var.alarm_name
   combiner     = "OR"
   conditions {
