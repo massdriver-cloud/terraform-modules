@@ -7,10 +7,6 @@ variable "message" {
   type = string
 }
 
-variable "alarm_sns_topic_arn" {
-  type = string
-}
-
 # Cloudwatch Variables
 variable "alarm_name" {
   type        = string
