@@ -7,10 +7,6 @@ variable "message" {
   type = string
 }
 
-variable "alarm_notification_channel_grn" {
-  type = string
-}
-
 variable "threshold" {
   type = number
 }
