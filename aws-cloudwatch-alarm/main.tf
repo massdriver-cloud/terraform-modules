@@ -1,5 +1,5 @@
 locals {
-  enable_alarms = var.md_metadata.observability.alarm_channels.aws != null
+  enable_alarms = lookup(var.md_metadata.observability.alarm_channels, "aws", null) != null
 }
 resource "aws_cloudwatch_metric_alarm" "alarm" {
   count      = local.enable_alarms ? 1 : 0
