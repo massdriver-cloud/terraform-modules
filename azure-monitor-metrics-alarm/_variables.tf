@@ -12,18 +12,13 @@ variable "resource_group_name" {
   description = "Resource Group of the Monitor Action Group and Metric Rules."
 }
 
-variable "action_group_id" {
-  type        = string
-  description = "The ID of the Monitor Action Group."
-}
-
 variable "alarm_name" {
   type        = string
   description = "The name of the Metric Alert."
 }
 
 variable "scopes" {
-  type        = string
+  type        = set(string)
   description = "A set of strings of resource IDs at which the metric criteria should be applied."
 }
 
