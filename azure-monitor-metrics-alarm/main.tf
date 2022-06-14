@@ -34,5 +34,5 @@ resource "azurerm_monitor_metric_alert" "main" {
 
 resource "massdriver_package_alarm" "package_alarm" {
   display_name      = var.display_name
-  cloud_provider_id = azurerm_monitor_metric_alert.main.id
+  cloud_resource_id = azurerm_monitor_metric_alert.main.id
 }
