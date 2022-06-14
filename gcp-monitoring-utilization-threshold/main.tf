@@ -1,9 +1,4 @@
-locals {
-  enable_alarms = lookup(var.md_metadata.observability.alarm_channels, "gcp", null) != null
-}
-
 resource "google_monitoring_alert_policy" "alert_policy" {
-  count        = local.enable_alarms ? 1 : 0
   display_name = var.alarm_name
   combiner     = "OR"
   conditions {
@@ -26,7 +21,7 @@ resource "google_monitoring_alert_policy" "alert_policy" {
   }
 
   notification_channels = [
-    var.md_metadata.observability.alarm_channels.gcp.id
+    var.notification_channel_id
   ]
 
   user_labels = var.md_metadata.default_tags

@@ -7,6 +7,11 @@ variable "message" {
   type = string
 }
 
+variable "notification_channel_id" {
+  type        = string
+  description = "Massdriver Alarm Channel - Notification Channel ID"
+}
+
 variable "threshold" {
   type = number
 }
