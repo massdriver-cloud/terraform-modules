@@ -17,7 +17,7 @@ No requirements.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_apis"></a> [apis](#module\_apis) | github.com/massdriver-cloud/terraform-modules//google-enable-apis | 9201b9f |
+| <a name="module_apis"></a> [apis](#module\_apis) | github.com/massdriver-cloud/terraform-modules//gcp-enable-apis | c46bc59 |
 
 ## Resources
 
@@ -29,7 +29,7 @@ No requirements.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_md_metadata"></a> [md\_metadata](#input\_md\_metadata) | Massdriver package metadata object. | `any` | n/a | yes |
+| <a name="input_md_metadata"></a> [md\_metadata](#input\_md\_metadata) | Massdriver package metadata object | `any` | n/a | yes |
 
 ## Outputs
 
