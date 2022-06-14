@@ -21,3 +21,8 @@ resource "aws_cloudwatch_metric_alarm" "alarm" {
   alarm_actions   = [var.sns_topic_arn]
   ok_actions      = [var.sns_topic_arn]
 }
+
+resource "massdriver_package_alarm" "package_alarm" {
+  display_name      = var.display_name
+  cloud_provider_id = aws_cloudwatch_metric_alarm.alarm.arn
+}
