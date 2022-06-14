@@ -6,6 +6,10 @@ repos:
       - id: terraform_fmt
       - id: terraform_validate
       - id: terraform_docs
+        args:
+          - --hook-config=--path-to-file=README.md
+          - --hook-config=--add-to-existing-file=true
+          - --hook-config=--create-file-if-not-exist=true
       # - id: terrascan
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.2.0
