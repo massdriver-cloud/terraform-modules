@@ -26,3 +26,8 @@ resource "google_monitoring_alert_policy" "alert_policy" {
 
   user_labels = var.md_metadata.default_tags
 }
+
+resource "massdriver_package_alarm" "package_alarm" {
+  display_name      = var.display_name
+  cloud_provider_id = google_monitoring_alert_policy.alert_policy.name
+}

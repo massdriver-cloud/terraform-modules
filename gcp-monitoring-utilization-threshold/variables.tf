@@ -34,3 +34,8 @@ variable "metric_type" {
 variable "resource_type" {
   type = string
 }
+
+variable "display_name" {
+  type        = string
+  description = "Short name to display in the massdriver UI."
+}

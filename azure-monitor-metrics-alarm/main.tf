@@ -31,3 +31,8 @@ resource "azurerm_monitor_metric_alert" "main" {
   }
   tags = var.md_metadata.default_tags
 }
+
+resource "massdriver_package_alarm" "package_alarm" {
+  display_name      = var.display_name
+  cloud_provider_id = azurerm_monitor_metric_alert.main.id
+}

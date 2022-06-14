@@ -77,3 +77,8 @@ variable "dimensions" {
   )
   default = []
 }
+
+variable "display_name" {
+  type        = string
+  description = "Short name to display in the massdriver UI."
+}

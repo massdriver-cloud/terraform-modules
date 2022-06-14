@@ -57,3 +57,8 @@ variable "dimensions" {
   type        = map(string)
   description = "The value against which the specified statistic is compared."
 }
+
+variable "display_name" {
+  type        = string
+  description = "Short name to display in the massdriver UI."
+}
