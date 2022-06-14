@@ -1,8 +1,4 @@
-locals {
-  enable_alarms = lookup(var.md_metadata.observability.alarm_channels, "aws", null) != null
-}
 resource "aws_cloudwatch_metric_alarm" "alarm" {
-  count      = local.enable_alarms ? 1 : 0
   alarm_name = var.alarm_name
 
   # We need to 'smuggle' our name_prefix for the package back to massdriver
@@ -22,6 +18,6 @@ resource "aws_cloudwatch_metric_alarm" "alarm" {
   dimensions          = var.dimensions
 
   actions_enabled = "true"
-  alarm_actions   = [var.md_metadata.observability.alarm_channels.aws.arn]
-  ok_actions      = [var.md_metadata.observability.alarm_channels.aws.arn]
+  alarm_actions   = [var.sns_topic_arn]
+  ok_actions      = [var.sns_topic_arn]
 }

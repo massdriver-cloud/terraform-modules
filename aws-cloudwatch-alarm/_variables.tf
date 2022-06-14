@@ -7,6 +7,11 @@ variable "message" {
   type = string
 }
 
+variable "sns_topic_arn" {
+  type        = string
+  description = "Massdriver Alarm Channel SNS Topic ARN"
+}
+
 # Cloudwatch Variables
 variable "alarm_name" {
   type        = string

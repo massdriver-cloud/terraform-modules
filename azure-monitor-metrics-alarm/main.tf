@@ -1,9 +1,4 @@
-locals {
-  enable_alarms = lookup(var.md_metadata.observability.alarm_channels, "azure", null) != null
-}
-
 resource "azurerm_monitor_metric_alert" "main" {
-  count               = local.enable_alarms ? 1 : 0
   name                = var.alarm_name
   resource_group_name = var.resource_group_name
   scopes              = var.scopes
@@ -31,7 +26,7 @@ resource "azurerm_monitor_metric_alert" "main" {
   }
 
   action {
-    action_group_id    = var.md_metadata.observability.alarm_channels.azure.ari
+    action_group_id    = var.monitor_action_group_id
     webhook_properties = var.md_metadata.default_tags
   }
   tags = var.md_metadata.default_tags

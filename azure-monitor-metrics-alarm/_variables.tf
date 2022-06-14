@@ -7,6 +7,11 @@ variable "message" {
   type = string
 }
 
+variable "monitor_action_group_id" {
+  type        = string
+  description = "Massdriver Alarm Channel Action Group ID"
+}
+
 variable "resource_group_name" {
   type        = string
   description = "Resource Group of the Monitor Action Group and Metric Rules."
