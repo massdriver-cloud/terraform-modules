@@ -9,7 +9,7 @@ variable "message" {
 
 variable "monitor_action_group_id" {
   type        = string
-  description = "Massdriver Alarm Channel Action Group ID"
+  description = "Massdriver Alarm Channel - Action Group ID"
 }
 
 variable "resource_group_name" {
