@@ -10,7 +10,7 @@ variable "resource_group_name" {
 
 resource "azurerm_monitor_action_group" "main" {
   name                = "${var.md_metadata.name_prefix}-alarms"
-  short_name          = "Massdriver Alarms"
+  short_name          = "MD Alarms"
   resource_group_name = var.resource_group_name
 
   webhook_receiver {
