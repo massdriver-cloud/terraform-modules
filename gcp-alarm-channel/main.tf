@@ -1,16 +1,16 @@
 variable "md_metadata" {
-  description = "Massdriver package metadata object."
+  description = "Massdriver package metadata object"
   type        = any
 }
 
 module "apis" {
-  source   = "github.com/massdriver-cloud/terraform-modules//google-enable-apis?ref=9201b9f"
+  source   = "github.com/massdriver-cloud/terraform-modules//gcp-enable-apis?ref=c46bc59"
   services = ["monitoring.googleapis.com"]
 }
 
 resource "google_monitoring_notification_channel" "main" {
   depends_on   = [module.apis]
-  display_name = "Massdriver Alarms"
+  display_name = "${var.md_metadata.name_prefix}-alarms"
 
   type = "webhook_tokenauth"
   labels = {

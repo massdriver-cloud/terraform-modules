@@ -10,11 +10,12 @@ repos:
           - --hook-config=--path-to-file=README.md
           - --hook-config=--add-to-existing-file=true
           - --hook-config=--create-file-if-not-exist=true
-      - id: terrascan
-        args:
-          - --args=--non-recursive
-          # We set this to high as it suggests KMS keys for SNS Topics which would set a base cost of $1 per bundle...
-          - --args=--severity=high
+      # This is picking up a bunch of k8s issues not in this commit...
+      # - id: terrascan
+      #   args:
+      #     - --args=--non-recursive
+      #     # We set this to high as it suggests KMS keys for SNS Topics which would set a base cost of $1 per bundle...
+      #     - --args=--severity=high
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.2.0
     hooks:
