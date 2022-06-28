@@ -31,7 +31,7 @@ resource "azurerm_monitor_metric_alert" "main" {
 
   action {
     action_group_id = var.monitor_action_group_id
-    webhook_propertes = merge(
+    webhook_properties = merge(
       var.md_metadata.default_tags,
       {
         alarm_id = local.alarm_id
