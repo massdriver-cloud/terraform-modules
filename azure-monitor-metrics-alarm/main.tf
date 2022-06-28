@@ -1,3 +1,7 @@
+locals {
+  alarm_id = "${var.md_metadata.name_prefix}-${var.metric_name}"
+}
+
 resource "azurerm_monitor_metric_alert" "main" {
   name                = var.alarm_name
   resource_group_name = var.resource_group_name
@@ -26,13 +30,18 @@ resource "azurerm_monitor_metric_alert" "main" {
   }
 
   action {
-    action_group_id    = var.monitor_action_group_id
-    webhook_properties = var.md_metadata.default_tags
+    action_group_id = var.monitor_action_group_id
+    webhook_propertes = merge(
+      var.md_metadata.default_tags,
+      {
+        alarm_id = local.alarm_id
+      }
+    )
   }
   tags = var.md_metadata.default_tags
 }
 
 resource "massdriver_package_alarm" "package_alarm" {
   display_name      = var.display_name
-  cloud_resource_id = azurerm_monitor_metric_alert.main.id
+  cloud_resource_id = local.alarm_id
 }
