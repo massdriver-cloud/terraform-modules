@@ -1,12 +1,10 @@
 
 locals {
-  create_key    = var.kms_encryption.type == "custom"
   alias_context = var.key_alias_context != "" ? "-${var.key_alias_context}" : ""
   alias         = "alias/${var.md_metadata.name_prefix}${local.alias_context}"
 }
 
 resource "aws_kms_key" "main" {
-  count                              = local.create_key ? 1 : 0
   description                        = "${var.md_metadata.name_prefix} encryption key"
   key_usage                          = "ENCRYPT_DECRYPT"
   customer_master_key_spec           = "SYMMETRIC_DEFAULT"
@@ -19,7 +17,6 @@ resource "aws_kms_key" "main" {
 }
 
 resource "aws_kms_alias" "main" {
-  count         = local.create_key ? 1 : 0
   name          = local.alias
-  target_key_id = aws_kms_key.main.0.key_id
+  target_key_id = aws_kms_key.main.key_id
 }
