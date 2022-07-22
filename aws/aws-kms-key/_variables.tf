@@ -4,7 +4,7 @@ variable "md_metadata" {
 }
 
 variable "kms_encryption" {
-  description = "AWS KMS encryption parameter block"
+  description = "AWS KMS encryption parameter block. For object structure, see https://github.com/massdriver-cloud/artifact-definitions/blob/main/definitions/types/aws-kms-encryption.json"
   type        = any
 }
 
