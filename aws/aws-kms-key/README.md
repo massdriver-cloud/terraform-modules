@@ -460,7 +460,7 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_key_alias_context"></a> [key\_alias\_context](#input\_key\_alias\_context) | (Optional) Additional string context to append to the end of the key alias. This is useful in bundles where multiple keys are created and you need to give context to differentiate each key. Must be lowercase letters and hyphens without spaces and no more than 20. If this field is not empty, it will be appended to the end of the alias with a hyphen | `string` | `""` | no |
-| <a name="input_kms_encryption"></a> [kms\_encryption](#input\_kms\_encryption) | AWS KMS encryption parameter block | `any` | n/a | yes |
+| <a name="input_kms_encryption"></a> [kms\_encryption](#input\_kms\_encryption) | AWS KMS encryption parameter block. For object structure, see https://github.com/massdriver-cloud/artifact-definitions/blob/main/definitions/types/aws-kms-encryption.json | `any` | n/a | yes |
 | <a name="input_md_metadata"></a> [md\_metadata](#input\_md\_metadata) | Massdriver package metadata object | `any` | n/a | yes |
 | <a name="input_policy"></a> [policy](#input\_policy) | IAM policy to apply to the KMS key | `string` | n/a | yes |
 
