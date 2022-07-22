@@ -3,11 +3,6 @@ variable "md_metadata" {
   type        = any
 }
 
-variable "kms_encryption" {
-  description = "AWS KMS encryption parameter block. For object structure, see https://github.com/massdriver-cloud/artifact-definitions/blob/main/definitions/types/aws-kms-encryption.json"
-  type        = any
-}
-
 variable "key_alias_context" {
   description = "(Optional) Additional string context to append to the end of the key alias. This is useful in bundles where multiple keys are created and you need to give context to differentiate each key. Must be lowercase letters and hyphens without spaces and no more than 20. If this field is not empty, it will be appended to the end of the alias with a hyphen"
   type        = string
