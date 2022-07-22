@@ -1,3 +1,5 @@
+# aws-kms-key
+
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
