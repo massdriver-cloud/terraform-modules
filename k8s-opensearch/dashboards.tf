@@ -29,6 +29,6 @@ resource "helm_release" "dashboards" {
   values = [
     "${file("${path.module}/opensearch_dashboards_values.yaml")}",
     yamlencode(local.dashboards_helm_values),
-    yamlencode(var.helm_additional_values)
+    yamlencode(var.dashboards_helm_additional_values)
   ]
 }
