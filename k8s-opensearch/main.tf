@@ -30,8 +30,8 @@ resource "helm_release" "opensearch" {
   values = [
     # GKE does note support unsafe kernel parameters in kubelet so requires a privledged init container to set them
     # we want to avoid doing this in other clouds as it is not a security best practice.
-    local.cloud == "gcp" ? yamlencode("${file("${path.module}/gke_sysctl_values.yaml")}") : yamlencode("${file("${path.module}/sysctl_values.yaml")}"),
+    local.cloud == "gcp" ? "${file("${path.module}/gke_sysctl_values.yaml")}" : "${file("${path.module}/sysctl_values.yaml")}",
     yamlencode(local.helm_values),
-    yamlencode(var.helm_additional_values)
+    yamlencode(var.helm_additional_values),
   ]
 }
