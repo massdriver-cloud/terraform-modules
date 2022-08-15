@@ -3,10 +3,11 @@ locals {
     image_version = "2.1.0"
     chart_version = "2.3.0"
     # this should be the default calculated name anyway, but we want to enforce it just to be sure
-    release_name = var.release == "" ? "opensearch" : "${var.release}-opensearch"
+    release_name = var.release == "" || var.release == "opensearch" ? "opensearch" : "${var.release}-opensearch"
   }
   helm_values = {
     rbac = {
+      create = true
       serviceAccountName = local.opensearch.release_name
     }
     image = {
