@@ -15,6 +15,30 @@ locals {
       tag = local.opensearch.image_version
     }
     labels = var.md_metadata.default_tags
+    // see: https://github.com/opensearch-project/helm-charts/blob/main/charts/opensearch/values.yaml#L373-L391
+    lifecyle = length(var.ism_policies) > 0 ? {
+      preStop = {
+          exec = {
+            command: ["/bin/sh", "-c", "echo Hello from the postStart handler > /usr/share/message"]
+          }
+      }
+      postStart = {
+          exec = {
+            command = [
+                "bash",
+                "-c",
+                <<EOF
+                #!/bin/bash
+                ES_URL=http://localhost:9200
+                # wait for ES to be up
+                while [[ "$(curl -s -o /dev/null -w '%\{http_code\}\n' $ES_URL)" != "200" ]]; do sleep 1; done
+                # PUT an ISM policy to ES rest API for each one in the var.ism_policies map
+                ${join("\n", [for k, v in var.ism_policies: "curl -XPUT \"$ES_URL/_template/${k}\" -H 'Content-Type: application/json' -d '${v}'"])}
+                EOF
+            ]
+          }
+      }
+    } : {}
   }
 }
 
