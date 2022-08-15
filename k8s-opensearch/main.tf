@@ -1,4 +1,5 @@
 locals {
+  cloud            = var.kubernetes_cluster.specs.kubernetes.cloud
   opensearch = {
     image_version = "2.1.0"
     chart_version = "2.3.0"
@@ -27,7 +28,9 @@ resource "helm_release" "opensearch" {
   wait_for_jobs    = true
 
   values = [
-    "${file("${path.module}/opensearch_values.yaml")}",
+    # GKE does note support unsafe kernel parameters in kubelet so requires a privledged init container to set them
+    # we want to avoid doing this in other clouds as it is not a security best practice.
+    local.cloud == "gcp" ? yamlencode("${file("${path.module}/gke_sysctl_values.yaml")}") : yamlencode("${file("${path.module}/sysctl_values.yaml")}"),
     yamlencode(local.helm_values),
     yamlencode(var.helm_additional_values)
   ]

@@ -1,4 +1,4 @@
- # https://github.com/opensearch-project/helm-charts/issues/87
+ # workaround from https://github.com/opensearch-project/helm-charts/issues/87
  extraInitContainers: 
    - name: sysctl
      image: docker.io/bitnami/bitnami-shell:10-debian-10-r199
