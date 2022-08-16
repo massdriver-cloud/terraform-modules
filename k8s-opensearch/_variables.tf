@@ -12,13 +12,11 @@ variable "kubernetes_cluster" {
 variable "release" {
   description = "Release name"
   type        = string
-  default     = "opensearch"
 }
 
 variable "namespace" {
   description = "Kubernetes namespace"
   type        = string
-  default     = "opensearch"
 }
 
 variable "helm_additional_values" {

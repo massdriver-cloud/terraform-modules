@@ -1,10 +1,10 @@
 locals {
-  cloud            = var.kubernetes_cluster.specs.kubernetes.cloud
+  kube_distribution = var.kubernetes_cluster.specs.kubernetes.distribution
   opensearch = {
     image_version = "2.1.0"
     chart_version = "2.3.0"
-    # this should be the default calculated name anyway, but we want to enforce it just to be sure
-    release_name = var.release == "" || var.release == "opensearch" ? "opensearch" : "${var.release}-opensearch"
+    # add opensearch to the end of the release name, but don't stutter.
+    release_name = trimsuffix(var.release, "opensearch") == var.release ? "${var.release}-opensearch" : var.release
   }
   helm_values = {
     rbac = {
@@ -15,13 +15,9 @@ locals {
       tag = local.opensearch.image_version
     }
     labels = var.md_metadata.default_tags
+    // this lifecycle hook configure ISM (think retention) policies based on user input by making some calls to the opensearch API.
     // see: https://github.com/opensearch-project/helm-charts/blob/main/charts/opensearch/values.yaml#L373-L391
     lifecyle = length(var.ism_policies) > 0 ? {
-      preStop = {
-          exec = {
-            command: ["/bin/sh", "-c", "echo Hello from the postStart handler > /usr/share/message"]
-          }
-      }
       postStart = {
           exec = {
             command = [
@@ -54,7 +50,7 @@ resource "helm_release" "opensearch" {
   values = [
     # GKE does note support unsafe kernel parameters in kubelet so requires a privledged init container to set them
     # we want to avoid doing this in other clouds as it is not a security best practice.
-    local.cloud == "gcp" ? "${file("${path.module}/gke_sysctl_values.yaml")}" : "${file("${path.module}/sysctl_values.yaml")}",
+    local.kube_distribution == "gke" ? "${file("${path.module}/gke_sysctl_values.yaml")}" : "${file("${path.module}/sysctl_values.yaml")}",
     yamlencode(local.helm_values),
     yamlencode(var.helm_additional_values),
   ]
