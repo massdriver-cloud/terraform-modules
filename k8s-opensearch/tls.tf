@@ -7,7 +7,7 @@ resource "tls_private_key" "opensearch" {
 
 resource "tls_self_signed_cert" "opensearch" {
   count = true ? 1 : 0
-  private_key_pem = tls_private_key.opensearch.private_key_pem
+  private_key_pem = tls_private_key.opensearch[0].private_key_pem
   subject {
     common_name  = "massdriver.cloud"
     organization = "MassDriver Inc"
