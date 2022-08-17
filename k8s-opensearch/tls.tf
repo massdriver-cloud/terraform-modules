@@ -13,6 +13,7 @@ resource "tls_self_signed_cert" "opensearch" {
     organization = "MassDriver Inc"
   }
   validity_period_hours = 24 * 365 * 5 # 5 years
+  early_renewal_hours = 24 * 365 # resource will consider itself expired 1 year before it actually expires
   allowed_uses = [
     "key_encipherment",
     "digital_signature",
