@@ -35,6 +35,6 @@ variable "enable_dashboards" {
 }
 
 variable "ism_policies" {
-    description = "Map of ISM policies to configure in the opensearch cluster. keys should be template names and bodies should be the ISM policy body"
-    default     = {}
+  description = "Map of ISM policies to configure in the opensearch cluster. keys should be template names and bodies should be the ISM policy body"
+  default     = {}
 }
