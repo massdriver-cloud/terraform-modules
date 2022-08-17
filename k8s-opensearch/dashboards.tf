@@ -27,7 +27,6 @@ resource "helm_release" "dashboards" {
   wait_for_jobs    = true
 
   values = [
-    "${file("${path.module}/opensearch_dashboards_values.yaml")}",
     yamlencode(local.dashboards_helm_values),
     yamlencode(var.dashboards_helm_additional_values)
   ]

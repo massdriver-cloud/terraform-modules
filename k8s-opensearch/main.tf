@@ -1,4 +1,5 @@
 locals {
+  tls_secret_name   = "${local.opensearch.release_name}-tls"
   kube_distribution = var.kubernetes_cluster.specs.kubernetes.distribution
   opensearch = {
     image_version = "2.1.0"
@@ -35,15 +36,22 @@ locals {
         }
       }
     } : {}
+    extraObjects = [
+      yamldecode(templatefile("${path.module}/OpenSearch_/tls_secret.yml.tftpl", {
+        name      = "${local.opensearch.release_name}-tls"
+        namespace = var.namespace
+        key       = base64encode(tls_private_key.opensearch.private_key_pem)
+        cert      = base64encode(tls_self_signed_cert.opensearch.cert_pem)
+      }))
+    ]
+    secretMounts = [
+      {
+        name       = local.tls_secret_name
+        secretName = local.tls_secret_name
+        path       = "/usr/share/opensearch/certs"
+      }
+    ]
   }
-  extraObjects = [
-    templatefile("${path.module}/tls_secret.yml.tftpl", {
-      name      = "${local.opensearch.release_name}-tls"
-      namespace = var.namespace
-      key = tls_private_key.opensearch_tls.private_key_pem
-      cert = tls_self_signed_cert.opensearch_tls.cert_pem
-    })
-  ]
 }
 
 resource "tls_private_key" "opensearch" {
@@ -77,7 +85,7 @@ resource "helm_release" "opensearch" {
   values = [
     # GKE does note support unsafe kernel parameters in kubelet so requires a privledged init container to set them
     # we want to avoid doing this in other clouds as it is not a security best practice.
-    local.kube_distribution == "gke" ? "${file("${path.module}/gke_sysctl_values.yaml")}" : "${file("${path.module}/sysctl_values.yaml")}",
+    local.kube_distribution == "gke" ? "${file("${path.module}/OpenSearch_/gke_sysctl_values.yml")}" : "${file("${path.module}/OpenSearch_/sysctl_values.yml")}",
     yamlencode(local.helm_values),
     yamlencode(var.helm_additional_values),
   ]
