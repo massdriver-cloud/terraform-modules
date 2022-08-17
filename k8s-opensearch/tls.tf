@@ -1,10 +1,12 @@
 
 resource "tls_private_key" "opensearch" {
+  count = true ? 1 : 0 # in the future we may opt to use cert-manager if it is installed in the cluster
   algorithm = "RSA"
   rsa_bits  = 4096
 }
 
 resource "tls_self_signed_cert" "opensearch" {
+  count = true ? 1 : 0
   private_key_pem = tls_private_key.opensearch.private_key_pem
   subject {
     common_name  = "massdriver.cloud"

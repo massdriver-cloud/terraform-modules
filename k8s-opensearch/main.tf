@@ -40,8 +40,8 @@ locals {
       yamldecode(templatefile("${path.module}/OpenSearch_/tls_secret.yml.tftpl", {
         name      = "${local.opensearch.release_name}-tls"
         namespace = var.namespace
-        key       = base64encode(tls_private_key.opensearch.private_key_pem)
-        cert      = base64encode(tls_self_signed_cert.opensearch.cert_pem)
+        key       = base64encode(tls_private_key.opensearch[0].private_key_pem)
+        cert      = base64encode(tls_self_signed_cert.opensearch[0].cert_pem)
       }))
     ]
     secretMounts = [
