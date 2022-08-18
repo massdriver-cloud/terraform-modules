@@ -4,7 +4,7 @@ resource "mdxc_application_identity" "main" {
 
 resource "mdxc_application_permission" "main" {
   for_each                = local.merged_policies
-  application_identity_id = (mdxc_application_identity.main).gcp_application_identity.service_account_email
+  application_identity_id = mdxc_application_identity.main.id
   gcp_configuration = {
     role      = each.value.role
     condition = each.value.condition
