@@ -3,8 +3,8 @@ locals {
 
   dependency_to_policy_map = flatten([for policy in local.app_policies :
     {
-      "dependency" = split(policy, ".")[1],
-      "policies"   = [split(policy, ".")[4]]
+      "dependency" = split(".", policy)[1],
+      "policies"   = [split(".", policy)[4]]
     }
     if true]
   )
