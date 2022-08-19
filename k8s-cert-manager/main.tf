@@ -29,4 +29,3 @@ resource "helm_release" "cert-manager" {
     yamlencode(var.helm_additional_values)
   ]
 }
-
