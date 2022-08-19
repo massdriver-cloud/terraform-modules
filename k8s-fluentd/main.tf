@@ -11,6 +11,7 @@ locals {
     name = local.service_account_name
     }
     labels = var.md_metadata.default_tags
+    plugins = ["fluent-plugin-opensearch"]
   }
 }
 
@@ -24,7 +25,7 @@ resource "helm_release" "fluentd" {
   wait_for_jobs    = true
 
   values = [
-    "${templatefile("${path.module}/values.yaml.tftpl", {opensearch_password="foo"})}",
+    "${file("${path.module}/values.yaml")}",
     yamlencode(local.helm_values),
     yamlencode(var.helm_additional_values)
   ]
