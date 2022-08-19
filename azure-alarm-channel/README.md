@@ -11,7 +11,7 @@ No requirements.
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.10.0 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.19.1 |
 
 ## Modules
 
