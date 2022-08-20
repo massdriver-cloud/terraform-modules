@@ -72,7 +72,6 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_identity"></a> [identity](#input\_identity) | The identity this application wil assume. Assume Role Policy for IAM ... TODO | `any` | n/a | yes |
 | <a name="input_name"></a> [name](#input\_name) | The name of the application. | `string` | n/a | yes |
-| <a name="input_root_path"></a> [root\_path](#input\_root\_path) | Path to root module. This is used to load massdriver.yaml and params/connection variables. | `string` | n/a | yes |
 
 ## Outputs
 
