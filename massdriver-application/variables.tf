@@ -4,6 +4,6 @@ variable "name" {
 }
 
 variable "identity" {
-  description = "The identity this application wil assume. Assume Role Policy for IAM ... TODO"
+  description = "Configures the cloud services (lambda, ec2, k8s, etc) that can assume this identity (IAM Role / Service Account)"
   type        = any
 }
