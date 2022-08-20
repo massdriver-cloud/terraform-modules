@@ -1,5 +1,5 @@
 variable "name" {
-  description = "The name of the application."
+  description = "The name of the application. This should be the Massdriver package name. var.md_metadata.name_prefix"
   type        = string
 }
 
