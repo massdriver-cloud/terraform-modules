@@ -1,8 +1,11 @@
 # massdriver-application
 
-This module configures an application IAM Role or Service Account and gives permissions to cloud services (lambda, ec2, k8s) to assume the role in a cloud agnostic way.
+This module configures an application to run on Massdriver provisioned infrastructure in a cloud agnostic way.
+
+It creates an IAM Role or Service Account (depending on the cloud), gives permissions to the cloud services (lambda, ec2, k8s) to assume the role, and binds application level permissions from massdriver artifacts' security policies (SQS, S3, etc)
 
 It provides a means to design applications in Massdriver to be cloud agnostic.
+
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
