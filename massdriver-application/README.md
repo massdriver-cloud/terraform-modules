@@ -15,7 +15,6 @@ It provides a means to design applications in Massdriver to be cloud agnostic.
 module "application" {
   source    = "https://github.com/massdriver-cloud/terraform-modules//massdriver-application"
   name      = var.md_metadata.name_prefix
-  root_path = path.root
   # Note: This will be abstracted into this module in a future release.
   identity = {
     assume_role_policy = <<EOF
