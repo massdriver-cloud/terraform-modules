@@ -29,6 +29,7 @@ data "jq_query" "envs" {
 }
 
 data "mdxc_cloud" "current" {}
+
 resource "mdxc_application_identity" "main" {
   name                = var.name
   gcp_configuration   = data.mdxc_cloud.current.cloud == "gcp" ? var.identity : null
