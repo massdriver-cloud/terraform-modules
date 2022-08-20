@@ -1,8 +1,10 @@
 locals {
-  root_path         = var.root_path
-  app_specification = yamldecode(file("${local.root_path}/../massdriver.yaml"))
-  connections       = jsondecode(file("${local.root_path}/_connections.auto.tfvars.json"))
-  params            = jsondecode(file("${local.root_path}/_params.auto.tfvars.json"))
+  # These trys are here so that terraform validate will pass in CI.
+  # We dont want to require the user to pass in the path to their MD bundle and requiring
+  # everyone to parse the right files and pass them in is error prone. :tada:
+  app_specification = try(yamldecode(file("${path.root}/../massdriver.yaml")), {})
+  connections       = try(jsondecode(file("${path.root}/_connections.auto.tfvars.json")), {})
+  params            = try(jsondecode(file("${path.root}/_params.auto.tfvars.json")), {})
   app_block         = lookup(local.app_specification, "app", {})
   app_envs          = lookup(local.app_block, "envs", {})
   app_policies      = toset(lookup(local.app_block, "policies", []))
