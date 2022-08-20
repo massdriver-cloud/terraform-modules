@@ -1,7 +1,8 @@
 locals {
-  app_specification = yamldecode(file("${path.root}/../massdriver.yaml"))
-  connections       = jsondecode(file("${path.root}/_connections.auto.tfvars.json"))
-  params            = jsondecode(file("${path.root}/_params.auto.tfvars.json"))
+  root_path         = var.root_path
+  app_specification = yamldecode(file("${local.root_path}/../massdriver.yaml"))
+  connections       = jsondecode(file("${local.root_path}/_connections.auto.tfvars.json"))
+  params            = jsondecode(file("${local.root_path}/_params.auto.tfvars.json"))
   app_block         = lookup(local.app_specification, "app", {})
   app_envs          = lookup(local.app_block, "envs", {})
   app_policies      = toset(lookup(local.app_block, "policies", []))
