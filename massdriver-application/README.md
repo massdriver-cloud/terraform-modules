@@ -8,6 +8,38 @@ It also parses `policies` and `envs` from the _massdriver.yaml_ `app` field.
 
 It provides a means to design applications in Massdriver to be cloud agnostic.
 
+## Example
+
+```hcl
+
+module "application" {
+  source    = "https://github.com/massdriver-cloud/terraform-modules//massdriver-application"
+  name      = var.md_metadata.name_prefix
+  root_path = path.root
+  # Note: This will be abstracted into this module in a future release.
+  identity = {
+    assume_role_policy = <<EOF
+{
+		"Version": "2012-10-17",
+		"Statement": [
+			{
+				"Effect": "Allow",
+				"Action": [
+					"sts:AssumeRole"
+				],
+				"Principal": {
+					"Service": [
+						"ec2.amazonaws.com"
+					]
+				}
+			}
+		]
+	}
+   EOF
+  }
+}
+```
+
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
