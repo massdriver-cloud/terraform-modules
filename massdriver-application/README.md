@@ -69,8 +69,8 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_identity"></a> [identity](#input\_identity) | The identity this application wil assume. Assume Role Policy for IAM ... TODO | `any` | n/a | yes |
-| <a name="input_name"></a> [name](#input\_name) | The name of the application. | `string` | n/a | yes |
+| <a name="input_identity"></a> [identity](#input\_identity) | Configures the cloud services (lambda, ec2, k8s, etc) that can assume this identity (IAM Role / Service Account) | `any` | n/a | yes |
+| <a name="input_name"></a> [name](#input\_name) | The name of the application. This should be the Massdriver package name. var.md\_metadata.name\_prefix | `string` | n/a | yes |
 
 ## Outputs
 
@@ -78,5 +78,6 @@ No modules.
 |------|-------------|
 | <a name="output_cloud"></a> [cloud](#output\_cloud) | The cloud provisioning executed in. |
 | <a name="output_envs"></a> [envs](#output\_envs) | The policies parsed from massdriver.yaml |
+| <a name="output_params"></a> [params](#output\_params) | Parameters provided to bundle. |
 | <a name="output_policies"></a> [policies](#output\_policies) | The policies parsed from massdriver.yaml |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
