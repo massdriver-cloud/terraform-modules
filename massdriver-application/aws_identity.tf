@@ -19,7 +19,7 @@ locals {
       ],
       "Principal": {
         "Service": [
-          "${local.aws_service}.amazonaws.com"
+          "ec2.amazonaws.com"
         ]
       }
     }
