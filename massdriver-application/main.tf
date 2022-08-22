@@ -16,6 +16,7 @@ locals {
 
   policies = { for p in local.app_policies : p => jsondecode(data.jq_query.policies[p].result) }
   envs     = { for k, v in local.app_envs : k => jsondecode(data.jq_query.envs[k].result) }
+  # TODO: add cloud specific envs
 }
 
 data "jq_query" "policies" {
@@ -42,7 +43,6 @@ resource "mdxc_application_identity" "main" {
   # TODO: Azure
   azure_configuration = data.mdxc_cloud.current.cloud == "azure" ? null : null
   aws_configuration   = data.mdxc_cloud.current.cloud == "aws" ? local.aws_identity : null
-
 }
 
 resource "mdxc_application_permission" "main" {
