@@ -86,9 +86,6 @@ override.tf.json
 .terraformrc
 terraform.rc
 
-# Ignore providers files they are useful for local dev but not for version control as the provider version is dictated by the consuming bundles
-_providers.tf
-
 ### Windows ###
 # Windows thumbnail cache files
 Thumbs.db
