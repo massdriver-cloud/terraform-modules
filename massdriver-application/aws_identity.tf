@@ -28,7 +28,9 @@ locals {
 EOF
   }
 
-  aws_eks_oidc_short = local.is_aws && local.is_kubernetes ? replace(var.kubernetes.cluster_artifact.data.infrastructure.oidc_issuer_url, "https://", "") : null
+  aws_eks_oidc_short               = local.is_aws && local.is_kubernetes ? replace(var.kubernetes.cluster_artifact.data.infrastructure.oidc_issuer_url, "https://", "") : null
+  aws_eks_oidc_federated_principal = local.is_aws && local.is_kubernetes ? "arn:aws:iam::${data.mdxc_cloud.current.id}:oidc-provider/${local.eks_oidc_short}" : null
+  aws_eks_assume_role_conditional  = local.is_aws && local.is_kubernetes ? "system:serviceaccount:${var.kubernetes.namespace}:${var.name}" : null
 }
 
 
@@ -41,12 +43,12 @@ EOF
 #       "Sid"    = "EksCertManager"
 #       "Effect" = "Allow",
 #       "Principal" = {
-#         "Federated" = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/${local.eks_oidc_short}"
+#         "Federated" = "arn:aws:iam::${data.mdxc_cloud.current.id}:oidc-provider/${local.eks_oidc_short}"
 #       }
 #       "Action" = "sts:AssumeRoleWithWebIdentity",
 #       "Condition" = {
 #         "StringEquals" = {
-#           "${local.eks_oidc_short}:sub" = "system:serviceaccount:${module.k8s_application.params.namespace}:${module.k8s_application.params.md_metadata.name_prefix}"
+#           "${local.eks_oidc_short}:sub" = "system:serviceaccount:${var.kubernetes.namespace}:${var.name}"
 #         }
 #       }
 #     }]
