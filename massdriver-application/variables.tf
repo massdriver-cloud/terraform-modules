@@ -3,7 +3,12 @@ variable "name" {
   type        = string
 }
 
-variable "identity" {
-  description = "Configures the cloud services (lambda, ec2, k8s, etc) that can assume this identity (IAM Role / Service Account)"
-  type        = any
+variable "service" {
+  description = "The cloud service type that will run this workload."
+  type        = string
+
+  validation {
+    condition     = contains(["function", "vm", "kubernetes"], var.service)
+    error_message = "Allowed values for service are \"function\", \"vm\", or \"kubernetes\"."
+  }
 }

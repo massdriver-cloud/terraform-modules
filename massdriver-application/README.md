@@ -69,8 +69,8 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_identity"></a> [identity](#input\_identity) | Configures the cloud services (lambda, ec2, k8s, etc) that can assume this identity (IAM Role / Service Account) | `any` | n/a | yes |
 | <a name="input_name"></a> [name](#input\_name) | The name of the application. This should be the Massdriver package name. var.md\_metadata.name\_prefix | `string` | n/a | yes |
+| <a name="input_service"></a> [service](#input\_service) | The cloud service type that will run this workload. | `string` | n/a | yes |
 
 ## Outputs
 
