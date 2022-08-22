@@ -38,7 +38,9 @@ resource "mdxc_application_identity" "main" {
   gcp_configuration = data.mdxc_cloud.current.cloud == "gcp" ? null : null
   # TODO: Azure
   azure_configuration = data.mdxc_cloud.current.cloud == "azure" ? null : null
-  aws_configuration   = data.mdxc_cloud.current.cloud == "aws" ? local.aws_identity : null
+  aws_configuration = data.mdxc_cloud.current.cloud == "aws" ? {
+    assume_role_policy = local.non_eks_assume_role_policy
+  } : null
 }
 
 resource "mdxc_application_permission" "main" {
