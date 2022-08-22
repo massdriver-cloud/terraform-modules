@@ -7,7 +7,8 @@ locals {
 
   aws_service = local.aws_service_map[var.service]
 
-  non_eks_assume_role_policy = <<EOF
+  aws_identity = {
+    assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -25,9 +26,6 @@ locals {
   ]
 }
 EOF
-
-  aws_identity = {
-    assume_role_policy = local.non_eks_assume_role_policy
   }
 }
 
