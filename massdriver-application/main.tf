@@ -33,10 +33,12 @@ data "jq_query" "envs" {
 data "mdxc_cloud" "current" {}
 
 resource "mdxc_application_identity" "main" {
-  name                = var.name
-  gcp_configuration   = data.mdxc_cloud.current.cloud == "gcp" ? var.identity : null
-  azure_configuration = data.mdxc_cloud.current.cloud == "azure" ? var.identity : null
-  aws_configuration   = data.mdxc_cloud.current.cloud == "aws" ? var.identity : null
+  name = var.name
+  # TODO: GCP
+  gcp_configuration = data.mdxc_cloud.current.cloud == "gcp" ? null : null
+  # TODO: Azure
+  azure_configuration = data.mdxc_cloud.current.cloud == "azure" ? null : null
+  aws_configuration   = data.mdxc_cloud.current.cloud == "aws" ? local.aws_identity : null
 }
 
 resource "mdxc_application_permission" "main" {
