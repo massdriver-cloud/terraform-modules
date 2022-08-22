@@ -27,6 +27,9 @@ locals {
 }
 EOF
   }
+
+  # TODO: if local.is_aws && local.is_kubernetes
+  # aws_eks_oidc_short = replace(var.kubernetes.cluster_artifact)
 }
 
 # TODO: work in eks support
@@ -34,7 +37,7 @@ EOF
 #   eks_oidc_short = replace(local.kubernetes_cluster.data.infrastructure.oidc_issuer_url, "https://", "")
 # }
 
-# data "aws_caller_identity" "current" {}
+
 
 # resource "aws_iam_role" "application" {
 #   name = module.k8s_application.params.md_metadata.name_prefix
