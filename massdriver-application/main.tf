@@ -17,6 +17,7 @@ locals {
   policies = { for p in local.app_policies : p => jsondecode(data.jq_query.policies[p].result) }
   envs     = { for k, v in local.app_envs : k => jsondecode(data.jq_query.envs[k].result) }
   # TODO: add cloud specific envs
+  # Azure needs the ENV VARS to auth
 }
 
 data "jq_query" "policies" {
@@ -35,13 +36,9 @@ data "mdxc_cloud" "current" {}
 
 resource "mdxc_application_identity" "main" {
   name = var.name
-  # TODO: GCP - for k8s it'll look like assume role in aws , we pass some args to mdoule.application
-  # for non-k8s, all services use a SA JSON file, so we'll need to actually inject _that_ into ENV vars so that they can be handed off to the runtime (helm, cloudfunctions, etc)
-  # these values should be in gcp_output or whatever from mdxc_application_identity
-  # gcp_configuration = {kubernetes = {namespace = "foo"}}  
-  gcp_configuration = data.mdxc_cloud.current.cloud == "gcp" ? null : null
-  # TODO: Azure
-  azure_configuration = data.mdxc_cloud.current.cloud == "azure" ? null : null
+
+  gcp_configuration   = data.mdxc_cloud.current.cloud == "gcp" ? local.gcp_identity : null
+  azure_configuration = data.mdxc_cloud.current.cloud == "azure" ? local.azure_identity : null
   aws_configuration   = data.mdxc_cloud.current.cloud == "aws" ? local.aws_identity : null
 }
 
