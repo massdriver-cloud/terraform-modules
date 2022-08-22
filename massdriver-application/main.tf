@@ -41,27 +41,8 @@ resource "mdxc_application_identity" "main" {
   gcp_configuration = data.mdxc_cloud.current.cloud == "gcp" ? null : null
   # TODO: Azure
   azure_configuration = data.mdxc_cloud.current.cloud == "azure" ? null : null
-  #aws_configuration   = data.mdxc_cloud.current.cloud == "aws" ? local.aws_identity : null
-  aws_configuration = {
-    assume_role_policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": [
-        "sts:AssumeRole"
-      ],
-      "Principal": {
-        "Service": [
-          "ec2.amazonaws.com"
-        ]
-      }
-    }
-  ]
-}
-EOF
-  }
+  aws_configuration   = data.mdxc_cloud.current.cloud == "aws" ? local.aws_identity : null
+
 }
 
 resource "mdxc_application_permission" "main" {
