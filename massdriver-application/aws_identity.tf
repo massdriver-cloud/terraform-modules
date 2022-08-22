@@ -27,24 +27,7 @@ locals {
 EOF
 
   aws_identity = {
-    assume_role_policy = <<EOF
-{
-		"Version": "2012-10-17",
-		"Statement": [
-			{
-				"Effect": "Allow",
-				"Action": [
-					"sts:AssumeRole"
-				],
-				"Principal": {
-					"Service": [
-						"${local.aws_service}.amazonaws.com"
-					]
-				}
-			}
-		]
-	}
-   EOF
+    assume_role_policy = local.non_eks_assume_role_policy
   }
 }
 
