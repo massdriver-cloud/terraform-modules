@@ -20,11 +20,7 @@ variable "kubernetes" {
   type = object({
     # k8s namespace workload will run in
     namespace = string,
-    # k8s app SA name
-    service_account_name = string,
-    # AWS - OIDC Issuer URL
-    # GCP - Project ID
-    # Azure - ???
-    cloud_federation_id = string
+    # Massdriver connection artifact
+    cluster_artifact = any
   })
 }
