@@ -11,7 +11,10 @@ locals {
   aws_eks_assume_role_conditional  = local.is_aws && local.is_kubernetes ? "system:serviceaccount:${var.kubernetes.namespace}:${var.name}" : null
 
   aws_identity = {
-    assume_role_policy = <<EOF
+    assume_role_policy = local.is_kubernetes ? local.aws_federated_principal_assume_role : local.aws_service_principal_assume_role
+  }
+
+  aws_service_principal_assume_role = <<EOF
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -29,47 +32,25 @@ locals {
   ]
 }
 EOF
-  }
 
-  eks_assume_role_policy = <<EOF
-  {
-    "Version": "2012-10-17",
-    "Statement": [
-      {
-        "Effect": "Allow",
-        "Action": "sts:AssumeRoleWithWebIdentity",
-        "Principal": {
-          "Federated": "${local.aws_eks_oidc_federated_principal}"
-        },
-        "Condition": {
-          "StringEquals": {
-            "${local.aws_eks_oidc_short}:sub": "${local.aws_eks_assume_role_conditional}"
-          }
+  aws_federated_principal_assume_role = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "sts:AssumeRoleWithWebIdentity",
+      "Principal": {
+        "Federated": "${local.aws_eks_oidc_federated_principal}"
+      },
+      "Condition": {
+        "StringEquals": {
+          "${local.aws_eks_oidc_short}:sub": "${local.aws_eks_assume_role_conditional}"
         }
       }
-    ]
-  }  
-  EOF
+    }
+  ]
+}  
+EOF
 
 }
-
-# resource "aws_iam_role" "application" {
-#   name = module.k8s_application.params.md_metadata.name_prefix
-
-#   assume_role_policy = jsonencode({
-#     Version = "2012-10-17"
-#     Statement = [{
-#       "Sid"    = "EksCertManager"
-#       "Effect" = "Allow",
-#       "Principal" = {
-#         "Federated" = "arn:aws:iam::${data.mdxc_cloud.current.id}:oidc-provider/${local.eks_oidc_short}"
-#       }
-#       "Action" = "sts:AssumeRoleWithWebIdentity",
-#       "Condition" = {
-#         "StringEquals" = {
-#           "${local.eks_oidc_short}:sub" = "system:serviceaccount:${var.kubernetes.namespace}:${var.name}"
-#         }
-#       }
-#     }]
-#   })
-# }
