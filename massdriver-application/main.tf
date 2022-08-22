@@ -34,32 +34,15 @@ data "mdxc_cloud" "current" {}
 
 resource "mdxc_application_identity" "main" {
   name = var.name
-  # TODO: GCP
+  # TODO: GCP - for k8s it'll look like assume role in aws , we pass some args to mdoule.application
+  # for non-k8s, all services use a SA JSON file, so we'll need to actually inject _that_ into ENV vars so that they can be handed off to the runtime (helm, cloudfunctions, etc)
+  # these values should be in gcp_output or whatever from mdxc_application_identity
   gcp_configuration = data.mdxc_cloud.current.cloud == "gcp" ? null : null
   # TODO: Azure
   azure_configuration = data.mdxc_cloud.current.cloud == "azure" ? null : null
   #aws_configuration   = data.mdxc_cloud.current.cloud == "aws" ? local.aws_identity : null
 
-  aws_configuration = {
-    assume_role_policy = <<EOF
-{
-		"Version": "2012-10-17",
-		"Statement": [
-			{
-				"Effect": "Allow",
-				"Action": [
-					"sts:AssumeRole"
-				],
-				"Principal": {
-					"Service": [
-						"ec2.amazonaws.com"
-					]
-				}
-			}
-		]
-	}
-   EOF
-  }
+  aws_configuration = local.aws_tmp
 }
 
 resource "mdxc_application_permission" "main" {
