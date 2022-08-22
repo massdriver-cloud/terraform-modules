@@ -10,32 +10,30 @@ It provides a means to design applications in Massdriver to be cloud agnostic.
 
 ## Example
 
-```hcl
 
+*Deploying a kubernetes workload*:
+
+```hcl
 module "application" {
-  source    = "https://github.com/massdriver-cloud/terraform-modules//massdriver-application"
-  name      = var.md_metadata.name_prefix
-  # Note: This will be abstracted into this module in a future release.
-  identity = {
-    assume_role_policy = <<EOF
-{
-		"Version": "2012-10-17",
-		"Statement": [
-			{
-				"Effect": "Allow",
-				"Action": [
-					"sts:AssumeRole"
-				],
-				"Principal": {
-					"Service": [
-						"ec2.amazonaws.com"
-					]
-				}
-			}
-		]
-	}
-   EOF
+  source  = "github.com/massdriver-cloud/terraform-modules//massdriver-application"
+  name    = var.md_metadata.name_prefix
+  service = "kubernetes"
+
+  kubernetes = {
+    namespace        = var.namespace
+		# Massdriver cluster artifact
+    cluster_artifact = var.kubernetes_cluster
   }
+}
+```
+
+*Deploying a serverless function*:
+
+```hcl
+module "application" {
+  source  = "github.com/massdriver-cloud/terraform-modules//massdriver-application"
+  name    = var.md_metadata.name_prefix
+  service = "function"
 }
 ```
 
@@ -49,7 +47,7 @@ No requirements.
 | Name | Version |
 |------|---------|
 | <a name="provider_jq"></a> [jq](#provider\_jq) | 0.2.0 |
-| <a name="provider_mdxc"></a> [mdxc](#provider\_mdxc) | 0.0.2 |
+| <a name="provider_mdxc"></a> [mdxc](#provider\_mdxc) | 0.0.3 |
 
 ## Modules
 
@@ -69,6 +67,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_kubernetes"></a> [kubernetes](#input\_kubernetes) | TODO: Kubernetes configuration. | <pre>object({<br>    # k8s namespace workload will run in<br>    namespace = string,<br>    # Massdriver connection artifact<br>    cluster_artifact = any<br>  })</pre> | `null` | no |
 | <a name="input_name"></a> [name](#input\_name) | The name of the application. This should be the Massdriver package name. var.md\_metadata.name\_prefix | `string` | n/a | yes |
 | <a name="input_service"></a> [service](#input\_service) | The cloud service type that will run this workload. | `string` | n/a | yes |
 
