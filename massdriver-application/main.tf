@@ -16,8 +16,8 @@ locals {
 
   policies = { for p in local.app_policies : p => jsondecode(data.jq_query.policies[p].result) }
   envs     = { for k, v in local.app_envs : k => jsondecode(data.jq_query.envs[k].result) }
-  # TODO: add cloud specific envs
-  # Azure needs the ENV VARS to auth
+  # TODO: Azure will need to inject its service account credentials into ENVs 
+  # since it doesnt have a mechanism of "assuming" a role / service account like AWS & GCP
 }
 
 data "jq_query" "policies" {
@@ -47,5 +47,3 @@ resource "mdxc_application_permission" "main" {
   application_identity_id = mdxc_application_identity.main.id
   permission              = each.value
 }
-
-
