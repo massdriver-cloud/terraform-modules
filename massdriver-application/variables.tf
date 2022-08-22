@@ -3,6 +3,7 @@ variable "name" {
   type        = string
 }
 
+# TODO: should we call this workload or runtime? Does service make sense?
 variable "service" {
   description = "The cloud service type that will run this workload."
   type        = string
