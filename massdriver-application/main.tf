@@ -22,6 +22,10 @@ locals {
   is_aws   = data.mdxc_cloud.current.cloud == "aws"
   is_azure = data.mdxc_cloud.current.cloud == "azure"
   is_gcp   = data.mdxc_cloud.current.cloud == "gcp"
+
+  is_function   = var.service == "function"
+  is_vm         = var.service == "vm"
+  is_kubernetes = var.service == "kubernetes"
 }
 
 data "jq_query" "policies" {

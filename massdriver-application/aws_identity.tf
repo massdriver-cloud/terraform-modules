@@ -28,15 +28,8 @@ locals {
 EOF
   }
 
-  # TODO: if local.is_aws && local.is_kubernetes
-  # aws_eks_oidc_short = replace(var.kubernetes.cluster_artifact)
+  aws_eks_oidc_short = local.is_aws && local.is_kubernetes ? replace(var.kubernetes.cluster_artifact.data.infrastructure.oidc_issuer_url, "https://", "") : null
 }
-
-# TODO: work in eks support
-# locals {
-#   eks_oidc_short = replace(local.kubernetes_cluster.data.infrastructure.oidc_issuer_url, "https://", "")
-# }
-
 
 
 # resource "aws_iam_role" "application" {
