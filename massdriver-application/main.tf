@@ -15,9 +15,13 @@ locals {
   })
 
   policies = { for p in local.app_policies : p => jsondecode(data.jq_query.policies[p].result) }
-  envs     = { for k, v in local.app_envs : k => jsondecode(data.jq_query.envs[k].result) }
   # TODO: Azure will need to inject its service account credentials into ENVs 
-  # since it doesnt have a mechanism of "assuming" a role / service account like AWS & GCP
+  # since it doesnt have a mechanism of "assuming" a role / service account like AWS & GCP  
+  envs = { for k, v in local.app_envs : k => jsondecode(data.jq_query.envs[k].result) }
+
+  is_aws   = data.mdxc_cloud.current.cloud == "aws"
+  is_azure = data.mdxc_cloud.current.cloud == "azure"
+  is_gcp   = data.mdxc_cloud.current.cloud == "gcp"
 }
 
 data "jq_query" "policies" {
@@ -37,9 +41,9 @@ data "mdxc_cloud" "current" {}
 resource "mdxc_application_identity" "main" {
   name = var.name
 
-  gcp_configuration   = data.mdxc_cloud.current.cloud == "gcp" ? local.gcp_identity : null
-  azure_configuration = data.mdxc_cloud.current.cloud == "azure" ? local.azure_identity : null
-  aws_configuration   = data.mdxc_cloud.current.cloud == "aws" ? local.aws_identity : null
+  gcp_configuration   = local.is_gcp ? local.gcp_identity : null
+  azure_configuration = local.is_azure ? local.azure_identity : null
+  aws_configuration   = local.is_aws ? local.aws_identity : null
 }
 
 resource "mdxc_application_permission" "main" {
