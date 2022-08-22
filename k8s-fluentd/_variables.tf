@@ -22,8 +22,3 @@ variable "helm_additional_values" {
   description = "Map of additional values to configure in helm chart"
   default     = {}
 }
-
-variable "opensearch_password" {
-  description = "Password for opensearch"
-  type        = string
-}
