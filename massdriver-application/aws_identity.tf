@@ -29,6 +29,26 @@ EOF
   aws_identity = {
     assume_role_policy = local.non_eks_assume_role_policy
   }
+  aws_tmp = {
+    assume_role_policy = <<EOF
+{
+		"Version": "2012-10-17",
+		"Statement": [
+			{
+				"Effect": "Allow",
+				"Action": [
+					"sts:AssumeRole"
+				],
+				"Principal": {
+					"Service": [
+						"ec2.amazonaws.com"
+					]
+				}
+			}
+		]
+	}
+   EOF
+  }
 }
 
 # TODO: work in eks support
