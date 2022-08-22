@@ -1,33 +1,33 @@
-locals {
-  aws_service_map = {
-    function   = "lambda",
-    vm         = "ec2",
-    kubernetes = "eks"
-  }
+# locals {
+#   aws_service_map = {
+#     function   = "lambda",
+#     vm         = "ec2",
+#     kubernetes = "eks"
+#   }
 
-  aws_service = local.aws_service_map[var.service]
+#   aws_service = local.aws_service_map[var.service]
 
-  aws_identity = {
-    assume_role_policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": [
-        "sts:AssumeRole"
-      ],
-      "Principal": {
-        "Service": [
-          "ec2.amazonaws.com"
-        ]
-      }
-    }
-  ]
-}
-EOF
-  }
-}
+#   aws_identity = {
+#     assume_role_policy = <<EOF
+# {
+#   "Version": "2012-10-17",
+#   "Statement": [
+#     {
+#       "Effect": "Allow",
+#       "Action": [
+#         "sts:AssumeRole"
+#       ],
+#       "Principal": {
+#         "Service": [
+#           "ec2.amazonaws.com"
+#         ]
+#       }
+#     }
+#   ]
+# }
+# EOF
+#   }
+# }
 
 # TODO: work in eks support
 # locals {
