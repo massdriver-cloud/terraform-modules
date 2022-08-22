@@ -31,27 +31,27 @@ locals {
 EOF
   }
 
-  #   eks_assume_role_policy = <<EOF
-  # {
-  #   "Version": "2012-10-17",
-  #   "Statement": [
-  #     {
-  #       "Effect": "Allow",
-  #       "Action": [
-  #         "sts:AssumeRole"
-  #       ],
-  #       "Principal": {
-  #         "Service": [
-  #           "${local.aws_service}.amazonaws.com"
-  #         ]
-  #       }
-  #     }
-  #   ]
-  # }  
-  # EOF
+  eks_assume_role_policy = <<EOF
+  {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Action": "sts:AssumeRoleWithWebIdentity",
+        "Principal": {
+          "Federated": "${local.aws_eks_oidc_federated_principal}"
+        },
+        "Condition": {
+          "StringEquals": {
+            "${local.aws_eks_oidc_short}:sub": "${local.aws_eks_assume_role_conditional}"
+          }
+        }
+      }
+    ]
+  }  
+  EOF
 
 }
-
 
 # resource "aws_iam_role" "application" {
 #   name = module.k8s_application.params.md_metadata.name_prefix
