@@ -3,7 +3,6 @@ variable "name" {
   type        = string
 }
 
-# TODO: should we call this workload or runtime? Does service make sense?
 variable "service" {
   description = "The cloud service type that will run this workload."
   type        = string
@@ -15,7 +14,7 @@ variable "service" {
 }
 
 variable "kubernetes" {
-  description = "TODO: Kubernetes configuration."
+  description = "Kubernetes configuration for binding the application identity to k8s workload identity (GCP) or federated assume role (AWS). Required if service='kubernetes'."
   default     = null
   type = object({
     # k8s namespace workload will run in
