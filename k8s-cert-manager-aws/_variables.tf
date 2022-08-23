@@ -23,4 +23,3 @@ variable "route53_hosted_zones" {
   type        = map(string)
   default     = {}
 }
-

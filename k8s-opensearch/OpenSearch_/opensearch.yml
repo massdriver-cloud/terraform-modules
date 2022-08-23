@@ -1,0 +1,53 @@
+  cluster.name: opensearch-cluster
+  cluster.routing.allocation.disk.threshold_enabled: false
+  # Bind to all interfaces because we don't know what IP address Docker will assign to us.
+  network.host: 0.0.0.0
+  # Setting network.host to a non-loopback address enables the annoying bootstrap checks. "Single-node" mode disables them again.
+  # discovery.type: single-node
+  opendistro_security.audit.config.disabled_rest_categories: NONE
+  opendistro_security.audit.config.disabled_transport_categories: NONE
+  cluster.routing.allocation.disk.threshold_enabled: false
+  plugins:
+    security:
+      ssl:
+        transport:
+          pemcert_filepath: /usr/share/opensearch/certs/tls.crt
+          pemkey_filepath: /usr/share/opensearch/certs/tls.key
+          pemtrustedcas_filepath: /usr/share/opensearch/certs/ca.crt
+          enforce_hostname_verification: false
+        http:
+          enabled: true
+          pemcert_filepath: /usr/share/opensearch/certs/tls.crt
+          pemkey_filepath: /usr/share/opensearch/certs/tls.key
+          pemtrustedcas_filepath: /usr/share/opensearch/certs/ca.crt
+      allow_unsafe_democertificates: false
+      allow_default_init_securityindex: false
+      authcz:
+        admin_dn:
+          - CN=admin,OU=SSL,O=Test,L=Test,C=US
+      # TODO i don't think we need this /  I really don't understand these DN's
+      # nodes_dn:
+      #  - 'CN=node.other.com,OU=SSL,O=Test,L=Test,C=DE'
+      #  - 'CN=*.example.com,OU=SSL,O=Test,L=Test,C=DE'
+      #  - 'CN=elk-devcluster*'
+      #  - '/CN=.*regex/'
+      audit.type: internal_opensearch
+      enable_snapshot_restore_privilege: true
+      check_snapshot_restore_write_privileges: true
+      restapi:
+        roles_enabled: ["all_access", "security_rest_api_access"]
+      system_indices:
+        enabled: true
+        indices:
+          [
+            ".opendistro-alerting-config",
+            ".opendistro-alerting-alert*",
+            ".opendistro-anomaly-results*",
+            ".opendistro-anomaly-detector*",
+            ".opendistro-anomaly-checkpoints",
+            ".opendistro-anomaly-detection-state",
+            ".opendistro-reports-*",
+            ".opendistro-notifications-*",
+            ".opendistro-notebooks",
+            ".opendistro-asynchronous-search-response*",
+          ]

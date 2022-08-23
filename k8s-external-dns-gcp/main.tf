@@ -19,4 +19,3 @@ module "external-dns" {
   }
   dns_provider = "google"
 }
-
