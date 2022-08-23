@@ -3,7 +3,6 @@ variable "md_metadata" {
   description = "md_metadata object"
 }
 
-// TODO this is only used in configuring my local dev provider. remove before merging.
 variable "kubernetes_cluster" {
   type        = any
   description = "A kubernetes_cluster artifact"
