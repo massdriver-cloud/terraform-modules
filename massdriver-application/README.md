@@ -8,6 +8,8 @@ It also parses `policies` and `envs` from the _massdriver.yaml_ `app` field.
 
 It provides a means to design applications in Massdriver to be cloud agnostic.
 
+It is intended to be used by application runtime modules like: [massdriver-application-helm](../massdriver-application-helm/)
+
 ## Example
 
 *Deploying a kubernetes workload*:
