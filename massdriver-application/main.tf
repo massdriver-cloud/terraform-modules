@@ -15,9 +15,17 @@ locals {
   })
 
   policies = { for p in local.app_policies : p => jsondecode(data.jq_query.policies[p].result) }
-  # TODO: Azure will need to inject its service account credentials into ENVs
-  # since it doesnt have a mechanism of "assuming" a role / service account like AWS & GCP
-  envs = { for k, v in local.app_envs : k => jsondecode(data.jq_query.envs[k].result) }
+
+  base_envs = { for k, v in local.app_envs : k => jsondecode(data.jq_query.envs[k].result) }
+  cloud_envs = {
+    # TODO: Azure will need to inject its service account credentials into ENVs
+    # since it doesnt have a mechanism of "assuming" a role / service account like AWS & GCP    
+    azure = local.base_envs
+    aws   = local.base_envs
+    gcp   = local.base_envs
+  }
+
+  envs = local.cloud_envs[data.mdxc_cloud.current.cloud]
 
   is_aws   = data.mdxc_cloud.current.cloud == "aws"
   is_azure = data.mdxc_cloud.current.cloud == "azure"
