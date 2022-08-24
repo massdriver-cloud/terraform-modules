@@ -11,7 +11,6 @@ locals {
     name = local.service_account_name
     }
     labels = var.md_metadata.default_tags
-    plugins = ["fluent-plugin-opensearch"]
   }
 }
 
