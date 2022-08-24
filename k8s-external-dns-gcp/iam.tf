@@ -16,30 +16,9 @@ resource "google_service_account" "external_dns" {
   display_name = "The GCP service account responsible for external-dns"
 }
 
-resource "google_project_iam_custom_role" "dns_least_privilege" {
-  role_id     = local.role_id
-  title       = "Least Privilege External DNS"
-  description = "Custom role "
-  permissions = [
-    "dns.resourceRecordSets.create",
-    "dns.resourceRecordSets.delete",
-    "dns.resourceRecordSets.get",
-    "dns.resourceRecordSets.list",
-    "dns.resourceRecordSets.update",
-    "dns.changes.create",
-    "dns.changes.get",
-    "dns.changes.list",
-    "dns.managedZones.list",
-    "dns.managedZones.update",
-    "dns.policies.create"
-  ]
-}
-
-# here we can use a binding since this will be the only custom role
-# of this kind, each is unique to the module, project
-resource "google_project_iam_binding" "gcp_sa" {
+resource "google_project_iam_member" "gcp_sa" {
   project = var.gcp_project_id
-  role    = google_project_iam_custom_role.dns_least_privilege.id
+  role    = "roles/dns.admin"
   members = [
     "serviceAccount:${google_service_account.external_dns.email}"
   ]
