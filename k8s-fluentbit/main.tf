@@ -16,9 +16,9 @@ locals {
 
 resource "helm_release" "fluentbit" {
   name             = var.release
-  chart            = "fluentbit"
+  chart            = "fluent-bit"
   repository       = "https://fluent.github.io/helm-charts"
-  version          = "0.20.6"
+  version          = "v0.20.6"
   namespace        = var.namespace
   create_namespace = true
   wait_for_jobs    = true
