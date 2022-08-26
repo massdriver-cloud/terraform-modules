@@ -1,5 +1,10 @@
 locals {
   base_helm_additional_values = {
+    commonLabels = module.application.params.md_metadata.default_tags
+    # this will trigger rollouts on every deploy
+    # deployment = {
+    #   annotations = module.application.params.md_metadata.deployment_id
+    # }
     envs = [for key, val in module.application.envs : { name = key, value = val }]
     ingress = {
       className = "nginx" // TODO: eventually this should come from the kubernetes artifact
