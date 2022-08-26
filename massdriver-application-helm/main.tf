@@ -1,7 +1,7 @@
 locals {
   base_helm_additional_values = {
     commonLabels = module.application.params.md_metadata.default_tags
-    deployment = {
+    pod = {
       annotations = {
         "md-deployment-id" = lookup(module.application.params.md_metadata, "deployment_id", "")
       }
