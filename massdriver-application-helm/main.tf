@@ -3,7 +3,7 @@ locals {
     commonLabels = module.application.params.md_metadata.default_tags
     pod = {
       annotations = {
-        "md-deployment-id" = lookup(module.application.params.md_metadata, "deployment_id", "")
+        "md-deployment-id" = lookup(module.application.params.md_metadata.deployment, "id", "")
       }
     }
     envs = [for key, val in module.application.envs : { name = key, value = val }]
