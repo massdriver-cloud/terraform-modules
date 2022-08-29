@@ -48,7 +48,7 @@ No requirements.
 | Name | Version |
 |------|---------|
 | <a name="provider_jq"></a> [jq](#provider\_jq) | 0.2.0 |
-| <a name="provider_mdxc"></a> [mdxc](#provider\_mdxc) | 1.0.0 |
+| <a name="provider_mdxc"></a> [mdxc](#provider\_mdxc) | 0.0.3 |
 
 ## Modules
 
