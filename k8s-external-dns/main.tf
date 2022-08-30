@@ -5,6 +5,8 @@ locals {
     serviceAccount = {
       name = local.service_account_name
     }
+    // Using md_metadata.name_prefix for the txtOwnerId so it will be unique for k8s clusters as well as bundles
+    txtOwnerId = var.md_metadata.name_prefix
     # there's a 1:1 requirement for hosted zone and provider. If multiple are passed in
     # NONE work...
     # https://github.com/kubernetes-sigs/external-dns/issues/1961
