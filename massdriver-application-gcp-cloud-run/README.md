@@ -1,4 +1,4 @@
-# gcp-application-cloud-run
+# massdriver-application-gcp-cloud-run
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
@@ -17,7 +17,7 @@ No requirements.
 |------|--------|---------|
 | <a name="module_apis"></a> [apis](#module\_apis) | github.com/massdriver-cloud/terraform-modules//google-enable-apis | 9201b9f |
 | <a name="module_application"></a> [application](#module\_application) | github.com/massdriver-cloud/terraform-modules//massdriver-application | n/a |
-| <a name="module_gcp_dns_ssl"></a> [gcp\_dns\_ssl](#module\_gcp\_dns\_ssl) | github.com/massdriver-cloud/terraform-modules//gcp-serverless-endpoint | n/a |
+| <a name="module_serverless_endpoint"></a> [serverless\_endpoint](#module\_serverless\_endpoint) | github.com/massdriver-cloud/terraform-modules//gcp-serverless-endpoint | n/a |
 
 ## Resources
 
