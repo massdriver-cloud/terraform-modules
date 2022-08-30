@@ -14,7 +14,7 @@ locals {
     assume_role_policy = local.is_kubernetes ? local.aws_federated_principal_assume_role : local.aws_service_principal_assume_role
   }
 
-  aws_service_principal_assume_role = <<EOF
+  aws_service_principal_assume_role = !local.is_aws ? null : <<EOF
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -33,7 +33,7 @@ locals {
 }
 EOF
 
-  aws_federated_principal_assume_role = <<EOF
+  aws_federated_principal_assume_role = !local.is_aws ? null : <<EOF
 {
   "Version": "2012-10-17",
   "Statement": [
