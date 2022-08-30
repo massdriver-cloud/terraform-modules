@@ -21,7 +21,7 @@ resource "google_compute_target_https_proxy" "main" {
 resource "google_compute_global_forwarding_rule" "main" {
   provider   = google-beta
   name       = var.resource_name
-  labels     = var.lables
+  labels     = var.labels
   target     = google_compute_target_https_proxy.main.self_link
   ip_address = google_compute_global_address.main.address
   port_range = "443"

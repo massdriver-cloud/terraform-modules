@@ -2,7 +2,7 @@ variable "resource_name" {
   type = string
 }
 
-variable "lables" {
+variable "labels" {
   type = any
 }
 
