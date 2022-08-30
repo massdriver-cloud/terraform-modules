@@ -6,10 +6,12 @@ variable "location" {
   type = string
 }
 
-variable "endpoint" {
+variable "zone" {
+  type    = string
   default = null
-  type = object({
-    subdomain = string,
-    zone      = string
-  })
+}
+
+variable "subdomain" {
+  type    = string
+  default = null
 }
