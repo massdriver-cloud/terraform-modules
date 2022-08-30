@@ -5,7 +5,7 @@ locals {
 }
 
 module "application" {
-  source  = "github.com/massdriver-cloud/terraform-modules//massdriver-application"
+  source  = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=a3371df"
   name    = module.application.params.md_metadata.name_prefix
   service = "function"
 }
