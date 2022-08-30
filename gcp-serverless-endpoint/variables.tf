@@ -2,6 +2,10 @@ variable "resource_name" {
   type = string
 }
 
+variable "lables" {
+  type = any
+}
+
 variable "subdomain" {
   type = string
 }
