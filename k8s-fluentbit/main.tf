@@ -1,6 +1,6 @@
 locals {
   # this should be the default calculated name anyway, but we want to enforce it just to be sure
-  service_account_name = trimprefix(var.release == trimsuffix(var.release, "-fluentbit") ? "${var.release}-fluentbit": var.release, "-")
+  service_account_name = var.release == "fluentbit" ? "fluentbit" : "${var.release}-fluentbit"
 
   # extract data about kubernetes cluster
   cloud            = var.kubernetes_cluster.specs.kubernetes.cloud
@@ -10,7 +10,7 @@ locals {
     serviceAccount = {
     name = local.service_account_name
     }
-    annotations = var.md_metadata.default_tags
+    labels = var.md_metadata.default_tags
   }
 }
 
