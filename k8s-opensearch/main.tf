@@ -1,5 +1,4 @@
 locals {
-  tls_secret_name   = "${local.opensearch.release_name}-tls"
   kube_distribution = var.kubernetes_cluster.specs.kubernetes.distribution
   opensearch = {
     image_version = "2.1.0"
@@ -36,21 +35,6 @@ locals {
         }
       }
     } : {}
-    extraObjects = [
-      yamldecode(templatefile("${path.module}/OpenSearch_/tls_secret.yml.tftpl", {
-        name      = "${local.opensearch.release_name}-tls"
-        namespace = var.namespace
-        key       = base64encode(tls_private_key.opensearch[0].private_key_pem)
-        cert      = base64encode(tls_self_signed_cert.opensearch[0].cert_pem)
-      }))
-    ]
-    secretMounts = [
-      {
-        name       = local.tls_secret_name
-        secretName = local.tls_secret_name
-        path       = "/usr/share/opensearch/certs"
-      }
-    ]
   }
 }
 
