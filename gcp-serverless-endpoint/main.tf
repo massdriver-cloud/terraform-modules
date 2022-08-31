@@ -1,5 +1,9 @@
+locals {
+  managed_zone_name = length(split("/", var.zone)) > 1 ? split("/", var.zone)[3] : var.zone
+}
+
 data "google_dns_managed_zone" "main" {
-  name = var.zone
+  name = local.managed_zone_name
 }
 
 resource "google_dns_record_set" "set" {
