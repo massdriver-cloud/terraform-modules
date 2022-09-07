@@ -1,5 +1,7 @@
 locals {
   managed_zone_name = length(split("/", var.zone)) > 1 ? split("/", var.zone)[3] : var.zone
+  dns_record_name   = "${var.subdomain}.${data.google_dns_managed_zone.main.dns_name}"
+  endpoint          = substr(local.dns_record_name, 0, length(local.dns_record_name) - 1)
 }
 
 data "google_dns_managed_zone" "main" {
@@ -7,7 +9,7 @@ data "google_dns_managed_zone" "main" {
 }
 
 resource "google_dns_record_set" "set" {
-  name         = "${var.subdomain}.${data.google_dns_managed_zone.main.dns_name}"
+  name         = local.dns_record_name
   type         = "A"
   ttl          = 3600
   managed_zone = data.google_dns_managed_zone.main.name
