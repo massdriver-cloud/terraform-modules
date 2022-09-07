@@ -33,7 +33,7 @@ locals {
 }
 EOF
 
-  aws_federated_principal_assume_role = !local.is_aws ? null : <<EOF
+  aws_federated_principal_assume_role = !local.is_aws && !local.is_kubernetes ? null : <<EOF
 {
   "Version": "2012-10-17",
   "Statement": [
