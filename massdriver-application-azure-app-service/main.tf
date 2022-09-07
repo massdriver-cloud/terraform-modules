@@ -1,30 +1,12 @@
 module "application" {
-  source  = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=a3371df"
+  source  = "../massdriver-application"
   name    = module.application.params.md_metadata.name_prefix
   service = "function"
 }
 
-resource "azuread_application" "main" {
-  display_name = var.md_metadata.name_prefix
-}
-
-resource "azuread_service_principal" "main" {
-  application_id = azuread_application.main.application_id
-}
-
-resource "azuread_service_principal_password" "main" {
-  service_principal_id = azuread_service_principal.main.object_id
-}
-
-resource "azurerm_role_assignment" "app_read_acr" {
-  scope                = data.azurerm_container_registry.main.id
-  role_definition_name = "AcrPull"
-  principal_id         = azuread_service_principal.main.object_id
-}
-
 resource "azurerm_resource_group" "main" {
   name     = var.md_metadata.name_prefix
-  location = var.vnet.specs.azure.region
+  location = var.application.location
 }
 
 resource "azurerm_service_plan" "main" {
@@ -150,8 +132,8 @@ resource "azurerm_linux_web_app" "main" {
 
   app_settings = {
     DOCKER_REGISTRY_SERVER_URL      = data.azurerm_container_registry.main.login_server
-    DOCKER_REGISTRY_SERVER_USERNAME = azuread_service_principal.main.application_id
-    DOCKER_REGISTRY_SERVER_PASSWORD = azuread_service_principal_password.main.value
+    DOCKER_REGISTRY_SERVER_USERNAME = module.application.azure_application_identity.application_id
+    DOCKER_REGISTRY_SERVER_PASSWORD = module.application.azure_application_identity.service_principal_secret
   }
 
   depends_on = [
