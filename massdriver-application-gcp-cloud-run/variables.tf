@@ -3,8 +3,7 @@ variable "container_image" {
 }
 
 variable "max_instances" {
-  type    = number
-  default = 5
+  type = number
 }
 
 variable "location" {

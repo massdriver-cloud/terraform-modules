@@ -34,7 +34,7 @@ No requirements.
 |------|-------------|------|---------|:--------:|
 | <a name="input_container_image"></a> [container\_image](#input\_container\_image) | n/a | `string` | n/a | yes |
 | <a name="input_location"></a> [location](#input\_location) | n/a | `string` | n/a | yes |
-| <a name="input_max_instances"></a> [max\_instances](#input\_max\_instances) | n/a | `number` | `5` | no |
+| <a name="input_max_instances"></a> [max\_instances](#input\_max\_instances) | n/a | `number` | n/a | yes |
 | <a name="input_network"></a> [network](#input\_network) | n/a | `string` | n/a | yes |
 | <a name="input_subdomain"></a> [subdomain](#input\_subdomain) | n/a | `string` | `null` | no |
 | <a name="input_vpc_connector_cidr"></a> [vpc\_connector\_cidr](#input\_vpc\_connector\_cidr) | n/a | `string` | `null` | no |
