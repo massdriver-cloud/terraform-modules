@@ -29,8 +29,6 @@ resource "google_compute_global_forwarding_rule" "main" {
 }
 
 locals {
-  # cloud_run_neg      =
-  # cloud_function_neg =
   backend_group = var.cloud_run_service_name != null ? google_compute_region_network_endpoint_group.cloud_run[0].id : google_compute_region_network_endpoint_group.cloud_function[0].id
 }
 
