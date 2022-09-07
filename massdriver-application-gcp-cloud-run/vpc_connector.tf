@@ -2,7 +2,6 @@
 # for database / cache network access
 
 resource "google_vpc_access_connector" "connector" {
-  count          = var.vpc_connector_cidr == null ? 0 : 1
   name           = module.application.params.md_metadata.name_prefix
   provider       = google-beta
   region         = var.location

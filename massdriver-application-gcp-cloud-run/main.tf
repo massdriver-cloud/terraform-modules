@@ -39,7 +39,6 @@ resource "google_cloud_run_service" "main" {
       # For valid annotation values and descriptions, see
       # https://cloud.google.com/sdk/gcloud/reference/run/deploy#--ingress
       "run.googleapis.com/ingress" = "internal-and-cloud-load-balancing"
-
     }
   }
 }
