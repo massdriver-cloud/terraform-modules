@@ -1,16 +1,16 @@
 module "application" {
-  source  = "../massdriver-application"
-  name    = module.application.params.md_metadata.name_prefix
+  source  = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=a3371df"
+  name    = var.name
   service = "function"
 }
 
 resource "azurerm_resource_group" "main" {
-  name     = var.md_metadata.name_prefix
+  name     = var.name
   location = var.application.location
 }
 
 resource "azurerm_service_plan" "main" {
-  name                = var.md_metadata.name_prefix
+  name                = var.name
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
 
@@ -20,7 +20,7 @@ resource "azurerm_service_plan" "main" {
 }
 
 resource "azurerm_monitor_autoscale_setting" "main" {
-  name                = var.md_metadata.name_prefix
+  name                = var.name
   resource_group_name = azurerm_resource_group.main.name
   location            = azurerm_resource_group.main.location
   target_resource_id  = azurerm_service_plan.main.id
@@ -86,7 +86,7 @@ resource "azurerm_monitor_autoscale_setting" "main" {
 }
 
 resource "azurerm_linux_web_app" "main" {
-  name                = var.md_metadata.name_prefix
+  name                = var.name
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
   service_plan_id     = azurerm_service_plan.main.id

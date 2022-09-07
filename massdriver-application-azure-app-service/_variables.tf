@@ -32,3 +32,7 @@ variable "md_metadata" {
     name_prefix = string
   })
 }
+
+variable "name" {
+  type = string
+}
