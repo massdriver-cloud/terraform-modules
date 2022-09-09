@@ -132,7 +132,7 @@ resource "azurerm_linux_web_app" "main" {
 
   app_settings = {
     DOCKER_REGISTRY_SERVER_URL      = data.azurerm_container_registry.main.login_server
-    DOCKER_REGISTRY_SERVER_USERNAME = module.application.id
+    DOCKER_REGISTRY_SERVER_USERNAME = module.application.azure_application_identity.service_principal_client_id
     DOCKER_REGISTRY_SERVER_PASSWORD = module.application.azure_application_identity.service_principal_secret
   }
 
