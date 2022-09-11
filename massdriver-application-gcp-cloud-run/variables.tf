@@ -14,14 +14,8 @@ variable "network" {
   type = string
 }
 
-variable "zone" {
-  type    = string
-  default = null
-}
-
-variable "subdomain" {
-  type    = string
-  default = null
+variable "endpoint" {
+  type = any
 }
 
 variable "vpc_connector_cidr" {
