@@ -1,4 +1,4 @@
-variable "acr" {
+variable "repo" {
   type = object({
     registry_name           = string
     registry_resource_group = string
@@ -35,4 +35,13 @@ variable "md_metadata" {
 
 variable "name" {
   type = string
+}
+
+variable "tags" {
+  type = object({
+    md-project  = string
+    md-target   = string
+    md-manifest = string
+    md-package  = string
+  })
 }

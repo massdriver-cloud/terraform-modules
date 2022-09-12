@@ -1,12 +1,20 @@
 module "application" {
-  source  = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=a3371df"
+  source  = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=64e9223"
   name    = var.name
   service = "function"
+}
+
+data "azurerm_container_registry" "main" {
+  count               = var.repo.repo_source == "Azure Container Registry" ? 1 : 0
+  name                = var.repo.registry_name
+  resource_group_name = var.repo.registry_resource_group
 }
 
 resource "azurerm_resource_group" "main" {
   name     = var.name
   location = var.application.location
+
+  tags = var.tags
 }
 
 resource "azurerm_service_plan" "main" {
@@ -17,6 +25,8 @@ resource "azurerm_service_plan" "main" {
   os_type      = "Linux"
   sku_name     = var.application.sku_name
   worker_count = var.application.minimum_worker_count
+
+  tags = var.tags
 }
 
 resource "azurerm_monitor_autoscale_setting" "main" {
@@ -83,6 +93,8 @@ resource "azurerm_monitor_autoscale_setting" "main" {
   depends_on = [
     azurerm_service_plan.main
   ]
+
+  tags = var.tags
 }
 
 resource "azurerm_linux_web_app" "main" {
@@ -101,6 +113,7 @@ resource "azurerm_linux_web_app" "main" {
     always_on = true
 
     auto_heal_enabled = true
+    health_check_path = "/health"
     auto_heal_setting {
       action {
         action_type = "Recycle"
@@ -122,21 +135,30 @@ resource "azurerm_linux_web_app" "main" {
         }
       }
     }
-    health_check_path = "/health"
+    container_registry_use_managed_identity = true
 
-    application_stack {
-      docker_image     = "${var.acr.registry_name}.azurecr.io/${var.acr.repo_name}"
-      docker_image_tag = var.acr.tag
+    dynamic "application_stack" {
+      for_each = var.repo.repo_source == "Azure Container Registry" ? toset(["Azure Container Registry"]) : toset([])
+
+      content {
+        docker_image     = "${var.repo.registry_name}.azurecr.io/${var.repo.repo_name}"
+        docker_image_tag = var.repo.tag
+      }
     }
-  }
 
-  app_settings = {
-    DOCKER_REGISTRY_SERVER_URL      = data.azurerm_container_registry.main.login_server
-    DOCKER_REGISTRY_SERVER_USERNAME = module.application.azure_application_identity.service_principal_client_id
-    DOCKER_REGISTRY_SERVER_PASSWORD = module.application.azure_application_identity.service_principal_secret
+    dynamic "application_stack" {
+      for_each = var.repo.repo_source == "DockerHub" ? toset(["DockerHub"]) : toset([])
+
+      content {
+        docker_image     = var.repo.docker_image
+        docker_image_tag = var.repo.tag
+      }
+    }
   }
 
   depends_on = [
     azurerm_service_plan.main
   ]
+
+  tags = var.tags
 }
