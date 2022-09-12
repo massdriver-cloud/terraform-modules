@@ -5,7 +5,7 @@ locals {
         create = true
         name   = local.controller_service_account_name
         annotations = {
-          "eks.amazonaws.com/role-arn" : aws_iam_role.efs-csi-controller.arn
+          "eks.amazonaws.com/role-arn" : aws_iam_role.efs_csi_controller.arn
         }
       }
     }

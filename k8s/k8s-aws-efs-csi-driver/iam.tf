@@ -8,7 +8,7 @@ data "aws_arn" "eks_cluster" {
   arn = var.kubernetes_cluster.data.infrastructure.arn
 }
 
-resource "aws_iam_role" "efs-csi-controller" {
+resource "aws_iam_role" "efs_csi_controller" {
   name = "${var.md_metadata.name_prefix}-efs-csi-controller"
 
   assume_role_policy = jsonencode({
