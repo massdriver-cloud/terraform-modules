@@ -1,9 +1,7 @@
 variable "repo" {
   type = object({
-    registry_name           = string
-    registry_resource_group = string
-    repo_name               = string
-    tag                     = string
+    docker_image     = string
+    docker_image_tag = string
   })
 }
 

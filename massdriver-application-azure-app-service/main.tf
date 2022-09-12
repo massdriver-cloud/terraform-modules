@@ -5,12 +5,6 @@ module "application" {
   application_identity_id = azurerm_linux_web_app.main.identity[0].principal_id
 }
 
-data "azurerm_container_registry" "main" {
-  count               = var.repo.repo_source == "Azure Container Registry" ? 1 : 0
-  name                = var.repo.registry_name
-  resource_group_name = var.repo.registry_resource_group
-}
-
 resource "azurerm_resource_group" "main" {
   name     = var.name
   location = var.application.location
@@ -138,24 +132,11 @@ resource "azurerm_linux_web_app" "main" {
     }
     container_registry_use_managed_identity = true
 
-    dynamic "application_stack" {
-      for_each = var.repo.repo_source == "Azure Container Registry" ? toset(["Azure Container Registry"]) : toset([])
-
-      content {
-        docker_image     = "${var.repo.registry_name}.azurecr.io/${var.repo.repo_name}"
-        docker_image_tag = var.repo.tag
-      }
-    }
-
-    dynamic "application_stack" {
-      for_each = var.repo.repo_source == "DockerHub" ? toset(["DockerHub"]) : toset([])
-
-      content {
+    application_stack {
         docker_image     = var.repo.docker_image
-        docker_image_tag = var.repo.tag
+        docker_image_tag = var.repo.docker_image_tag
       }
     }
-  }
 
   depends_on = [
     azurerm_service_plan.main
@@ -165,8 +146,7 @@ resource "azurerm_linux_web_app" "main" {
 }
 
 resource "azurerm_role_assignment" "main" {
-  count                = var.repo.repo_source == "Azure Container Registry" ? 1 : 0
-  scope                = data.azurerm_container_registry.main.id
+  scope                = "/${replace(join(", ", slice(split("/", azurerm_resource_group.main.id), 1, 3)), ", ", "/")}"
   role_definition_name = "AcrPull"
   principal_id         = azurerm_linux_web_app.main.identity[0].principal_id
 }
