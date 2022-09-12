@@ -1,15 +1,14 @@
-
 locals {
-  eks_oidc_short = replace(var.kubernetes_cluster.data.infrastructure.oidc_issuer_url, "https://", "")
+  eks_oidc_short = replace(var.eks_oidc_issuer_url, "https://", "")
   iam_resources  = length(var.storage_class_to_efs_arn_map) > 0 ? [for sc_name, efs_arn in var.storage_class_to_efs_arn_map : efs_arn] : ["*"]
 }
 
 data "aws_arn" "eks_cluster" {
-  arn = var.kubernetes_cluster.data.infrastructure.arn
+  arn = var.eks_cluster_arn
 }
 
 resource "aws_iam_role" "efs_csi_controller" {
-  name = "${var.md_metadata.name_prefix}-efs-csi-controller"
+  name = "${var.name_prefix}-efs-csi-controller"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"

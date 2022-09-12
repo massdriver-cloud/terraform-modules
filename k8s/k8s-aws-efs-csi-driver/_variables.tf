@@ -1,11 +1,21 @@
-variable "md_metadata" {
-  type        = any
-  description = "md_metadata object"
+variable "name_prefix" {
+  type        = string
+  description = "name prefix to apply to resources object"
 }
 
-variable "kubernetes_cluster" {
-  type        = any
+variable "eks_cluster_arn" {
+  type        = string
   description = "A kubernetes_cluster artifact"
+}
+
+variable "eks_oidc_issuer_url" {
+  type        = string
+  description = "A kubernetes_cluster artifact"
+  validation {
+    # regex(...) fails if it cannot find a match
+    condition     = can(regex("^https://.*$", var.eks_oidc_issuer_url))
+    error_message = "The eks_oidc_issuer_url variable must be an https endpoint."
+  }
 }
 
 variable "release" {
