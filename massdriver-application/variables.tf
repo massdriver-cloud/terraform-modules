@@ -23,3 +23,9 @@ variable "kubernetes" {
     cluster_artifact = any
   })
 }
+
+variable "application_identity" {
+  description = "If an application identity already exists, you can specify it here to skip the process of creating a new application identity."
+  type        = string
+  default     = ""
+}
