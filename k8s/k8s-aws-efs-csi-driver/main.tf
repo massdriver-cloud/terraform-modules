@@ -12,6 +12,7 @@ resource "helm_release" "main" {
   repository       = "https://kubernetes-sigs.github.io/aws-efs-csi-driver/"
   version          = local.chart_version
   namespace        = var.namespace
+  create_namespace = true
 
   values = [
     "${file("${path.module}/values.yaml")}",
