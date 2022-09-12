@@ -15,6 +15,7 @@ locals {
   })
 
   create_application_identity = var.application_identity == ""
+  application_identity_id = local.create_application_identity ? mdxc_application_identity.main.0.id : var.application_identity
 
   policies = { for p in local.app_policies : p => jsondecode(data.jq_query.policies[p].result) }
 
@@ -63,6 +64,6 @@ resource "mdxc_application_identity" "main" {
 
 resource "mdxc_application_permission" "main" {
   for_each                = local.policies
-  application_identity_id = local.create_application_identity ? mdxc_application_identity.main.0.id : var.application_identity
+  application_identity_id = local.application_identity_id
   permission              = each.value
 }
