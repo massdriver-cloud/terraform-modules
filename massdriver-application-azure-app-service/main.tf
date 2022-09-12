@@ -1,7 +1,8 @@
 module "application" {
-  source  = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=64e9223"
-  name    = var.name
-  service = "function"
+  source                  = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=51e732e"
+  name                    = var.name
+  service                 = "function"
+  application_identity_id = azurerm_linux_web_app.main.identity[0].principal_id
 }
 
 data "azurerm_container_registry" "main" {
@@ -164,6 +165,7 @@ resource "azurerm_linux_web_app" "main" {
 }
 
 resource "azurerm_role_assignment" "main" {
+  count                = var.repo.repo_source == "Azure Container Registry" ? 1 : 0
   scope                = data.azurerm_container_registry.main.id
   role_definition_name = "AcrPull"
   principal_id         = azurerm_linux_web_app.main.identity[0].principal_id
