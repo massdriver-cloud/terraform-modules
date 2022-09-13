@@ -8,20 +8,17 @@ module "application" {
 resource "azurerm_resource_group" "main" {
   name     = var.name
   location = var.application.location
-
-  tags = var.tags
+  tags     = var.tags
 }
 
 resource "azurerm_service_plan" "main" {
   name                = var.name
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
-
-  os_type      = "Linux"
-  sku_name     = var.application.sku_name
-  worker_count = var.application.minimum_worker_count
-
-  tags = var.tags
+  os_type             = "Linux"
+  sku_name            = var.application.sku_name
+  worker_count        = var.application.minimum_worker_count
+  tags                = var.tags
 }
 
 resource "azurerm_monitor_autoscale_setting" "main" {
@@ -88,7 +85,6 @@ resource "azurerm_monitor_autoscale_setting" "main" {
   depends_on = [
     azurerm_service_plan.main
   ]
-
   tags = var.tags
 }
 
@@ -133,20 +129,22 @@ resource "azurerm_linux_web_app" "main" {
     container_registry_use_managed_identity = true
 
     application_stack {
-        docker_image     = var.repo.docker_image
-        docker_image_tag = var.repo.docker_image_tag
-      }
+      docker_image     = var.repo.docker_image
+      docker_image_tag = var.repo.docker_image_tag
     }
+  }
 
   depends_on = [
     azurerm_service_plan.main
   ]
-
   tags = var.tags
 }
 
+data "azurerm_client_config" "main" {
+}
+
 resource "azurerm_role_assignment" "main" {
-  scope                = "/${replace(join(", ", slice(split("/", azurerm_resource_group.main.id), 1, 3)), ", ", "/")}"
+  scope                = "/subscriptions/${data.azurerm_client_config.main.subscription_id}"
   role_definition_name = "AcrPull"
   principal_id         = azurerm_linux_web_app.main.identity[0].principal_id
 }
