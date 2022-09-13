@@ -30,10 +30,5 @@ variable "name" {
 }
 
 variable "tags" {
-  type = object({
-    md-project  = string
-    md-target   = string
-    md-manifest = string
-    md-package  = string
-  })
+  type = any
 }
