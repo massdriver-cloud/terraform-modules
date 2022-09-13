@@ -1,8 +1,9 @@
 module "application" {
-  source                  = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=51e732e"
-  name                    = var.name
-  service                 = "function"
-  application_identity_id = azurerm_linux_web_app.main.identity[0].principal_id
+  source                      = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=0451152"
+  name                        = var.name
+  service                     = "function"
+  application_identity_id     = azurerm_linux_web_app.main.identity[0].principal_id
+  create_application_identity = false
 }
 
 resource "azurerm_resource_group" "main" {

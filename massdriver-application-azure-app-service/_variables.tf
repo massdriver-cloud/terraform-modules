@@ -25,12 +25,6 @@ variable "application" {
   })
 }
 
-variable "md_metadata" {
-  type = object({
-    name_prefix = string
-  })
-}
-
 variable "name" {
   type = string
 }
