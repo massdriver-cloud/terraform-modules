@@ -9,14 +9,14 @@ module "application" {
   service = "function"
 }
 
-module "aws_lambda_function" "main" {
-  source         = "github.com/massdriver-cloud/terraform-modules//aws/aws-lambda-function"
-  function_name  = var.md_metadata.name_prefix
-  role_arn       = module.application.id
-  image          = var.image
-  memory_size    = var.memory_size
-  timeout        = var.execution_timeout
-  envs           = module.application.envs
-  x_ray_enabled  = var.x-ray.enabled
-  retention_days = var.retention_days
+module "aws_lambda_function" {
+  source            = "github.com/massdriver-cloud/terraform-modules//aws/aws-lambda-function"
+  function_name     = var.md_metadata.name_prefix
+  role_arn          = module.application.id
+  image             = var.image
+  memory_size       = var.memory_size
+  execution_timeout = var.execution_timeout
+  envs              = module.application.envs
+  x_ray_enabled     = var.x_ray_enabled
+  retention_days    = var.retention_days
 }
