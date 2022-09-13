@@ -44,7 +44,10 @@ resource "aws_iam_policy" "function_logging_policy" {
         "logs:PutLogEvents"
       ],
       "Effect" : "Allow",
-      "Resource" : "${aws_cloudwatch_log_group.function_log_group.arn}"
+      "Resource" : [
+        "${aws_cloudwatch_log_group.function_log_group.arn}:*",
+        "${aws_cloudwatch_log_group.function_log_group.arn}"
+      ]
     }
   ]
 }
