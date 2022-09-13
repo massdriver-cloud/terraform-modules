@@ -24,8 +24,24 @@ variable "kubernetes" {
   })
 }
 
+variable "create_application_identity" {
+  description = "If an application identity already exists, you can specify it here to skip the process of creating a new application identity."
+  type        = bool
+  default     = true
+
+  validation {
+    condition     = var.create_application_identity || (!var.create_application_identity && var.application_identity_id != null)
+    error_message = "If create_application_identity is false, you must specify an application_identity_id"
+  }
+}
+
 variable "application_identity_id" {
   description = "If an application identity already exists, you can specify it here to skip the process of creating a new application identity."
   type        = string
   default     = null
+
+  validation {
+    condition     = (var.application_identity_id == null && var.create_application_identity) || (var.application_identity_id != null && !var.create_application_identity)
+    error_message = "create_application_identity must be false if application_identity_id is specified."
+  }
 }
