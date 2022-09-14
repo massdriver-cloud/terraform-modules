@@ -7,10 +7,9 @@ variable "image" {
 
 variable "dns" {
   type = object({
-    enable_dns          = bool
-    alias               = string
-    zone_name           = string
-    zone_resource_group = string
+    enable_dns = bool
+    subdomain  = string
+    zone_name  = string
   })
 }
 

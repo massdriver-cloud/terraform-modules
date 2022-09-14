@@ -94,19 +94,20 @@ resource "azurerm_linux_web_app" "main" {
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
   service_plan_id     = azurerm_service_plan.main.id
-
-  https_only = true
-  ftps_state = "FtpsOnly"
+  https_only          = true
+  tags                = var.tags
 
   identity {
     type = "SystemAssigned"
   }
 
   site_config {
-    always_on = true
+    always_on                               = true
+    auto_heal_enabled                       = true
+    health_check_path                       = "/health"
+    container_registry_use_managed_identity = true
+    ftps_state                              = "FtpsOnly"
 
-    auto_heal_enabled = true
-    health_check_path = "/health"
     auto_heal_setting {
       action {
         action_type = "Recycle"
@@ -128,7 +129,6 @@ resource "azurerm_linux_web_app" "main" {
         }
       }
     }
-    container_registry_use_managed_identity = true
 
     application_stack {
       docker_image     = var.image.repository
@@ -139,7 +139,6 @@ resource "azurerm_linux_web_app" "main" {
   depends_on = [
     azurerm_service_plan.main
   ]
-  tags = var.tags
 }
 
 data "azurerm_client_config" "main" {
