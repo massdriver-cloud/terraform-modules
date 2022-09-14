@@ -23,5 +23,5 @@ output "params" {
 
 output "id" {
   description = "Cloud ID for application IAM (AWS Role, GCP Service Account, Azure Service Account, etc)"
-  value       = mdxc_application_identity.main.id
+  value       = local.application_identity_id
 }

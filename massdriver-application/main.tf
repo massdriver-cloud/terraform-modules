@@ -14,6 +14,8 @@ locals {
     connections = local.connections
   })
 
+  application_identity_id = var.create_application_identity ? mdxc_application_identity.main.0.id : var.application_identity_id
+
   policies = { for p in local.app_policies : p => jsondecode(data.jq_query.policies[p].result) }
 
   base_envs = { for k, v in local.app_envs : k => jsondecode(data.jq_query.envs[k].result) }
@@ -51,7 +53,8 @@ data "jq_query" "envs" {
 data "mdxc_cloud" "current" {}
 
 resource "mdxc_application_identity" "main" {
-  name = var.name
+  count = var.create_application_identity ? 1 : 0
+  name  = var.name
 
   gcp_configuration   = local.is_gcp ? local.gcp_identity : null
   azure_configuration = local.is_azure ? local.azure_identity : null
@@ -60,6 +63,6 @@ resource "mdxc_application_identity" "main" {
 
 resource "mdxc_application_permission" "main" {
   for_each                = local.policies
-  application_identity_id = mdxc_application_identity.main.id
+  application_identity_id = local.application_identity_id
   permission              = each.value
 }
