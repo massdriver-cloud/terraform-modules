@@ -79,7 +79,7 @@ resource "azurerm_monitor_autoscale_setting" "main" {
   }
   notification {
     email {
-      custom_emails = [var.application.notification_email]
+      custom_emails = [var.md_metadata.target.contact_email]
     }
   }
 

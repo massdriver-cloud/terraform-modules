@@ -32,3 +32,7 @@ variable "name" {
 variable "tags" {
   type = any
 }
+
+variable "md_metadata" {
+  type = any
+}
