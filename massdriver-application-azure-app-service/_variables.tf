@@ -1,15 +1,14 @@
-variable "repo" {
+variable "image" {
   type = object({
-    docker_image     = string
-    docker_image_tag = string
+    repository = string
+    tag        = string
   })
 }
 
 variable "dns" {
   type = object({
     enable_dns          = bool
-    txt_record          = string
-    cname_record        = string
+    alias               = string
     zone_name           = string
     zone_resource_group = string
   })

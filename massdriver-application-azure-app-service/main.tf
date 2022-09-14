@@ -130,8 +130,8 @@ resource "azurerm_linux_web_app" "main" {
     container_registry_use_managed_identity = true
 
     application_stack {
-      docker_image     = var.repo.docker_image
-      docker_image_tag = var.repo.docker_image_tag
+      docker_image     = var.image.repository
+      docker_image_tag = var.image.tag
     }
   }
 
