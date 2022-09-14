@@ -79,7 +79,7 @@ resource "azurerm_monitor_autoscale_setting" "main" {
   }
   notification {
     email {
-      custom_emails = [var.md_metadata.target.contact_email]
+      custom_emails = [var.contact_email]
     }
   }
 
@@ -96,6 +96,7 @@ resource "azurerm_linux_web_app" "main" {
   service_plan_id     = azurerm_service_plan.main.id
 
   https_only = true
+  ftps_state = "FtpsOnly"
 
   identity {
     type = "SystemAssigned"
