@@ -1,5 +1,5 @@
 module "application" {
-  source                      = "github.com/massdriver-cloud/terraform-modules//massdriver-application"
+  source                      = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=9e3a1b4"
   name                        = var.name
   service                     = "function"
   application_identity_id     = azurerm_linux_web_app.main.identity[0].principal_id
