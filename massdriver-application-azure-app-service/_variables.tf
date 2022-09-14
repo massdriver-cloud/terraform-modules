@@ -21,7 +21,6 @@ variable "application" {
     sku_name             = string
     minimum_worker_count = number
     maximum_worker_count = number
-    notification_email   = string
   })
 }
 
