@@ -6,7 +6,7 @@ variable "image" {
 }
 
 variable "dns" {
-  type = object({
+  type = any({
     enable_dns = bool
     subdomain  = string
     zone_name  = string
