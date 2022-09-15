@@ -6,11 +6,7 @@ variable "image" {
 }
 
 variable "dns" {
-  type = any({
-    enable_dns = bool
-    subdomain  = string
-    zone_name  = string
-  })
+  type = any
 }
 
 variable "application" {
