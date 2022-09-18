@@ -5,6 +5,7 @@ locals {
   app_specification = try(yamldecode(file("${path.root}/../massdriver.yaml")), {})
   connections       = try(jsondecode(file("${path.root}/_connections.auto.tfvars.json")), {})
   params            = try(jsondecode(file("${path.root}/_params.auto.tfvars.json")), {})
+  params_envs       = lookup(local.params, "envs", [])
   app_block         = lookup(local.app_specification, "app", {})
   app_envs          = lookup(local.app_block, "envs", {})
   app_policies      = toset(lookup(local.app_block, "policies", []))
@@ -18,7 +19,10 @@ locals {
 
   policies = { for p in local.app_policies : p => jsondecode(data.jq_query.policies[p].result) }
 
-  base_envs = { for k, v in local.app_envs : k => jsondecode(data.jq_query.envs[k].result) }
+  base_envs = merge(
+    { for k, v in local.app_envs : k => jsondecode(data.jq_query.envs[k].result) },
+    { for env in local.params_envs: env.name => env.value }
+  )
   cloud_envs = {
     # TODO: Azure will need to inject its service account credentials into ENVs
     # since it doesnt have a mechanism of "assuming" a role / service account like AWS & GCP    
