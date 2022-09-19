@@ -1,10 +1,11 @@
 locals {
-  zone_name = element(split("/", var.dns.zone_id), length(var.dns.zone_id) - 2)
+  zone_split_id = split("/", var.dns.zone_id)
+  zone_name     = element(local.zone_split_id, index(local.zone_split_id, "dnszones") + 1)
 }
 
 data "azurerm_dns_zone" "main" {
-  count               = var.dns.enable_dns ? 1 : 0
-  name                = local.zone_name
+  count = var.dns.enable_dns ? 1 : 0
+  name  = local.zone_name
 }
 
 resource "azurerm_dns_txt_record" "main" {
