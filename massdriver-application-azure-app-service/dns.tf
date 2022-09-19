@@ -1,5 +1,5 @@
 locals {
-  zone_name = element(split("/", var.dns.zone_id), length(var.dns.zone_id) - 2)
+  zone_name = element(split("/", var.dns.zone_id), 8)
 }
 
 data "azurerm_dns_zone" "main" {
