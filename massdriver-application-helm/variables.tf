@@ -18,3 +18,14 @@ variable "chart" {
   description = "The path to your Helm chart"
   type        = string
 }
+
+variable "additionalEnvs" {
+  description = "Additional environment variables to set"
+  type        = list(
+    object ({
+      name  = string
+      value = string
+    })
+  )
+  default = []
+}
