@@ -19,7 +19,7 @@ variable "chart" {
   type        = string
 }
 
-variable "additionalEnvs" {
+variable "additional_envs" {
   description = "Additional environment variables to set"
   type        = list(
     object ({
