@@ -1,8 +1,8 @@
 locals {
   // Combine environment variables from application and module variables (params)
-  combinedEnvs = merge(
+  combined_envs = merge(
     module.application.envs,
-    { for env in var.additionalEnvs : env.name => env.value }
+    { for env in var.additional_envs : env.name => env.value }
   )
   base_helm_additional_values = {
     commonLabels = module.application.params.md_metadata.default_tags
@@ -11,7 +11,7 @@ locals {
         "md-deployment-id" = lookup(module.application.params.md_metadata.deployment, "id", "")
       }
     }
-    envs = [for key, val in local.combinedEnvs : { name = key, value = tostring(val) }]
+    envs = [for key, val in local.combined_envs : { name = key, value = tostring(val) }]
     ingress = {
       className = "nginx" // TODO: eventually this should come from the kubernetes artifact
       annotations = {
