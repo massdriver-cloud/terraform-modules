@@ -129,9 +129,7 @@ resource "azurerm_linux_web_app" "main" {
         }
       }
     }
-
-
-
+    
     application_stack {
       docker_image     = var.image.repository
       docker_image_tag = var.image.tag
