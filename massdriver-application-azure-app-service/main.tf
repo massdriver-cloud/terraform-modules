@@ -136,6 +136,8 @@ resource "azurerm_linux_web_app" "main" {
     }
   }
 
+  app_settings = module.application.envs
+
   depends_on = [
     azurerm_service_plan.main
   ]
