@@ -1,5 +1,5 @@
 locals {
-  zone_split_id       = split("/", var.dns.zone_id)
+  zone_split_id       = var.dns.enable_dns ? split("/", var.dns.zone_id) : []
   zone_name           = element(local.zone_split_id, index(local.zone_split_id, "dnszones") + 1)
   zone_resource_group = element(local.zone_split_id, index(local.zone_split_id, "resourceGroups") + 1)
 }
