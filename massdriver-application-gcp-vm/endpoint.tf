@@ -1,6 +1,6 @@
 module "endpoint" {
   count                       = var.endpoint.enabled ? 1 : 0
-  source                      = "../gcp-serverless-endpoint"
+  source                      = "../gcp-endpoint"
   resource_name               = module.application.params.md_metadata.name_prefix
   labels                      = module.application.params.md_metadata.default_tags
   location                    = var.location

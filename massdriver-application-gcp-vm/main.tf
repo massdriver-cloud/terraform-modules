@@ -8,7 +8,7 @@ resource "google_compute_instance_template" "main" {
   # checkov:skip=CKV_GCP_39: ADD REASON
   provider = google-beta
 
-  name         = module.application.params.md_metadata.name_prefix
+  name         = "${module.application.params.md_metadata.name_prefix}2"
   labels       = module.application.params.md_metadata.default_tags
   machine_type = var.machine_type
 
@@ -32,8 +32,7 @@ resource "google_compute_instance_template" "main" {
   }
 
   metadata = {
-    # enable after debugging
-    # block-project-ssh-keys = true
+    block-project-ssh-keys = true
     # gce-service-proxy      = <<-EOF
     # {
     #   "api-version": "0.2",
@@ -60,7 +59,10 @@ resource "google_compute_instance_template" "main" {
       # Containers on Google Compute Engine.
       spec:
         containers:
-        - image: nginxdemos/hello
+        - image: ${var.container_image}
+          env:
+          - name: "ONE_ENV"
+            value: "ONE_VAL"
           name: from-cli-2
           securityContext:
             privileged: false
@@ -70,23 +72,8 @@ resource "google_compute_instance_template" "main" {
         restartPolicy: Always
         volumes: []
     EOF
+    google-logging-enabled    = "true"
   }
-
-  # spec:
-  # containers:
-  # - args:
-  #   - arg.sh
-  #   command:
-  #   - cmd.sh
-  #   image: nginxdemos/hello
-  #   name: from-cli-2
-  #   securityContext:
-  #     privileged: false
-  #   stdin: false
-  #   tty: false
-  #   volumeMounts: []
-  # restartPolicy: Always
-  # volumes: []
 
   service_account {
     scopes = ["userinfo-email", "compute-ro", "storage-ro"]
@@ -123,10 +110,14 @@ resource "google_compute_instance_group_manager" "main" {
   target_pools       = [google_compute_target_pool.main.id]
   base_instance_name = "autoscaler-sample"
 
-  auto_healing_policies {
-    health_check      = google_compute_health_check.autohealing.id
-    initial_delay_sec = 300
-  }
+  # We may be able to remove this
+  # We _have_ to add a health check to the backend service, and
+  # that will remove unhealthy instances from the managed instance group.
+  # If the below check fails, the MIG check will also fail.
+  # auto_healing_policies {
+  #   health_check      = google_compute_health_check.autohealing.id
+  #   initial_delay_sec = 300
+  # }
 }
 
 data "google_compute_image" "main" {
