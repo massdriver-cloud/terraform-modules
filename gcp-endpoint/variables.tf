@@ -27,3 +27,8 @@ variable "cloud_function_service_name" {
   type    = string
   default = null
 }
+
+variable "managed_instance_group_name" {
+  type    = string
+  default = null
+}
