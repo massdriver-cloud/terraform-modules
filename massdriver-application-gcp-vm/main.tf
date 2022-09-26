@@ -1,14 +1,25 @@
 module "application" {
   source  = "github.com/massdriver-cloud/terraform-modules//massdriver-application"
   name    = module.application.params.md_metadata.name_prefix
-  service = "function"
+  service = "vm"
+}
+
+# TODO: push to mdxc for gcp vms?
+# NOTE: assumes registry is in the same project as the application
+data "google_project" "main" {
+}
+
+resource "google_project_iam_member" "containers" {
+  project = data.google_project.main.project_id
+  role    = "roles/artifactregistry.reader"
+  member  = "serviceAccount:${module.application.id}"
 }
 
 resource "google_compute_instance_template" "main" {
   # checkov:skip=CKV_GCP_39: ADD REASON
   provider = google-beta
 
-  name         = "${module.application.params.md_metadata.name_prefix}2"
+  name_prefix  = module.application.params.md_metadata.name_prefix
   labels       = module.application.params.md_metadata.default_tags
   machine_type = var.machine_type
 
@@ -33,51 +44,45 @@ resource "google_compute_instance_template" "main" {
 
   metadata = {
     block-project-ssh-keys = true
-    # gce-service-proxy      = <<-EOF
-    # {
-    #   "api-version": "0.2",
-    #   "proxy-spec": {
-    #     "proxy-port": 15001,
-    #     "network": "my-network",
-    #     "tracing": "ON",
-    #     "access-log": "/var/log/envoy/access.log"
-    #   }
-    #   "service": {
-    #     "serving-ports": [80, 81]
-    #   },
-    #  "labels": {
-    #    "app_name": "bookserver_app",
-    #    "app_version": "STABLE"
-    #   }
-    # }
-    # EOF
-    # DISCLAIMER:\n# This container declaration format is not a public API and may change without\n# notice. Please use gcloud command-line tool or Google Cloud Console to run\n# Containers on Google Compute Engine.\n\nspec:\n  containers:\n  - args:\n    - arg.sh\n    command:\n    - cmd.sh\n    image: nginxdemos/hello\n    name: from-cli-2\n    securityContext:\n      privileged: false\n    stdin: false\n    tty: false\n    volumeMounts: []\n  restartPolicy: Always\n  volumes: []\n
-    gce-container-declaration = <<-EOF
-      # DISCLAIMER:
-      # This container declaration format is not a public API and may change without
-      # notice. Please use gcloud command-line tool or Google Cloud Console to run
-      # Containers on Google Compute Engine.
-      spec:
-        containers:
-        - image: ${var.container_image}
-          env:
-          - name: "ONE_ENV"
-            value: "ONE_VAL"
-          name: from-cli-2
-          securityContext:
-            privileged: false
-          stdin: false
-          tty: false
-          volumeMounts: []
-        restartPolicy: Always
-        volumes: []
-    EOF
-    google-logging-enabled    = "true"
+    # DISCLAIMER:
+    # This container declaration format is not a public API and may change without
+    # notice. Please use gcloud command-line tool or Google Cloud Console to run
+    # Containers on Google Compute Engine.
+    gce-container-declaration = yamlencode({
+      "spec" : {
+        "containers" : [
+          {
+            "image" : var.container_image,
+            "env" : [for key, val in module.application.envs :
+              {
+                "name" : key,
+                "value" : val,
+            }]
+            "name" : module.application.params.md_metadata.name_prefix,
+            "securityContext" : {
+              "privileged" : false
+            },
+            "stdin" : false,
+            "tty" : false,
+            "volumeMounts" : [],
+          },
+        ],
+        "restartPolicy" : "Always",
+        "volumes" : []
+      }
+    })
+    google-logging-enabled = "true"
   }
 
   service_account {
-    scopes = ["userinfo-email", "compute-ro", "storage-ro"]
+    # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
+    scopes = ["cloud-platform"]
     email  = module.application.id
+  }
+
+  # We need the new template to be created before the old one is deleted.
+  lifecycle {
+    create_before_destroy = true
   }
 }
 
@@ -92,13 +97,15 @@ data "google_compute_zones" "available" {
 }
 
 resource "google_compute_instance_group_manager" "main" {
+  for_each = toset(data.google_compute_zones.available.names)
   provider = google-beta
 
   name = module.application.params.md_metadata.name_prefix
-  zone = data.google_compute_zones.available.names[0]
+  # regional
+  zone = each.value
 
   version {
-    instance_template = google_compute_instance_template.main.id
+    instance_template = google_compute_instance_template.main.self_link
     name              = "primary"
   }
 
@@ -108,16 +115,12 @@ resource "google_compute_instance_group_manager" "main" {
   }
 
   target_pools       = [google_compute_target_pool.main.id]
-  base_instance_name = "autoscaler-sample"
+  base_instance_name = module.application.params.md_metadata.name_prefix
 
-  # We may be able to remove this
-  # We _have_ to add a health check to the backend service, and
-  # that will remove unhealthy instances from the managed instance group.
-  # If the below check fails, the MIG check will also fail.
-  # auto_healing_policies {
-  #   health_check      = google_compute_health_check.autohealing.id
-  #   initial_delay_sec = 300
-  # }
+  auto_healing_policies {
+    health_check      = google_compute_health_check.autohealing.id
+    initial_delay_sec = 300
+  }
 }
 
 data "google_compute_image" "main" {
@@ -133,7 +136,8 @@ resource "google_compute_firewall" "main" {
 
   allow {
     protocol = "tcp"
-    ports    = ["80", "443"]
+    # TODO: test if we can remove port 80 here
+    ports = ["80", "443"]
   }
 
   source_ranges = ["0.0.0.0/0"]
