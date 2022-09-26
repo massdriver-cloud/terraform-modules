@@ -3,6 +3,4 @@ output "application" {
   value       = module.application
 }
 
-# output "endpoint" {
-#   value = module.endpoint.endpoint
-# }
+
