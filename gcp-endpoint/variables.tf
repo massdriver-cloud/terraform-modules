@@ -28,7 +28,13 @@ variable "cloud_function_service_name" {
   default = null
 }
 
-variable "managed_instance_group_name" {
-  type    = string
+variable "managed_instance_groups" {
+  type    = any
   default = null
+}
+
+variable "managed_instance_group_health_check_port" {
+  type        = string
+  description = "the port to use for managed instance group health checks"
+  default     = null
 }
