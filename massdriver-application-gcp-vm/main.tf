@@ -136,8 +136,7 @@ resource "google_compute_firewall" "main" {
 
   allow {
     protocol = "tcp"
-    # TODO: test if we can remove port 80 here
-    ports = ["80", "443"]
+    ports    = [tostring(var.port)]
   }
 
   source_ranges = ["0.0.0.0/0"]
