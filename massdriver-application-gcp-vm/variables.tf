@@ -25,3 +25,10 @@ variable "endpoint" {
 variable "machine_type" {
   type = string
 }
+
+variable "health_check" {
+  type = object({
+    port = number
+    path = string
+  })
+}

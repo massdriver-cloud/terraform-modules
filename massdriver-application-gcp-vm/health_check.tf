@@ -6,7 +6,7 @@ resource "google_compute_health_check" "autohealing" {
   unhealthy_threshold = 10 # 50 seconds
 
   http_health_check {
-    request_path = "/"
-    port         = var.port
+    port         = var.health_check.port
+    request_path = var.health_check.path
   }
 }
