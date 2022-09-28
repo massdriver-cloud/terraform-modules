@@ -37,7 +37,7 @@ resource "google_compute_health_check" "mig" {
   unhealthy_threshold = 10 # 50 seconds
 
   http_health_check {
-    request_path = "/"
-    port         = var.managed_instance_group_health_check_port
+    request_path = var.managed_instance_group_health_check.path
+    port         = var.managed_instance_group_health_check.port
   }
 }
