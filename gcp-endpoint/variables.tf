@@ -33,8 +33,13 @@ variable "managed_instance_groups" {
   default = null
 }
 
-variable "managed_instance_group_health_check_port" {
-  type        = string
-  description = "the port to use for managed instance group health checks"
-  default     = null
+variable "managed_instance_group_health_check" {
+  type = object({
+    port = number
+    path = string
+  })
+  default = {
+    port = 80
+    path = "/"
+  }
 }
