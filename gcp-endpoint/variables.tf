@@ -27,7 +27,6 @@ variable "cloud_function_service_name" {
   type    = string
   default = null
 }
-<<<<<<< HEAD:gcp-endpoint/variables.tf
 
 variable "managed_instance_groups" {
   type    = any
@@ -44,5 +43,3 @@ variable "managed_instance_group_health_check" {
     path = "/"
   }
 }
-=======
->>>>>>> ccae04e (revert changes to endpoint):gcp-serverless-endpoint/variables.tf
