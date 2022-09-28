@@ -18,9 +18,24 @@ resource "google_compute_target_https_proxy" "main" {
   ssl_certificates = [google_compute_managed_ssl_certificate.main.id]
 }
 
-resource "google_compute_global_forwarding_rule" "main" {
+resource "google_compute_target_http_proxy" "main" {
+  name    = var.resource_name
+  url_map = google_compute_url_map.https_redirect.self_link
+}
+
+resource "google_compute_global_forwarding_rule" "http" {
   provider   = google-beta
   name       = var.resource_name
+  labels     = var.labels
+  target     = google_compute_target_http_proxy.main.self_link
+  ip_address = google_compute_global_address.main.address
+  port_range = "80"
+  depends_on = [google_compute_global_address.main]
+}
+
+resource "google_compute_global_forwarding_rule" "https" {
+  provider   = google-beta
+  name       = "${var.resource_name}-https"
   labels     = var.labels
   target     = google_compute_target_https_proxy.main.self_link
   ip_address = google_compute_global_address.main.address
@@ -28,21 +43,8 @@ resource "google_compute_global_forwarding_rule" "main" {
   depends_on = [google_compute_global_address.main]
 }
 
-locals {
-  backend_group = var.cloud_run_service_name != null ? google_compute_region_network_endpoint_group.cloud_run[0].id : google_compute_region_network_endpoint_group.cloud_function[0].id
-}
-
-resource "google_compute_backend_service" "main" {
-  name        = var.resource_name
-  timeout_sec = 30
-
-  backend {
-    group = local.backend_group
-  }
-}
-
 resource "google_compute_url_map" "main" {
-  name            = var.resource_name
+  name            = "${var.resource_name}-https"
   default_service = google_compute_backend_service.main.id
 
   host_rule {
@@ -53,5 +55,14 @@ resource "google_compute_url_map" "main" {
   path_matcher {
     name            = "all"
     default_service = google_compute_backend_service.main.id
+  }
+}
+
+resource "google_compute_url_map" "https_redirect" {
+  name = "${var.resource_name}-redirect"
+  default_url_redirect {
+    https_redirect         = true
+    redirect_response_code = "MOVED_PERMANENTLY_DEFAULT"
+    strip_query            = false
   }
 }
