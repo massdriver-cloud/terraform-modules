@@ -1,3 +1,0 @@
-variable "runtime" {
-  type = string
-}
