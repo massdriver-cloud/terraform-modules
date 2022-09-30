@@ -1,6 +1,6 @@
 module "application" {
   source  = "github.com/massdriver-cloud/terraform-modules//massdriver-application"
-  name    = module.application.params.md_metadata.name_prefix
+  name    = var.name
   service = "function"
 }
 
