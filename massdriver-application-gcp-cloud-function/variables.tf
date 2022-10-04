@@ -1,7 +1,3 @@
-variable "name" {
-  type = string
-}
-
 variable "md_metadata" {
   type        = any
   description = "Massdriver metadata which is provided by the Massdriver deployment runtime"
@@ -18,7 +14,7 @@ variable "source_archive_path" {
 
 variable "cloud_function_configuration" {
   type = object({
-    runtime = string
+    runtime           = string
     entrypoint        = string
     memory_mb         = number
     minimum_instances = number
