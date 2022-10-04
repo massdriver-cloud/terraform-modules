@@ -18,3 +18,5 @@ resource "google_cloudfunctions_function_iam_member" "invoker" {
   role   = "roles/cloudfunctions.invoker"
   member = "allUsers"
 }
+
+# TODO: add a redirect from CF https: endpoint to the DNS endpoint
