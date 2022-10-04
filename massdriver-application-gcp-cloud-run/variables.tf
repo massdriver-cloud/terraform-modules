@@ -3,10 +3,6 @@ variable "md_metadata" {
   description = "Massdriver metadata which is provided by the Massdriver deployment runtime"
 }
 
-variable "location" {
-  type = string
-}
-
 variable "container_image" {
   type = string
 }
