@@ -1,4 +1,9 @@
-variable "name" {
+variable "md_metadata" {
+  type        = any
+  description = "Massdriver metadata which is provided by the Massdriver deployment runtime"
+}
+
+variable "location" {
   type = string
 }
 
@@ -14,15 +19,10 @@ variable "location" {
   type = string
 }
 
-variable "network" {
-  type = string
-}
-
 variable "endpoint" {
   type = any
 }
 
-variable "vpc_connector_cidr" {
-  type    = string
-  default = null
+variable "vpc_connector" {
+  type = string
 }

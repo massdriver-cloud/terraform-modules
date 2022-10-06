@@ -1,8 +1,8 @@
 module "serverless_endpoint" {
   count                  = var.endpoint.enabled ? 1 : 0
   source                 = "github.com/massdriver-cloud/terraform-modules//gcp-serverless-endpoint?ref=c00db94"
-  resource_name          = module.application.params.md_metadata.name_prefix
-  labels                 = module.application.params.md_metadata.default_tags
+  resource_name          = var.md_metadata.name_prefix
+  labels                 = var.md_metadata.default_tags
   zone                   = var.endpoint.zone.name
   subdomain              = var.endpoint.subdomain
   location               = var.location

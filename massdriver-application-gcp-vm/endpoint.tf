@@ -1,8 +1,8 @@
 module "endpoint" {
   count                   = var.endpoint.enabled ? 1 : 0
   source                  = "github.com/massdriver-cloud/terraform-modules//gcp-endpoint?ref=076ecd7"
-  resource_name           = module.application.params.md_metadata.name_prefix
-  labels                  = module.application.params.md_metadata.default_tags
+  resource_name           = var.md_metadata.name_prefix
+  labels                  = var.md_metadata.default_tags
   location                = var.location
   zone                    = var.endpoint.zone
   subdomain               = var.endpoint.subdomain
