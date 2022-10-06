@@ -8,6 +8,7 @@ resource "google_cloudfunctions_function" "main" {
   name                          = var.md_metadata.name_prefix
   service_account_email         = module.application.id
   labels                        = var.md_metadata.default_tags
+  location                      = var.location
   runtime                       = var.cloud_function_configuration.runtime
   environment_variables         = module.application.envs
   trigger_http                  = true
@@ -18,7 +19,7 @@ resource "google_cloudfunctions_function" "main" {
   source_archive_bucket         = google_storage_bucket.main.name
   source_archive_object         = var.source_archive_path
   ingress_settings              = "ALLOW_INTERNAL_AND_GCLB"
-  vpc_connector                 = "projects/md-wbeebe-0808-example-apps/locations/us-west2/connectors/${var.vpc_connector_name}"
+  vpc_connector                 = var.vpc_connector
   vpc_connector_egress_settings = "PRIVATE_RANGES_ONLY"
 
   # default: 60  (s)
