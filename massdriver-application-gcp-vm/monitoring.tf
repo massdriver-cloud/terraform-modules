@@ -11,13 +11,13 @@ locals {
 
 module "alarm_channel" {
   source      = "github.com/massdriver-cloud/terraform-modules//gcp-alarm-channel?ref=bfcf556"
-  md_metadata = module.application.params.md_metadata
+  md_metadata = var.md_metadata
 }
 
 module "cpu_alarm" {
   source                  = "github.com/massdriver-cloud/terraform-modules//gcp-monitoring-utilization-threshold?ref=cafdc89"
   notification_channel_id = module.alarm_channel.id
-  md_metadata             = module.application.params.md_metadata
+  md_metadata             = var.md_metadata
   display_name            = "CPU Usage High"
   message                 = "CPU usage over threshold ${local.threshold_cpu * 100}%"
   alarm_name              = "highMemory"

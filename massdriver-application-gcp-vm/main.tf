@@ -1,6 +1,6 @@
 module "application" {
   source  = "github.com/massdriver-cloud/terraform-modules//massdriver-application"
-  name    = var.name
+  name    = var.md_metadata.name_prefix
   service = "vm"
 }
 
@@ -19,14 +19,14 @@ resource "google_compute_instance_template" "main" {
   # checkov:skip=CKV_GCP_39: ADD REASON
   provider = google-beta
 
-  name_prefix  = module.application.params.md_metadata.name_prefix
-  labels       = module.application.params.md_metadata.default_tags
+  name_prefix  = var.md_metadata.name_prefix
+  labels       = var.md_metadata.default_tags
   machine_type = var.machine_type
 
   can_ip_forward = false
 
   # network tags
-  tags = [module.application.params.md_metadata.name_prefix]
+  tags = [var.md_metadata.name_prefix]
 
   shielded_instance_config {
     enable_integrity_monitoring = true
@@ -58,7 +58,7 @@ resource "google_compute_instance_template" "main" {
                 "name" : key,
                 "value" : val,
             }]
-            "name" : module.application.params.md_metadata.name_prefix,
+            "name" : var.md_metadata.name_prefix,
             "securityContext" : {
               "privileged" : false
             },
@@ -88,7 +88,7 @@ resource "google_compute_instance_template" "main" {
 
 resource "google_compute_target_pool" "main" {
   provider = google-beta
-  name     = module.application.params.md_metadata.name_prefix
+  name     = var.md_metadata.name_prefix
   region   = var.location
 }
 
@@ -100,7 +100,7 @@ resource "google_compute_instance_group_manager" "main" {
   for_each = toset(data.google_compute_zones.available.names)
   provider = google-beta
 
-  name = module.application.params.md_metadata.name_prefix
+  name = var.md_metadata.name_prefix
   # regional
   zone = each.value
 
@@ -115,7 +115,7 @@ resource "google_compute_instance_group_manager" "main" {
   }
 
   target_pools       = [google_compute_target_pool.main.id]
-  base_instance_name = module.application.params.md_metadata.name_prefix
+  base_instance_name = var.md_metadata.name_prefix
 
   auto_healing_policies {
     health_check      = google_compute_health_check.autohealing.id
@@ -131,7 +131,7 @@ data "google_compute_image" "main" {
 }
 
 resource "google_compute_firewall" "main" {
-  name    = module.application.params.md_metadata.name_prefix
+  name    = var.md_metadata.name_prefix
   network = var.subnetwork.data.infrastructure.gcp_global_network_grn
 
   allow {
@@ -140,5 +140,5 @@ resource "google_compute_firewall" "main" {
   }
 
   source_ranges = ["0.0.0.0/0"]
-  target_tags   = [module.application.params.md_metadata.name_prefix]
+  target_tags   = [var.md_metadata.name_prefix]
 }

@@ -1,23 +1,22 @@
 module "application" {
   source  = "github.com/massdriver-cloud/terraform-modules//massdriver-application"
-  name    = var.name
+  name    = var.md_metadata.name_prefix
   service = "function"
 }
 
 resource "google_cloud_run_service" "main" {
-  name     = module.application.params.md_metadata.name_prefix
+  name     = var.md_metadata.name_prefix
   location = var.location
 
   template {
     metadata {
       annotations = {
         # Use the VPC Connector
-        "run.googleapis.com/vpc-access-connector" = google_vpc_access_connector.connector.name
+        "run.googleapis.com/vpc-access-connector" = var.vpc_connector
         # all egress from the service should go through the VPC Connector
         "run.googleapis.com/vpc-access-egress" = "all-traffic"
         "autoscaling.knative.dev/maxScale"     = "${var.max_instances}"
       }
-
     }
 
     spec {
