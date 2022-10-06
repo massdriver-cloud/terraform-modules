@@ -26,11 +26,6 @@ variable "endpoint" {
   type = any
 }
 
-variable "vpc_connector_name" {
-  type    = string
-  default = null
+variable "vpc_connector" {
+  type = string
 }
-
-
-
-
