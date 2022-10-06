@@ -1,5 +1,5 @@
 resource "google_compute_health_check" "autohealing" {
-  name                = "${module.application.params.md_metadata.name_prefix}-autohealing"
+  name                = "${var.md_metadata.name_prefix}-autohealing"
   check_interval_sec  = 5
   timeout_sec         = 5
   healthy_threshold   = 2
