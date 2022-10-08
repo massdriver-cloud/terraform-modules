@@ -23,6 +23,9 @@ resource "google_cloud_run_service" "main" {
       service_account_name = module.application.id
       containers {
         image = var.container_image
+        ports {
+          container_port = var.container_port
+        }
         dynamic "env" {
           for_each = module.application.envs
           content {
