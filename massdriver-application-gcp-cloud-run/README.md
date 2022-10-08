@@ -9,8 +9,7 @@ No requirements.
 
 | Name | Version |
 |------|---------|
-| <a name="provider_google"></a> [google](#provider\_google) | 4.34.0 |
-| <a name="provider_google-beta"></a> [google-beta](#provider\_google-beta) | 4.34.0 |
+| <a name="provider_google"></a> [google](#provider\_google) | n/a |
 
 ## Modules
 
@@ -24,7 +23,6 @@ No requirements.
 
 | Name | Type |
 |------|------|
-| [google-beta_google_vpc_access_connector.connector](https://registry.terraform.io/providers/hashicorp/google-beta/latest/docs/resources/google_vpc_access_connector) | resource |
 | [google_cloud_run_service.main](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/cloud_run_service) | resource |
 | [google_cloud_run_service_iam_member.public-access](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/cloud_run_service_iam_member) | resource |
 
@@ -36,8 +34,8 @@ No requirements.
 | <a name="input_endpoint"></a> [endpoint](#input\_endpoint) | n/a | `any` | n/a | yes |
 | <a name="input_location"></a> [location](#input\_location) | n/a | `string` | n/a | yes |
 | <a name="input_max_instances"></a> [max\_instances](#input\_max\_instances) | n/a | `number` | n/a | yes |
-| <a name="input_network"></a> [network](#input\_network) | n/a | `string` | n/a | yes |
-| <a name="input_vpc_connector_cidr"></a> [vpc\_connector\_cidr](#input\_vpc\_connector\_cidr) | n/a | `string` | `null` | no |
+| <a name="input_md_metadata"></a> [md\_metadata](#input\_md\_metadata) | Massdriver metadata which is provided by the Massdriver deployment runtime | `any` | n/a | yes |
+| <a name="input_vpc_connector"></a> [vpc\_connector](#input\_vpc\_connector) | n/a | `string` | n/a | yes |
 
 ## Outputs
 
