@@ -15,10 +15,6 @@ variable "max_instances" {
   type = number
 }
 
-variable "location" {
-  type = string
-}
-
 variable "endpoint" {
   type = any
 }
