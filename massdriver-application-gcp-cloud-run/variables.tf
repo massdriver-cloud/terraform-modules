@@ -11,6 +11,10 @@ variable "container_image" {
   type = string
 }
 
+variable "container_port" {
+  type = number
+}
+
 variable "max_instances" {
   type = number
 }
