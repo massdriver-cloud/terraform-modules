@@ -1,5 +1,5 @@
 resource "google_storage_bucket" "main" {
-  name                        = var.name
+  name                        = var.md_metadata.name_prefix
   labels                      = var.md_metadata.default_tags
   location                    = var.location
   uniform_bucket_level_access = true

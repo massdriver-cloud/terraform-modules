@@ -8,7 +8,7 @@ resource "google_cloudfunctions_function" "main" {
   name                          = var.md_metadata.name_prefix
   service_account_email         = module.application.id
   labels                        = var.md_metadata.default_tags
-  location                      = var.location
+  region                        = var.location
   runtime                       = var.cloud_function_configuration.runtime
   environment_variables         = module.application.envs
   trigger_http                  = true
@@ -34,5 +34,3 @@ resource "google_cloudfunctions_function" "main" {
     module.apis
   ]
 }
-
-
