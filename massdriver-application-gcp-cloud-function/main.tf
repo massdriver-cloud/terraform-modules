@@ -26,7 +26,7 @@ resource "google_cloudfunctions_function" "main" {
   # max    : 540 (s)
   timeout = 120
 
-  # TODO: link ticket
+  # TODO: https://github.com/massdriver-cloud/massdriver/issues/1495
   # docker_registry   = "ARTIFACT_REGISTRY"
   # docker_repository = "projects/<>/locations/us-west2/repositories/<>"
 
