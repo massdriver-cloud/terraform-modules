@@ -13,13 +13,14 @@ resource "azurerm_resource_group" "main" {
 }
 
 resource "azurerm_service_plan" "main" {
-  name                = var.name
-  location            = azurerm_resource_group.main.location
-  resource_group_name = azurerm_resource_group.main.name
-  os_type             = "Linux"
-  sku_name            = var.application.sku_name
-  worker_count        = var.application.minimum_worker_count
-  tags                = var.tags
+  name                   = var.name
+  location               = azurerm_resource_group.main.location
+  resource_group_name    = azurerm_resource_group.main.name
+  os_type                = "Linux"
+  sku_name               = var.application.sku_name
+  worker_count           = var.application.zone_balancing ? (var.application.minimum_worker_count * 3) : var.application.minimum_worker_count
+  zone_balancing_enabled = var.application.zone_balancing
+  tags                   = var.tags
 }
 
 resource "azurerm_monitor_autoscale_setting" "main" {
