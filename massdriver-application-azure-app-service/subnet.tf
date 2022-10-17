@@ -42,3 +42,15 @@ resource "azurerm_subnet" "main" {
     }
   }
 }
+
+resource "azurerm_network_security_group" "main" {
+  name                = var.name
+  resource_group_name = azurerm_subnet.main.resource_group_name
+  location            = var.application.location
+  tags                = var.tags
+}
+
+resource "azurerm_subnet_network_security_group_association" "main" {
+  network_security_group_id = azurerm_network_security_group.main.id
+  subnet_id                 = azurerm_subnet.main.id
+}
