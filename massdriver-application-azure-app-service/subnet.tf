@@ -25,8 +25,10 @@ locals {
 # /26 64 - 5 = 59 => 29
 # /25 128 - 5 = 123 => 61
 # /24 256 - 5 = 251 => 125
+#
 # Ideally, Massdriver picks an IP range that is not in use
 # and is a /24 so we can handle max scale of App Service.
+# For now, we require the user to provide a /24.
 resource "azurerm_subnet" "main" {
   name                 = var.name
   resource_group_name  = local.resource_group_name
