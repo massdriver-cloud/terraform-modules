@@ -12,6 +12,7 @@ variable "dns" {
 variable "application" {
   type = object({
     location             = string
+    cidr                 = string
     sku_name             = string
     minimum_worker_count = number
     maximum_worker_count = number
@@ -37,9 +38,4 @@ variable "command" {
 
 variable "virtual_network_id" {
   type = string
-}
-
-variable "subnet_cidr" {
-  type        = string
-  description = "The CIDR block for the subnet. Max size of /24, minimum of /28"
 }
