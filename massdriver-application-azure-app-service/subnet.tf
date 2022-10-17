@@ -31,7 +31,7 @@ resource "azurerm_subnet" "main" {
   name                 = var.name
   resource_group_name  = local.resource_group_name
   virtual_network_name = local.network_name
-  address_prefixes     = [var.subnet_cidr]
+  address_prefixes     = [var.application.cidr]
 
   delegation {
     name = "virtual-network-integration"
