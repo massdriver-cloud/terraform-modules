@@ -1,7 +1,7 @@
 locals {
   zone_split_id       = var.dns.enable_dns ? split("/", var.dns.zone_id) : []
-  zone_name           = var.dns.enable_dns ? element(local.zone_split_id, index(local.zone_split_id, "dnszones") + 1) : null
-  zone_resource_group = var.dns.enable_dns ? element(local.zone_split_id, index(local.zone_split_id, "resourceGroups") + 1) : null
+  zone_name           = var.dns.enable_dns ? regex(".*/dns[z|Z]ones/(.*)$", var.dns.zone_id)[0] : null
+  zone_resource_group = var.dns.enable_dns ? regex(".*/resource[g|G]roups/(.*)/providers", var.dns.zone_id)[0] : null
 }
 
 data "azurerm_dns_zone" "main" {
