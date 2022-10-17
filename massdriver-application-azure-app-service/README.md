@@ -37,13 +37,12 @@ No requirements.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_application"></a> [application](#input\_application) | n/a | <pre>object({<br>    location             = string<br>    sku_name             = string<br>    minimum_worker_count = number<br>    maximum_worker_count = number<br>  })</pre> | n/a | yes |
+| <a name="input_application"></a> [application](#input\_application) | n/a | <pre>object({<br>    location             = string<br>    cidr                 = string<br>    sku_name             = string<br>    minimum_worker_count = number<br>    maximum_worker_count = number<br>  })</pre> | n/a | yes |
 | <a name="input_command"></a> [command](#input\_command) | n/a | `string` | `null` | no |
 | <a name="input_contact_email"></a> [contact\_email](#input\_contact\_email) | n/a | `string` | n/a | yes |
 | <a name="input_dns"></a> [dns](#input\_dns) | n/a | `any` | n/a | yes |
 | <a name="input_image"></a> [image](#input\_image) | n/a | <pre>object({<br>    repository = string<br>    tag        = string<br>  })</pre> | n/a | yes |
 | <a name="input_name"></a> [name](#input\_name) | n/a | `string` | n/a | yes |
-| <a name="input_subnet_cidr"></a> [subnet\_cidr](#input\_subnet\_cidr) | The CIDR block for the subnet. Max size of /24, minimum of /28 | `string` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | n/a | `any` | n/a | yes |
 | <a name="input_virtual_network_id"></a> [virtual\_network\_id](#input\_virtual\_network\_id) | n/a | `string` | n/a | yes |
 
