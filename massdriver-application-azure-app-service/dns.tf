@@ -1,7 +1,7 @@
 locals {
   zone_split_id       = var.dns.enable_dns ? split("/", var.dns.zone_id) : []
-  zone_name           = var.dns.enable_dns ? element(local.zone_split_id, index(local.zone_split_id, "dnszones") + 1) : null
-  zone_resource_group = var.dns.enable_dns ? element(local.zone_split_id, index(local.zone_split_id, "resourceGroups") + 1): null
+  zone_name           = var.dns.enable_dns ? regex(".*/dns[z|Z]ones/(.*)$", var.dns.zone_id)[0] : null
+  zone_resource_group = var.dns.enable_dns ? regex(".*/resource[g|G]roups/(.*)/providers", var.dns.zone_id)[0] : null
 }
 
 data "azurerm_dns_zone" "main" {
@@ -38,12 +38,17 @@ resource "azurerm_app_service_custom_hostname_binding" "main" {
   hostname            = join(".", [azurerm_dns_cname_record.main[0].name, azurerm_dns_cname_record.main[0].zone_name])
   app_service_name    = azurerm_linux_web_app.main.name
   resource_group_name = azurerm_resource_group.main.name
+  depends_on = [
+    azurerm_dns_txt_record.main
+  ]
 }
 
 resource "azurerm_app_service_managed_certificate" "main" {
   count                      = var.dns.enable_dns ? 1 : 0
   custom_hostname_binding_id = azurerm_app_service_custom_hostname_binding.main[0].id
-  tags                       = var.tags
+  # Tags are listed as additions in every plan
+  # https://github.com/hashicorp/terraform-provider-azurerm/issues/11816
+  tags = var.tags
 }
 
 resource "azurerm_app_service_certificate_binding" "main" {

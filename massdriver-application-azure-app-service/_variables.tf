@@ -12,6 +12,7 @@ variable "dns" {
 variable "application" {
   type = object({
     location             = string
+    cidr                 = string
     sku_name             = string
     minimum_worker_count = number
     maximum_worker_count = number
@@ -28,5 +29,14 @@ variable "tags" {
 }
 
 variable "contact_email" {
+  type = string
+}
+
+variable "command" {
+  type    = string
+  default = null
+}
+
+variable "virtual_network_id" {
   type = string
 }
