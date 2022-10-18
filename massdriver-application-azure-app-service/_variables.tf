@@ -16,6 +16,7 @@ variable "application" {
     sku_name             = string
     minimum_worker_count = number
     maximum_worker_count = number
+    zone_balancing       = bool
   })
 }
 
