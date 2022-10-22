@@ -28,17 +28,3 @@ variable "helm_values" {
   description = "Additional Helm values to pass to the chart"
   type        = any
 }
-
-
-
-
-variable "additional_envs" {
-  description = "Additional environment variables to set"
-  type = list(
-    object({
-      name  = string
-      value = string
-    })
-  )
-  default = []
-}

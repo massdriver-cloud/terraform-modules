@@ -53,7 +53,6 @@ No requirements.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_additional_envs"></a> [additional\_envs](#input\_additional\_envs) | Additional environment variables to set | <pre>list(<br>    object({<br>      name  = string<br>      value = string<br>    })<br>  )</pre> | `[]` | no |
 | <a name="input_chart"></a> [chart](#input\_chart) | The path to your Helm chart | `string` | `"grafana/mimir-distributed"` | no |
 | <a name="input_chart_repository"></a> [chart\_repository](#input\_chart\_repository) | n/a | `string` | `"https://grafana.github.io/helm-charts"` | no |
 | <a name="input_helm_values"></a> [helm\_values](#input\_helm\_values) | Additional Helm values to pass to the chart | `any` | n/a | yes |
