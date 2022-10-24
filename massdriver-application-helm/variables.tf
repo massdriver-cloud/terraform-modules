@@ -21,11 +21,21 @@ variable "chart" {
 
 variable "additional_envs" {
   description = "Additional environment variables to set"
-  type        = list(
-    object ({
+  type = list(
+    object({
       name  = string
       value = string
     })
   )
   default = []
+}
+
+variable "chart_repository" {
+  type    = string
+  default = null
+}
+
+variable "chart_version" {
+  type    = string
+  default = null
 }
