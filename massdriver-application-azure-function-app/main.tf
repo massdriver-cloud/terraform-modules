@@ -39,11 +39,7 @@ resource "azurerm_linux_function_app" "main" {
   tags                        = var.tags
 
 
-  app_settings = merge({
-    FUNCTIONS_WORKER_RUNTIME = var.application.runtime
-  },
-    module.application.envs
-  )
+  app_settings = module.application.envs
 
   site_config {
     always_on                               = true
