@@ -17,6 +17,10 @@ variable "application" {
   })
 }
 
+variable "dns" {
+  type = any
+}
+
 variable "name" {
   type = string
 }
@@ -26,5 +30,9 @@ variable "tags" {
 }
 
 variable "virtual_network_id" {
+  type = string
+}
+
+variable "contact_email" {
   type = string
 }
