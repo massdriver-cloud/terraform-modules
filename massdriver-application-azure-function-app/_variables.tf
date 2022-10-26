@@ -12,6 +12,8 @@ variable "application" {
     location             = string
     sku_name             = string
     maximum_worker_count = number
+    cidr                 = string
+    runtime              = string
   })
 }
 
@@ -21,4 +23,8 @@ variable "name" {
 
 variable "tags" {
   type = any
+}
+
+variable "virtual_network_id" {
+  type = string
 }
