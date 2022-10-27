@@ -29,13 +29,3 @@ variable "additional_envs" {
   )
   default = []
 }
-
-variable "chart_repository" {
-  type    = string
-  default = null
-}
-
-variable "chart_version" {
-  type    = string
-  default = null
-}

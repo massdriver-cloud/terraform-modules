@@ -20,8 +20,6 @@ module "application" {
 resource "helm_release" "application" {
   name              = var.name
   chart             = var.chart
-  repository        = var.chart_repository
-  version           = var.chart_version
   namespace         = var.namespace
   create_namespace  = true
   force_update      = true
