@@ -1,24 +1,28 @@
-variable "container_image" {
-  type = string
-}
-
-variable "max_instances" {
-  type = number
+variable "md_metadata" {
+  type        = any
+  description = "Massdriver metadata which is provided by the Massdriver deployment runtime"
 }
 
 variable "location" {
   type = string
 }
 
-variable "network" {
+variable "container_image" {
   type = string
+}
+
+variable "container_port" {
+  type = number
+}
+
+variable "max_instances" {
+  type = number
 }
 
 variable "endpoint" {
   type = any
 }
 
-variable "vpc_connector_cidr" {
-  type    = string
-  default = null
+variable "vpc_connector" {
+  type = string
 }

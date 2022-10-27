@@ -8,85 +8,19 @@ module "application" {
 
 resource "azurerm_resource_group" "main" {
   name     = var.name
-  location = var.application.location
+  location = var.location
   tags     = var.tags
 }
 
 resource "azurerm_service_plan" "main" {
-  name                = var.name
-  location            = azurerm_resource_group.main.location
-  resource_group_name = azurerm_resource_group.main.name
-  os_type             = "Linux"
-  sku_name            = var.application.sku_name
-  worker_count        = var.application.minimum_worker_count
-  tags                = var.tags
-}
-
-resource "azurerm_monitor_autoscale_setting" "main" {
-  name                = var.name
-  resource_group_name = azurerm_resource_group.main.name
-  location            = azurerm_resource_group.main.location
-  target_resource_id  = azurerm_service_plan.main.id
-  enabled             = true
-
-  profile {
-    name = "autoscale-profile"
-
-    capacity {
-      default = azurerm_service_plan.main.worker_count
-      minimum = azurerm_service_plan.main.worker_count
-      maximum = var.application.maximum_worker_count
-    }
-
-    rule {
-      metric_trigger {
-        metric_name        = "CpuPercentage"
-        metric_resource_id = azurerm_service_plan.main.id
-        time_grain         = "PT1M"
-        statistic          = "Average"
-        time_window        = "PT5M"
-        time_aggregation   = "Average"
-        operator           = "GreaterThan"
-        threshold          = 75
-      }
-      scale_action {
-        direction = "Increase"
-        type      = "ChangeCount"
-        value     = 1
-        cooldown  = "PT1M"
-      }
-    }
-
-    rule {
-      metric_trigger {
-        metric_name        = "CpuPercentage"
-        metric_resource_id = azurerm_service_plan.main.id
-        time_grain         = "PT5M"
-        statistic          = "Average"
-        time_window        = "PT10M"
-        time_aggregation   = "Average"
-        operator           = "LessThan"
-        threshold          = 25
-      }
-
-      scale_action {
-        direction = "Decrease"
-        type      = "ChangeCount"
-        value     = "1"
-        cooldown  = "PT1M"
-      }
-    }
-  }
-  notification {
-    email {
-      custom_emails = [var.contact_email]
-    }
-  }
-
-  depends_on = [
-    azurerm_service_plan.main
-  ]
-  tags = var.tags
+  name                   = var.name
+  location               = azurerm_resource_group.main.location
+  resource_group_name    = azurerm_resource_group.main.name
+  os_type                = "Linux"
+  sku_name               = var.application.sku_name
+  worker_count           = var.application.zone_balancing ? (var.application.minimum_worker_count * 3) : var.application.minimum_worker_count
+  zone_balancing_enabled = var.application.zone_balancing
+  tags                   = var.tags
 }
 
 resource "azurerm_linux_web_app" "main" {
@@ -100,6 +34,22 @@ resource "azurerm_linux_web_app" "main" {
   identity {
     type = "SystemAssigned"
   }
+
+  # To get application logs, we need to set app logging level and retention.
+  logs {
+    application_logs {
+      file_system_level = "Error"
+    }
+    http_logs {
+      file_system {
+        retention_in_days = 7
+        retention_in_mb   = 35
+      }
+    }
+  }
+
+  # https://learn.microsoft.com/en-us/azure/app-service/overview-vnet-integration#regional-virtual-network-integration
+  virtual_network_subnet_id = azurerm_subnet.main.id
 
   site_config {
     always_on                               = true
@@ -134,6 +84,8 @@ resource "azurerm_linux_web_app" "main" {
       docker_image     = var.image.repository
       docker_image_tag = var.image.tag
     }
+
+    app_command_line = var.command
   }
 
   app_settings = module.application.envs
