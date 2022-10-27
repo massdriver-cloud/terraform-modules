@@ -10,18 +10,10 @@ output "md_deployment_id" {
   value = lookup(module.application.params.md_metadata.deployment, "id", "")
 }
 
-output "mdx_identity" {
-  value = module.application.id
-}
-
-output "k8s_service_account_id" {
-  value = module.application.id
+output "k8s_service_account" {
+  value = local.service_account
 }
 
 output "mdx_application" {
   value = module.application
 }
-
-
-
-
