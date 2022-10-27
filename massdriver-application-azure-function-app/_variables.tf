@@ -9,12 +9,10 @@ variable "docker" {
 
 variable "application" {
   type = object({
-    location             = string
     sku_name             = string
     minimum_worker_count = number
     maximum_worker_count = number
     cidr                 = string
-    runtime              = string
   })
 }
 
@@ -35,5 +33,9 @@ variable "virtual_network_id" {
 }
 
 variable "contact_email" {
+  type = string
+}
+
+variable "location" {
   type = string
 }
