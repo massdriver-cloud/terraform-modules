@@ -1,12 +1,3 @@
-variable "name" {
-  type = string
-}
-
-variable "namespace" {
-  type = string
-}
-
-variable "kubernetes_cluster" {
+variable "massdriver_application" {
   type = any
 }
-

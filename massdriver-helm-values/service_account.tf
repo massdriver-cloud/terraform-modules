@@ -1,13 +1,13 @@
 locals {
   aws_service_account = {
     annotations = {
-      "eks.amazonaws.com/role-arn" = module.application.id
+      "eks.amazonaws.com/role-arn" = var.massdriver_application.id
     }
   }
 
   gcp_service_account = {
     annotations = {
-      "iam.gke.io/gcp-service-account" = module.application.id
+      "iam.gke.io/gcp-service-account" = var.massdriver_application.id
     }
   }
 
@@ -20,5 +20,5 @@ locals {
     azure = local.azure_service_account
   }
 
-  service_account = local.cloud_service_accounts[module.application.cloud]
+  service_account = local.cloud_service_accounts[var.massdriver_application.cloud]
 }

@@ -1,19 +1,15 @@
 output "common_labels" {
-  value = module.application.params.md_metadata.default_tags
+  value = local.common_labels
 }
 
 output "envs" {
-  value = module.application.envs
+  value = local.envs
 }
 
-output "md_deployment_id" {
-  value = lookup(module.application.params.md_metadata.deployment, "id", "")
+output "deployment_id" {
+  value = local.deployment_id
 }
 
 output "k8s_service_account" {
   value = local.service_account
-}
-
-output "mdx_application" {
-  value = module.application
 }
