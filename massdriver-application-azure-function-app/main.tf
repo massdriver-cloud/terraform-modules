@@ -18,12 +18,14 @@ resource "azurerm_resource_group" "main" {
 }
 
 resource "azurerm_service_plan" "main" {
-  name                = var.name
-  resource_group_name = azurerm_resource_group.main.name
-  location            = azurerm_resource_group.main.location
-  os_type             = "Linux"
-  sku_name            = var.application.sku_name
-  tags                = var.tags
+  name                   = var.name
+  resource_group_name    = azurerm_resource_group.main.name
+  location               = azurerm_resource_group.main.location
+  os_type                = "Linux"
+  sku_name               = var.application.sku_name
+  worker_count           = var.application.zone_balancing ? (var.application.minimum_worker_count * 3) : var.application.minimum_worker_count
+  zone_balancing_enabled = var.application.zone_balancing
+  tags                   = var.tags
 }
 
 resource "azurerm_linux_function_app" "main" {
@@ -31,15 +33,14 @@ resource "azurerm_linux_function_app" "main" {
   resource_group_name         = azurerm_resource_group.main.name
   location                    = azurerm_resource_group.main.location
   service_plan_id             = azurerm_service_plan.main.id
+  app_settings                = module.application.envs
+  functions_extension_version = "~4"
   https_only                  = true
   storage_account_name        = azurerm_storage_account.main.name
   storage_account_access_key  = azurerm_storage_account.main.primary_access_key
-  functions_extension_version = "~4"
   virtual_network_subnet_id   = azurerm_subnet.main.id
   tags                        = var.tags
 
-
-  app_settings = module.application.envs
 
   site_config {
     always_on                               = true
