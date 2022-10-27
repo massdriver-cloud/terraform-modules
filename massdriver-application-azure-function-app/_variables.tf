@@ -13,6 +13,7 @@ variable "application" {
     minimum_worker_count = number
     maximum_worker_count = number
     cidr                 = string
+    zone_balancing       = bool
   })
 }
 

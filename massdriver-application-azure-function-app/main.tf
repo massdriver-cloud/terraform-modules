@@ -13,7 +13,7 @@ module "application" {
 
 resource "azurerm_resource_group" "main" {
   name     = var.name
-  location = var.application.location
+  location = var.location
   tags     = var.tags
 }
 
