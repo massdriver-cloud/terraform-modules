@@ -28,6 +28,7 @@ resource "helm_release" "application" {
   values = [
     fileexists("${var.chart}/values.yaml") ? file("${var.chart}/values.yaml") : "",
     yamlencode(module.application.params),
+    yamlencode(var.helm_additional_values),
     yamlencode(local.helm_values)
   ]
 }
