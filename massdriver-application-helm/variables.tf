@@ -19,6 +19,12 @@ variable "chart" {
   type        = string
 }
 
+variable "helm_additional_values" {
+  description = "Additional helm values to set"
+  type = map
+  default = {}
+}
+
 variable "additional_envs" {
   description = "Additional environment variables to set"
   type = list(
