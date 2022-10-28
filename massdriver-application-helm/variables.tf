@@ -27,8 +27,8 @@ variable "helm_additional_values" {
 
 variable "additional_envs" {
   description = "Additional environment variables to set"
-  type        = list(
-    object ({
+  type = list(
+    object({
       name  = string
       value = string
     })
