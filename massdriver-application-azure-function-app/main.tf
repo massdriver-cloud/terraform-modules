@@ -8,6 +8,7 @@ module "application" {
   name                        = var.name
   service                     = "function"
   application_identity_id     = azurerm_linux_function_app.main.identity[0].principal_id
+  # We aren't creating an application identity for this module because we are assigning permissions directly to the system-assigned managed identity of the function app.
   create_application_identity = false
 }
 
