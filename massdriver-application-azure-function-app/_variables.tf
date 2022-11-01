@@ -14,7 +14,7 @@ variable "application" {
     cidr                 = string
     zone_balancing       = bool
     health_check_path    = string
-    app_logs = object({
+    logs = object({
       retention_period_days = number
       disk_quota_mb         = number
     })

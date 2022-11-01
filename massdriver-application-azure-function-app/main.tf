@@ -62,8 +62,8 @@ resource "azurerm_linux_function_app" "main" {
     }
 # These app log settings will be exposed to the user with the data conversion widget.
     app_service_logs {
-      disk_quota_mb         = var.application.app_logs.disk_quota_mb
-      retention_period_days = var.application.app_logs.retention_period_days
+      disk_quota_mb         = var.application.logs.disk_quota_mb
+      retention_period_days = var.application.logs.retention_period_days
     }
   }
 
