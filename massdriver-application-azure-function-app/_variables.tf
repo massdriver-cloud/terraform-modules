@@ -6,7 +6,6 @@ variable "docker" {
   })
 }
 
-
 variable "application" {
   type = object({
     sku_name             = string
@@ -14,6 +13,17 @@ variable "application" {
     maximum_worker_count = number
     cidr                 = string
     zone_balancing       = bool
+    health_check_path    = string
+    app_logs = object({
+      retention_period_days = number
+      disk_quota_mb         = number
+    })
+  })
+}
+
+variable "monitoring" {
+  type = object({
+    mode = string
   })
 }
 
@@ -39,4 +49,8 @@ variable "contact_email" {
 
 variable "location" {
   type = string
+}
+
+variable "md_metadata" {
+  type = any
 }

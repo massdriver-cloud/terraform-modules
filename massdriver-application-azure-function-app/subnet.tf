@@ -1,7 +1,6 @@
 locals {
-  split_id            = split("/", var.virtual_network_id)
-  network_name        = element(local.split_id, index(local.split_id, "virtualNetworks") + 1)
-  resource_group_name = element(local.split_id, index(local.split_id, "resourceGroups") + 1)
+  network_name        = regex(".*/virtual[n|N]etworks/(.*)$", var.virtual_network_id)[0]
+  resource_group_name = regex(".*/resource[g|G]roups/(.*)/providers", var.virtual_network_id)[0]
 }
 
 resource "azurerm_subnet" "main" {

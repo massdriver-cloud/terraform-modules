@@ -50,7 +50,7 @@ resource "azurerm_linux_function_app" "main" {
     app_scale_limit                         = var.application.maximum_worker_count
     container_registry_use_managed_identity = true
     ftps_state                              = "FtpsOnly"
-    health_check_path                       = "/health"
+    health_check_path                       = var.application.health_check_path
     vnet_route_all_enabled                  = true
 
     application_stack {
@@ -60,10 +60,10 @@ resource "azurerm_linux_function_app" "main" {
         image_tag    = var.docker.tag
       }
     }
-
+# These app log settings will be exposed to the user with the data conversion widget.
     app_service_logs {
-      disk_quota_mb         = 50
-      retention_period_days = 7
+      disk_quota_mb         = var.application.app_logs.disk_quota_mb
+      retention_period_days = var.application.app_logs.retention_period_days
     }
   }
 
