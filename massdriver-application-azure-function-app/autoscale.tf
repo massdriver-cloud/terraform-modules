@@ -11,7 +11,7 @@ resource "azurerm_monitor_autoscale_setting" "main" {
     capacity {
       default = azurerm_service_plan.main.worker_count
       minimum = azurerm_service_plan.main.worker_count
-      maximum = var.application.maximum_worker_count
+      maximum = var.application.zone_balancing ? (var.application.maximum_worker_count * 3) : var.application.maximum_worker_count
     }
 
     rule {
