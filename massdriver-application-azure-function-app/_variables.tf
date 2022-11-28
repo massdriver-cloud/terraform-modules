@@ -11,7 +11,6 @@ variable "application" {
     sku_name             = string
     minimum_worker_count = number
     maximum_worker_count = number
-    cidr                 = string
     zone_balancing       = bool
     health_check_path    = string
     logs = object({
@@ -52,5 +51,9 @@ variable "location" {
 }
 
 variable "md_metadata" {
+  type = any
+}
+
+variable "network" {
   type = any
 }
