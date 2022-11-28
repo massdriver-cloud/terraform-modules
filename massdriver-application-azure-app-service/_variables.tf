@@ -49,3 +49,13 @@ variable "network" {
     cidr = string
   })
 }
+
+variable "monitoring" {
+  type = object({
+    mode = string
+  })
+}
+
+variable "md_metadata" {
+  type = any
+}
