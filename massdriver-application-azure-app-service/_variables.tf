@@ -11,7 +11,6 @@ variable "dns" {
 
 variable "application" {
   type = object({
-    cidr                 = string
     sku_name             = string
     minimum_worker_count = number
     maximum_worker_count = number
@@ -42,4 +41,11 @@ variable "location" {
 
 variable "virtual_network_id" {
   type = string
+}
+
+variable "network" {
+  type = object({
+    auto = bool
+    cidr = string
+  })
 }
