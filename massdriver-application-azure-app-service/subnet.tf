@@ -1,7 +1,8 @@
 locals {
   split_id            = split("/", var.virtual_network_id)
-  network_name        = element(local.split_id, index(local.split_id, "virtualNetworks") + 1)
-  resource_group_name = element(local.split_id, index(local.split_id, "resourceGroups") + 1)
+  vnet_name           = element(local.split_id, index(local.split_id, "virtualNetworks") + 1)
+  vnet_resource_group = element(local.split_id, index(local.split_id, "resourceGroups") + 1)
+  cidr                = var.network.auto ? utility_available_cidr.cidr.result : var.network.cidr
 }
 
 # This subnet is for the IPs of the Azure App Service instances.
@@ -29,12 +30,31 @@ locals {
 # Ideally, Massdriver picks an IP range that is not in use
 # and is a /24 so we can handle max scale of App Service.
 # For now, we require the user to provide a /24.
+
+data "azurerm_virtual_network" "lookup" {
+  name                = local.vnet_name
+  resource_group_name = local.vnet_resource_group
+}
+
+data "azurerm_subnet" "lookup" {
+  for_each             = toset(data.azurerm_virtual_network.lookup.subnets)
+  name                 = each.key
+  virtual_network_name = local.vnet_name
+  resource_group_name  = local.vnet_resource_group
+}
+
+resource "utility_available_cidr" "cidr" {
+  from_cidrs = data.azurerm_virtual_network.lookup.address_space
+  used_cidrs = flatten([for subnet in data.azurerm_subnet.lookup : subnet.address_prefixes])
+  mask       = 24
+}
+
 resource "azurerm_subnet" "main" {
   name                 = var.name
-  resource_group_name  = local.resource_group_name
-  virtual_network_name = local.network_name
-  address_prefixes     = [var.application.cidr]
-
+  resource_group_name  = local.vnet_resource_group
+  virtual_network_name = local.vnet_name
+  address_prefixes     = [local.cidr]
+  service_endpoints    = ["Microsoft.Web"]
   delegation {
     name = "virtual-network-integration"
 

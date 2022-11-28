@@ -11,7 +11,6 @@ variable "dns" {
 
 variable "application" {
   type = object({
-    cidr                 = string
     sku_name             = string
     minimum_worker_count = number
     maximum_worker_count = number
@@ -42,4 +41,21 @@ variable "location" {
 
 variable "virtual_network_id" {
   type = string
+}
+
+variable "network" {
+  type = object({
+    auto = bool
+    cidr = string
+  })
+}
+
+variable "monitoring" {
+  type = object({
+    mode = string
+  })
+}
+
+variable "md_metadata" {
+  type = any
 }

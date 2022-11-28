@@ -37,6 +37,8 @@ resource "azurerm_linux_web_app" "main" {
 
   # To get application logs, we need to set app logging level and retention.
   logs {
+    failed_request_tracing  = true
+    detailed_error_messages = true
     application_logs {
       file_system_level = "Error"
     }
@@ -55,6 +57,7 @@ resource "azurerm_linux_web_app" "main" {
     always_on                               = true
     auto_heal_enabled                       = true
     health_check_path                       = "/health"
+    http2_enabled                           = true
     container_registry_use_managed_identity = true
     ftps_state                              = "FtpsOnly"
 
