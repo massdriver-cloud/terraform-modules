@@ -44,10 +44,7 @@ variable "virtual_network_id" {
 }
 
 variable "network" {
-  type = object({
-    auto = bool
-    cidr = string
-  })
+  type = any
 }
 
 variable "monitoring" {
