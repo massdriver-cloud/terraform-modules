@@ -8,6 +8,10 @@ terraform {
       source = "massdriver-cloud/massdriver"
     }
 
+    utility = {
+      source = "massdriver-cloud/utility"
+    }
+
     mdxc = {
       source = "massdriver-cloud/mdxc"
     }
