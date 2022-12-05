@@ -21,8 +21,8 @@ resource "aws_kinesis_firehose_delivery_stream" "main" {
       bucket_arn          = var.bucket_arn
       prefix              = local.key_prefix
       error_output_prefix = "errors/!{timestamp:yyyy}/!{timestamp:MM}/!{timestamp:dd}/!{timestamp:HH}/!{firehose:error-output-type}/"
-      buffer_size         = var.buffer_size     # In MB
-      buffer_interval     = var.buffer_interval # In seconds
+      buffer_size         = var.buffer_size_mb
+      buffer_interval     = var.buffer_interval_seconds
 
       dynamic_partitioning_configuration {
         enabled = true
@@ -48,7 +48,7 @@ resource "aws_kinesis_firehose_delivery_stream" "main" {
 }
 
 resource "aws_iam_role" "firehose_role" {
-  name        = "firehose_test_role"
+  name        = local.name
   description = "Assume role for ${local.name}"
 
   assume_role_policy = data.aws_iam_policy_document.firehose_assume_role_policy.json
