@@ -4,10 +4,10 @@ locals {
 
 resource "google_monitoring_alert_policy" "main" {
   count        = local.is_theshold_alarm ? 1 : 0
-  display_name = local.alarm_unique_id
+  display_name = local.alarm_id
   combiner     = "OR"
   conditions {
-    display_name = "${var.md_metadata.name_prefix} COMPARISON_GT"
+    display_name = var.display_name
     condition_threshold {
       filter     = local.filter
       duration   = "${var.alarm_configuration.duration_s}s"

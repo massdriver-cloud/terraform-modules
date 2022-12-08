@@ -29,6 +29,7 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_alarm_configuration"></a> [alarm\_configuration](#input\_alarm\_configuration) | n/a | <pre>object({<br>    metric_type        = string<br>    resource_type      = string<br>    threshold          = number<br>    duration_s         = optional(number, 60)<br>    alignment_period_s = optional(number, 60)<br>    value_type         = optional(string, "DOUBLE")<br>  })</pre> | n/a | yes |
+| <a name="input_cloud_resource_id"></a> [cloud\_resource\_id](#input\_cloud\_resource\_id) | The identifier for what resource is producing the metrics. Usually it's the self\_link attribute of the resource. | `string` | n/a | yes |
 | <a name="input_display_name"></a> [display\_name](#input\_display\_name) | Short name to display in the massdriver UI. | `string` | n/a | yes |
 | <a name="input_md_metadata"></a> [md\_metadata](#input\_md\_metadata) | Massdriver metadata | `any` | n/a | yes |
 | <a name="input_message"></a> [message](#input\_message) | A message including additional context for this alarm. | `string` | n/a | yes |
