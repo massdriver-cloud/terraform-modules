@@ -30,9 +30,8 @@ locals {
     }
   }
   autoscaling_map = {
-    "AUTOMATED" = local.preset_autoscaling
-    "DISABLED"  = {}
-    "CUSTOM"    = lookup(var.autoscaling, "autoscaling", {})
+    "PRESET" = local.preset_autoscaling
+    "CUSTOM" = lookup(var.autoscaling, "autoscaling", {})
   }
   autoscaling = lookup(local.autoscaling_map, var.autoscaling.mode, {})
 }

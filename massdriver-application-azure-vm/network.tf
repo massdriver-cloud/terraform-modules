@@ -16,7 +16,7 @@ resource "azurerm_public_ip" "main" {
   allocation_method   = "Static"
   sku                 = "Standard"
   sku_tier            = "Regional"
-  domain_name_label   = "testest2test"
+  domain_name_label   = var.name
   tags                = var.tags
 }
 
@@ -56,4 +56,23 @@ resource "azurerm_lb_rule" "main" {
   protocol                       = "Tcp"
   frontend_port                  = 80
   backend_port                   = 80
+}
+
+resource "azurerm_lb_nat_rule" "main" {
+  name                           = "NatRule1"
+  resource_group_name            = azurerm_resource_group.main.name
+  loadbalancer_id                = azurerm_lb.main.id
+  frontend_ip_configuration_name = azurerm_lb.main.frontend_ip_configuration.0.name
+  protocol                       = "Tcp"
+  backend_port                   = 80
+}
+
+resource "azurerm_lb_outbound_rule" "main" {
+  name            = "OutboundRule1"
+  loadbalancer_id = azurerm_lb.main.id
+  frontend_ip_configuration {
+    name = "PublicIPAddress"
+  }
+  backend_address_pool_id = azurerm_lb_backend_address_pool.main.id
+  protocol                = "Tcp"
 }
