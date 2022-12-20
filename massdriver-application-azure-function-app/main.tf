@@ -42,6 +42,7 @@ resource "azurerm_linux_function_app" "main" {
   tags                        = var.tags
 
   app_settings = merge(module.application.envs, {
+    FUNCTIONS_WORKER_RUNTIME                 = "python"
     WEBSITE_CONTENTAZUREFILECONNECTIONSTRING = azurerm_storage_account.main.primary_connection_string
     WEBSITE_CONTENTSHARE                     = var.name
     WEBSITE_CONTENTOVERVNET                  = 1
