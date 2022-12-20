@@ -17,10 +17,4 @@ resource "azurerm_storage_account" "main" {
       retention_policy_days = 7
     }
   }
-
-  network_rules {
-    default_action             = "Deny"
-    bypass                     = ["AzureServices", "Logging", "Metrics"]
-    virtual_network_subnet_ids = [azurerm_subnet.main.id]
-  }
 }
