@@ -34,7 +34,6 @@ resource "azurerm_linux_function_app" "main" {
   resource_group_name         = azurerm_resource_group.main.name
   location                    = azurerm_resource_group.main.location
   service_plan_id             = azurerm_service_plan.main.id
-  app_settings                = module.application.envs
   functions_extension_version = "~4"
   https_only                  = true
   storage_account_name        = azurerm_storage_account.main.name
@@ -42,6 +41,9 @@ resource "azurerm_linux_function_app" "main" {
   virtual_network_subnet_id   = azurerm_subnet.main.id
   tags                        = var.tags
 
+  app_settings = merge(module.application.envs, {
+    WEBSITE_CONTENTAZUREFILECONNECTIONSTRING = azurerm_storage_account.main.primary_connection_string
+  })
 
   site_config {
     always_on                               = true
@@ -52,10 +54,6 @@ resource "azurerm_linux_function_app" "main" {
     ftps_state                              = "FtpsOnly"
     health_check_path                       = var.application.health_check_path
     vnet_route_all_enabled                  = true
-
-    app_settings = merge(module.application.envs, {
-      WEBSITE_CONTENTAZUREFILECONNECTIONSTRING = azurerm_storage_account.main.primary_connection_string
-    })
 
     application_stack {
       docker {
