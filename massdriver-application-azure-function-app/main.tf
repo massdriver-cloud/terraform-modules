@@ -53,6 +53,10 @@ resource "azurerm_linux_function_app" "main" {
     health_check_path                       = var.application.health_check_path
     vnet_route_all_enabled                  = true
 
+    app_settings = merge(module.application.envs, {
+      WEBSITE_CONTENTAZUREFILECONNECTIONSTRING = azurerm_storage_account.main.primary_connection_string
+    })
+
     application_stack {
       docker {
         registry_url = var.docker.registry
