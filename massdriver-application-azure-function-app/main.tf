@@ -47,7 +47,7 @@ resource "azurerm_linux_function_app" "main" {
     WEBSITE_CONTENTSHARE                     = var.name
     WEBSITE_CONTENTOVERVNET                  = 1
     WEBSITE_WEBDEPLOY_USE_SCM                = true
-    WEBSITE_RUN_FROM_PACKAGE                 = 0
+    WEBSITE_RUN_FROM_PACKAGE                 = 1
   })
 
   site_config {
