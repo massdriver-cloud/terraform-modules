@@ -44,6 +44,7 @@ resource "azurerm_linux_function_app" "main" {
   app_settings = merge(module.application.envs, {
     WEBSITE_CONTENTAZUREFILECONNECTIONSTRING = azurerm_storage_account.main.primary_connection_string
     WEBSITE_CONTENTSHARE                     = var.name
+    WEBSITE_CONTENTOVERVNET                  = 1
   })
 
   site_config {
