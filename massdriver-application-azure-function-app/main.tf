@@ -45,6 +45,7 @@ resource "azurerm_linux_function_app" "main" {
     WEBSITE_CONTENTAZUREFILECONNECTIONSTRING = azurerm_storage_account.main.primary_connection_string
     WEBSITE_CONTENTSHARE                     = var.name
     WEBSITE_CONTENTOVERVNET                  = 1
+    WEBSITE_WEBDEPLOY_USE_SCM                = true
   })
 
   site_config {
