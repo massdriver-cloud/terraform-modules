@@ -14,13 +14,13 @@ variable "destination" {
   type        = string
 }
 
-variable "buffer_size" {
+variable "buffer_size_mb" {
   description = "Batch size in MB to send data to the destination"
   type        = number
   default     = 64
 }
 
-variable "buffer_interval" {
+variable "buffer_interval_seconds" {
   description = "Amount of time in seconds in which to send data to the destination if the buffer size has not been fulfilled"
   type        = number
   default     = 300
