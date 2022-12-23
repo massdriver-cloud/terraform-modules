@@ -1,16 +1,14 @@
 locals {
   enable_opensearch = var.logging.opensearch.enabled
   enable_fluentbit  = local.enable_opensearch # we could add OR logic for other destinations that would require fluentbit
-  o11y_namespace    = "md-observability"
+  observability_namespace    = "md-observability"
 }
 
-// Unless the user is running prometheus (or integrates an observability package like DD)
-// there isn't much point to this service.
 module "kube-state-metrics" {
   source      = "github.com/massdriver-cloud/terraform-modules//k8s-kube-state-metrics?ref=c336d59"
   md_metadata = var.md_metadata
   release     = "kube-state-metrics"
-  namespace   = local.o11y_namespace
+  namespace   = local.observability_namespace
 }
 
 module "opensearch" {
@@ -18,7 +16,7 @@ module "opensearch" {
   source             = "github.com/massdriver-cloud/terraform-modules//k8s-opensearch?ref=5fc9525"
   md_metadata        = var.md_metadata
   release            = "opensearch"
-  namespace          = local.o11y_namespace
+  namespace          = local.observability_namespace
   kubernetes_cluster = local.kubernetes_cluster_artifact
   helm_additional_values = {
     persistence = {
@@ -34,17 +32,16 @@ module "opensearch" {
 
 module "fluentbit" {
   count = local.enable_fluentbit ? 1 : 0
-  # TODO replace ref with a SHA once k8s-fluentbit is merged
   source             = "github.com/massdriver-cloud/terraform-modules//k8s-fluentbit?ref=f920d78"
   md_metadata        = var.md_metadata
   release            = "fluentbit"
-  namespace          = local.o11y_namespace
+  namespace          = local.observability_namespace
   kubernetes_cluster = local.kubernetes_cluster_artifact
   helm_additional_values = {
     config = {
       filters = file("${path.module}/logging/fluentbit/filter.conf")
       outputs = templatefile("${path.module}/logging/fluentbit/opensearch_output.conf.tftpl", {
-        namespace = local.o11y_namespace
+        namespace = local.observability_namespace
       })
     }
   }

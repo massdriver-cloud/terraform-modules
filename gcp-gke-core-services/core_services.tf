@@ -18,30 +18,31 @@ data "google_dns_managed_zone" "hosted_zones" {
   name     = each.key
 }
 
-/******************************************
-  Webhooks/Admission Controllers deployed to the GKE cluster,
-  get called from the control plane. If the cluster has private _nodes_
-  and if a webhook, etc.. get deployed to those nodes, this firewall rule is needed.
-  Without this, things like cert-manager (double check) won't work
-  https://github.com/kubernetes/kubernetes/issues/79739
- *****************************************/
-resource "google_compute_firewall" "control_plane_ingress" {
-  name        = "${var.md_metadata.name_prefix}-ingress"
-  description = "Allow GKE control plane to hit pods for admission controllers/webhooks"
-  project     = var.gcp_project_id
-  network     = var.vpc_grn
-  priority    = 1000
-  direction   = "INGRESS"
+# todo: move to main shared module, doesn't need to be downstream
+# /******************************************
+#   Webhooks/Admission Controllers deployed to the GKE cluster,
+#   get called from the control plane. If the cluster has private _nodes_
+#   and if a webhook, etc.. get deployed to those nodes, this firewall rule is needed.
+#   Without this, things like cert-manager (double check) won't work
+#   https://github.com/kubernetes/kubernetes/issues/79739
+#  *****************************************/
+# resource "google_compute_firewall" "control_plane_ingress" {
+#   name        = "${var.md_metadata.name_prefix}-ingress"
+#   description = "Allow GKE control plane to hit pods for admission controllers/webhooks"
+#   project     = var.gcp_project_id
+#   network     = var.vpc_grn
+#   priority    = 1000
+#   direction   = "INGRESS"
 
-  source_ranges = [var.control_plane_ipv4_cidr_block]
-  source_tags   = []
-  target_tags   = [local.cluster_network_tag]
+#   source_ranges = [var.control_plane_ipv4_cidr_block]
+#   source_tags   = []
+#   target_tags   = [local.cluster_network_tag]
 
-  allow {
-    protocol = "tcp"
-    ports    = [8443]
-  }
-}
+#   allow {
+#     protocol = "tcp"
+#     ports    = [8443]
+#   }
+# }
 
 module "ingress_nginx" {
   source             = "github.com/massdriver-cloud/terraform-modules//k8s-ingress-nginx?ref=c336d59"
