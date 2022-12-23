@@ -1,10 +1,10 @@
+variable "md_metadata" {
+  type = any
+}
+
 variable "cloud_dns_managed_zones" {
   type = any
   default = []
-}
-
-variable "vpc_grn" {
-  type = string
 }
 
 variable "enable_ingress" {
@@ -28,19 +28,9 @@ variable "node_groups" {
   default = []
 }
 
-variable "md_metadata" {
-  type = any
-}
-
-variable "gcp_project_id" {
-  description = "GCP project ID to use with cert-manager"
-  type        = string
-}
-
-variable "gcp_region" {
-  type        = string
-}
-
-variable "control_plane_ipv4_cidr_block" {
-type = string
+variable "gcp_config" {
+  type = object({
+    project_id = string
+    region = string
+  })
 }
