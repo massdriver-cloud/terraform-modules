@@ -4,10 +4,10 @@ locals {
 }
 
 module "application" {
-  source                      = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=22d422e"
-  name                        = var.name
-  service                     = "function"
-  application_identity_id     = azurerm_linux_function_app.main.identity[0].principal_id
+  source                  = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=22d422e"
+  name                    = var.name
+  service                 = "function"
+  application_identity_id = azurerm_linux_function_app.main.identity[0].principal_id
   # We aren't creating an application identity for this module because we are assigning permissions directly to the system-assigned managed identity of the function app.
   create_application_identity = false
 }
@@ -60,7 +60,7 @@ resource "azurerm_linux_function_app" "main" {
         image_tag    = var.docker.tag
       }
     }
-# These app log settings will be exposed to the user with the data conversion widget.
+    # These app log settings will be exposed to the user with the data conversion widget.
     app_service_logs {
       disk_quota_mb         = var.application.logs.disk_quota_mb
       retention_period_days = var.application.logs.retention_period_days
