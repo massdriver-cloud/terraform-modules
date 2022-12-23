@@ -15,7 +15,7 @@ data "aws_eks_node_group" "main" {
 }
 
 # https://github.com/terraform-aws-modules/terraform-aws-eks/issues/860
-# the cross product of all node groups and all tags
+# ~kinda~ the dot-product of tags and auto scaling groups
 resource "null_resource" "add_custom_tags_to_asg" {
   for_each = local.asg_tag_map
   triggers = {
@@ -28,4 +28,3 @@ aws autoscaling create-or-update-tags \
 EOF
   }
 }
-
