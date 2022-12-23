@@ -21,7 +21,7 @@ locals {
   base_envs = { for k, v in local.app_envs : k => jsondecode(data.jq_query.envs[k].result) }
   cloud_envs = {
     # TODO: Azure will need to inject its service account credentials into ENVs
-    # since it doesnt have a mechanism of "assuming" a role / service account like AWS & GCP    
+    # since it doesnt have a mechanism of "assuming" a role / service account like AWS & GCP
     azure = local.base_envs
     aws   = local.base_envs
     gcp   = local.base_envs

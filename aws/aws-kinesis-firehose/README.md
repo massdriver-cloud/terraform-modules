@@ -11,7 +11,7 @@ No requirements.
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 4.40.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | n/a |
 
 ## Modules
 
@@ -31,8 +31,8 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_bucket_arn"></a> [bucket\_arn](#input\_bucket\_arn) | ARN of the destination bucket for Firehose to deliver to | `string` | n/a | yes |
-| <a name="input_buffer_interval"></a> [buffer\_interval](#input\_buffer\_interval) | Amount of time in seconds in which to send data to the destination if the buffer size has not been fulfilled | `number` | `300` | no |
-| <a name="input_buffer_size"></a> [buffer\_size](#input\_buffer\_size) | Batch size in MB to send data to the destination | `number` | `64` | no |
+| <a name="input_buffer_interval_seconds"></a> [buffer\_interval\_seconds](#input\_buffer\_interval\_seconds) | Amount of time in seconds in which to send data to the destination if the buffer size has not been fulfilled | `number` | `300` | no |
+| <a name="input_buffer_size_mb"></a> [buffer\_size\_mb](#input\_buffer\_size\_mb) | Batch size in MB to send data to the destination | `number` | `64` | no |
 | <a name="input_destination"></a> [destination](#input\_destination) | Service to send data to from Firehose | `string` | n/a | yes |
 | <a name="input_dynamic_partitioning_enabled"></a> [dynamic\_partitioning\_enabled](#input\_dynamic\_partitioning\_enabled) | Enable s3 partitioning to group events in to unique keys in s3 based on a JQ query | `bool` | `false` | no |
 | <a name="input_name"></a> [name](#input\_name) | Name of the Firehose | `string` | n/a | yes |
