@@ -12,15 +12,15 @@ resource "aws_cloudwatch_metric_alarm" "alarm" {
   evaluation_periods  = var.evaluation_periods
   threshold           = var.threshold
 
-  dynamic metric_query {
+  dynamic "metric_query" {
     for_each = var.metric_queries
     content {
-      id = metric_query.key
-      expression = try(metric_query.value.expression, null)
-      label = metric_query.value.label
+      id          = metric_query.key
+      expression  = try(metric_query.value.expression, null)
+      label       = metric_query.value.label
       return_data = metric_query.value.return_data
 
-      dynamic metric {
+      dynamic "metric" {
         for_each = metric_query.value.metric != null ? toset(["metric"]) : toset([]) //try({ metric_query.value.metric.metric_name = metric_query.value.metric }, {})
         content {
           metric_name = metric_query.value.metric.metric_name
@@ -29,7 +29,7 @@ resource "aws_cloudwatch_metric_alarm" "alarm" {
           stat        = try(metric_query.value.metric.stat, null)
           unit        = try(metric_query.value.metric.unit, null)
 
-          dimensions = metric_query.value.metric.dimensions//try(metric_query.value.metric.dimensions, {})
+          dimensions = metric_query.value.metric.dimensions //try(metric_query.value.metric.dimensions, {})
         }
       }
     }

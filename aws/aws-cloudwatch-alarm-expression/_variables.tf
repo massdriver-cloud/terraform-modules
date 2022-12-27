@@ -35,16 +35,16 @@ variable "threshold" {
 
 variable "metric_queries" {
   type = map(object({
-    expression = optional(string)
-    label = optional(string)
+    expression  = optional(string)
+    label       = optional(string)
     return_data = optional(string)
     metric = optional(object({
       metric_name = string
-      namespace = string
-      period = string
-      stat = string
-      unit = optional(string)
-      dimensions = optional(map(string))
+      namespace   = string
+      period      = string
+      stat        = string
+      unit        = optional(string)
+      dimensions  = optional(map(string))
     }))
   }))
   description = "Map of id to metric_query object. See the [`aws_cloudwatch_metric_alarm`](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_metric_alarm) documentation for object structure"
