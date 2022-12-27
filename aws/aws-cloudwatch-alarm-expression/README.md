@@ -1,4 +1,6 @@
-# aws-cloudwatch-alarm
+# aws-cloudwatch-alarm-expression
+
+A module for creating a Massdriver-integrated AWS alarm using complex metric expressions.
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
