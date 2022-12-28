@@ -21,7 +21,7 @@ resource "aws_cloudwatch_metric_alarm" "alarm" {
       return_data = metric_query.value.return_data
 
       dynamic "metric" {
-        for_each = metric_query.value.metric != null ? toset(["metric"]) : toset([]) //try({ metric_query.value.metric.metric_name = metric_query.value.metric }, {})
+        for_each = metric_query.value.metric != null ? toset(["metric"]) : toset([])
         content {
           metric_name = metric_query.value.metric.metric_name
           namespace   = metric_query.value.metric.namespace
@@ -29,7 +29,7 @@ resource "aws_cloudwatch_metric_alarm" "alarm" {
           stat        = try(metric_query.value.metric.stat, null)
           unit        = try(metric_query.value.metric.unit, null)
 
-          dimensions = metric_query.value.metric.dimensions //try(metric_query.value.metric.dimensions, {})
+          dimensions = try(metric_query.value.metric.dimensions, {})
         }
       }
     }
