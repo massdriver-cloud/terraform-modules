@@ -21,8 +21,8 @@ variable "chart" {
 
 variable "helm_additional_values" {
   description = "Additional helm values to set"
-  type = map
-  default = {}
+  type        = map(any)
+  default     = {}
 }
 
 variable "additional_envs" {

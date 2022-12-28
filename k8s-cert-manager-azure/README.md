@@ -9,9 +9,9 @@ No requirements.
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azuread"></a> [azuread](#provider\_azuread) | 2.27.0 |
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.19.1 |
-| <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) | 2.12.1 |
+| <a name="provider_azuread"></a> [azuread](#provider\_azuread) | n/a |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | n/a |
+| <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) | n/a |
 
 ## Modules
 

@@ -47,8 +47,8 @@ No requirements.
 
 | Name | Version |
 |------|---------|
-| <a name="provider_jq"></a> [jq](#provider\_jq) | 0.2.0 |
-| <a name="provider_mdxc"></a> [mdxc](#provider\_mdxc) | 0.0.7 |
+| <a name="provider_jq"></a> [jq](#provider\_jq) | n/a |
+| <a name="provider_mdxc"></a> [mdxc](#provider\_mdxc) | n/a |
 
 ## Modules
 
@@ -68,6 +68,8 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_application_identity_id"></a> [application\_identity\_id](#input\_application\_identity\_id) | If an application identity already exists, you can specify it here to skip the process of creating a new application identity. | `string` | `null` | no |
+| <a name="input_create_application_identity"></a> [create\_application\_identity](#input\_create\_application\_identity) | If an application identity already exists, you can specify it here to skip the process of creating a new application identity. | `bool` | `true` | no |
 | <a name="input_kubernetes"></a> [kubernetes](#input\_kubernetes) | Kubernetes configuration for binding the application identity to k8s workload identity (GCP) or federated assume role (AWS). Required if service='kubernetes'. | <pre>object({<br>    # k8s namespace workload will run in<br>    namespace = string,<br>    # Massdriver connection artifact<br>    cluster_artifact = any<br>  })</pre> | `null` | no |
 | <a name="input_name"></a> [name](#input\_name) | The name of the application. This should be the Massdriver package name. var.md\_metadata.name\_prefix | `string` | n/a | yes |
 | <a name="input_service"></a> [service](#input\_service) | The cloud service type that will run this workload. | `string` | n/a | yes |
