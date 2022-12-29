@@ -56,6 +56,7 @@ No requirements.
 |------|-------------|------|---------|:--------:|
 | <a name="input_additional_envs"></a> [additional\_envs](#input\_additional\_envs) | Additional environment variables to set | <pre>list(<br>    object({<br>      name  = string<br>      value = string<br>    })<br>  )</pre> | `[]` | no |
 | <a name="input_chart"></a> [chart](#input\_chart) | The path to your Helm chart | `string` | n/a | yes |
+| <a name="input_helm_additional_values"></a> [helm\_additional\_values](#input\_helm\_additional\_values) | Additional helm values to set | `map(any)` | `{}` | no |
 | <a name="input_kubernetes_cluster"></a> [kubernetes\_cluster](#input\_kubernetes\_cluster) | Massdriver Kubernetes Cluster Artifact | `any` | n/a | yes |
 | <a name="input_name"></a> [name](#input\_name) | The release name of the chart, this should be your var.md\_metadata.name\_prefix | `string` | n/a | yes |
 | <a name="input_namespace"></a> [namespace](#input\_namespace) | Namespace to deploy chart into | `string` | n/a | yes |

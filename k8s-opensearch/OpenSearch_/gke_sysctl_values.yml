@@ -1,5 +1,5 @@
  # workaround from https://github.com/opensearch-project/helm-charts/issues/87
- extraInitContainers: 
+ extraInitContainers:
    - name: sysctl
      image: docker.io/bitnami/bitnami-shell:10-debian-10-r199
      imagePullPolicy: "IfNotPresent"

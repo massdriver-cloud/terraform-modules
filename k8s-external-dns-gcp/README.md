@@ -9,7 +9,7 @@ No requirements.
 
 | Name | Version |
 |------|---------|
-| <a name="provider_google"></a> [google](#provider\_google) | 4.32.0 |
+| <a name="provider_google"></a> [google](#provider\_google) | n/a |
 
 ## Modules
 
@@ -21,8 +21,7 @@ No requirements.
 
 | Name | Type |
 |------|------|
-| [google_project_iam_binding.gcp_sa](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_binding) | resource |
-| [google_project_iam_custom_role.dns_least_privilege](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_custom_role) | resource |
+| [google_project_iam_member.gcp_sa](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_member) | resource |
 | [google_project_iam_member.k8s_sa](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_member) | resource |
 | [google_service_account.external_dns](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/service_account) | resource |
 
