@@ -8,7 +8,7 @@ locals {
 
   helm_values = {
     serviceAccount = {
-    name = local.service_account_name
+      name = local.service_account_name
     }
     labels = var.md_metadata.default_tags
   }

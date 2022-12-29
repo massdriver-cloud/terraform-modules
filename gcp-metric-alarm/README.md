@@ -9,8 +9,8 @@ No requirements.
 
 | Name | Version |
 |------|---------|
-| <a name="provider_google"></a> [google](#provider\_google) | 4.44.1 |
-| <a name="provider_massdriver"></a> [massdriver](#provider\_massdriver) | 1.1.4 |
+| <a name="provider_google"></a> [google](#provider\_google) | n/a |
+| <a name="provider_massdriver"></a> [massdriver](#provider\_massdriver) | n/a |
 
 ## Modules
 
