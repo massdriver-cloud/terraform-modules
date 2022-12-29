@@ -1,4 +1,8 @@
-# aws-asg-add-tags
+# aws-eks-add-tags
+
+This module is a workaround for an [issue](https://github.com/terraform-aws-modules/terraform-aws-eks/issues/860) in the AWS provider.
+
+It uses a `null_resource` to add tags in an idempotent way to an eks cluster.
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
@@ -28,7 +32,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_cluster_name"></a> [cluster\_name](#input\_cluster\_name) | n/a | `string` | `null` | no |
+| <a name="input_cluster_name"></a> [cluster\_name](#input\_cluster\_name) | The name of the EKS cluster | `string` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | n/a | `map(string)` | n/a | yes |
 
 ## Outputs

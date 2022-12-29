@@ -3,6 +3,6 @@ variable "tags" {
 }
 
 variable "cluster_name" {
-  type    = string
-  default = null
+  type        = string
+  description = "The name of the EKS cluster"
 }
