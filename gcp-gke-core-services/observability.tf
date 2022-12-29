@@ -1,7 +1,7 @@
 locals {
-  enable_opensearch = var.logging.opensearch.enabled
-  enable_fluentbit  = local.enable_opensearch # we could add OR logic for other destinations that would require fluentbit
-  observability_namespace    = "md-observability"
+  enable_opensearch       = var.logging.opensearch.enabled
+  enable_fluentbit        = local.enable_opensearch # we could add OR logic for other destinations that would require fluentbit
+  observability_namespace = "md-observability"
 }
 
 module "kube-state-metrics" {
@@ -31,7 +31,7 @@ module "opensearch" {
 }
 
 module "fluentbit" {
-  count = local.enable_fluentbit ? 1 : 0
+  count              = local.enable_fluentbit ? 1 : 0
   source             = "github.com/massdriver-cloud/terraform-modules//k8s-fluentbit?ref=f920d78"
   md_metadata        = var.md_metadata
   release            = "fluentbit"

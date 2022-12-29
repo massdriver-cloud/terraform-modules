@@ -32,5 +32,5 @@ data "google_client_config" "provider" {}
 
 data "google_container_cluster" "cluster" {
   name     = local.cluster_name
-  location = var.gcp_region
+  location = var.gcp_config.region
 }

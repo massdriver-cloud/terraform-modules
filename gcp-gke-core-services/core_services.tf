@@ -61,7 +61,7 @@ module "external_dns" {
   release                 = "external-dns"
   namespace               = local.core_services_namespace
   cloud_dns_managed_zones = local.cloud_dns_managed_zones_to_domain_map
-  gcp_project_id          = var.gcp_project_id
+  gcp_project_id          = var.gcp_config.project_id
 }
 
 module "cert_manager" {
@@ -71,5 +71,5 @@ module "cert_manager" {
   md_metadata        = var.md_metadata
   release            = "cert-manager"
   namespace          = local.core_services_namespace
-  gcp_project_id          = var.gcp_project_id
+  gcp_project_id     = var.gcp_config.project_id
 }
