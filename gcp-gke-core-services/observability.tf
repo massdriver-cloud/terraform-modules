@@ -17,7 +17,7 @@ module "opensearch" {
   md_metadata        = var.md_metadata
   release            = "opensearch"
   namespace          = local.observability_namespace
-  kubernetes_cluster = local.kubernetes_cluster_artifact
+  kubernetes_cluster = var.kubernetes_cluster_artifact
   helm_additional_values = {
     persistence = {
       size = "${var.logging.opensearch.persistence_size_gi}Gi"
@@ -36,7 +36,7 @@ module "fluentbit" {
   md_metadata        = var.md_metadata
   release            = "fluentbit"
   namespace          = local.observability_namespace
-  kubernetes_cluster = local.kubernetes_cluster_artifact
+  kubernetes_cluster = var.kubernetes_cluster_artifact
   helm_additional_values = {
     config = {
       filters = file("${path.module}/logging/fluentbit/filter.conf")

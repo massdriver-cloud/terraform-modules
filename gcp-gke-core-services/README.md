@@ -10,7 +10,6 @@
 | <a name="requirement_google-beta"></a> [google-beta](#requirement\_google-beta) | ~> 4.0 |
 | <a name="requirement_helm"></a> [helm](#requirement\_helm) | ~> 2.0 |
 | <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | ~> 2.0 |
-| <a name="requirement_massdriver"></a> [massdriver](#requirement\_massdriver) | ~> 1.1 |
 | <a name="requirement_null"></a> [null](#requirement\_null) | ~> 3.0 |
 
 ## Providers
@@ -19,7 +18,6 @@
 |------|---------|
 | <a name="provider_google"></a> [google](#provider\_google) | 4.47.0 |
 | <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) | 2.16.1 |
-| <a name="provider_massdriver"></a> [massdriver](#provider\_massdriver) | 1.1.4 |
 
 ## Modules
 
@@ -39,7 +37,6 @@
 | [kubernetes_cluster_role_binding.massdriver-cloud-provisioner](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/cluster_role_binding) | resource |
 | [kubernetes_daemonset.nvidia_driver](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/daemonset) | resource |
 | [kubernetes_service_account.massdriver-cloud-provisioner](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/service_account) | resource |
-| [massdriver_artifact.kubernetes_cluster](https://registry.terraform.io/providers/massdriver-cloud/massdriver/latest/docs/resources/artifact) | resource |
 | [google_client_config.provider](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/client_config) | data source |
 | [google_container_cluster.cluster](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/container_cluster) | data source |
 | [google_dns_managed_zone.hosted_zones](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/dns_managed_zone) | data source |
@@ -52,6 +49,7 @@
 | <a name="input_cloud_dns_managed_zones"></a> [cloud\_dns\_managed\_zones](#input\_cloud\_dns\_managed\_zones) | n/a | `any` | `[]` | no |
 | <a name="input_enable_ingress"></a> [enable\_ingress](#input\_enable\_ingress) | n/a | `bool` | `false` | no |
 | <a name="input_gcp_config"></a> [gcp\_config](#input\_gcp\_config) | n/a | <pre>object({<br>    project_id = string<br>    region     = string<br>  })</pre> | n/a | yes |
+| <a name="input_kubernetes_cluster_artifact"></a> [kubernetes\_cluster\_artifact](#input\_kubernetes\_cluster\_artifact) | The Massdriver Kubernetes Cluster artifact. | `any` | n/a | yes |
 | <a name="input_logging"></a> [logging](#input\_logging) | n/a | <pre>object({<br>    opensearch = optional(object({<br>      enabled             = bool<br>      persistence_size_gi = optional(number, 10)<br>      retention_days      = optional(number, 7)<br>    }))<br>  })</pre> | `null` | no |
 | <a name="input_md_metadata"></a> [md\_metadata](#input\_md\_metadata) | n/a | `any` | n/a | yes |
 | <a name="input_node_groups"></a> [node\_groups](#input\_node\_groups) | n/a | `any` | `[]` | no |
