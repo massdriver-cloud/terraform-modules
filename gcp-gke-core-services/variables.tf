@@ -2,6 +2,11 @@ variable "md_metadata" {
   type = any
 }
 
+variable "kubernetes_cluster_artifact" {
+  type        = any
+  description = "The Massdriver Kubernetes Cluster artifact."
+}
+
 variable "cloud_dns_managed_zones" {
   type    = any
   default = []
