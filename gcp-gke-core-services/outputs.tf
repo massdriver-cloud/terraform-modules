@@ -1,4 +1,4 @@
 output "kubernetes_token" {
-  value     = lookup(data.kubernetes_secret.massdriver-cloud-provisioner_service-account_secret.data, "token")
+  value     = lookup(kubernetes_secret_v1.main.data, "token")
   sensitive = true
 }
