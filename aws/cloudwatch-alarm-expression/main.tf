@@ -3,10 +3,7 @@ resource "aws_cloudwatch_metric_alarm" "alarm" {
 
   # We need to 'smuggle' our name_prefix for the package back to massdriver
   # so we can show the alarms on the correct manifest in the UI
-  alarm_description = jsonencode({
-    name_prefix = var.md_metadata.name_prefix
-    message     = var.message
-  })
+  alarm_description = var.message
 
   comparison_operator = var.comparison_operator
   evaluation_periods  = var.evaluation_periods
