@@ -1,4 +1,4 @@
-# aws-cloudwatch-alarm
+# cloudwatch-alarm
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
