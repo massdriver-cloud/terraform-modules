@@ -1,4 +1,4 @@
-# AWS Alarm Channel for Massdriver
+# alarm-channel
 
 Create an AWS SNS Topic for receiving Cloudwatch Metric events from bundles.
 
@@ -11,7 +11,7 @@ No requirements.
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 4.27.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 4.48.0 |
 
 ## Modules
 

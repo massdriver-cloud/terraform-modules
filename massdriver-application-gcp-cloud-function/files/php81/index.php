@@ -28,4 +28,3 @@ function helloHttp(ServerRequestInterface $request): string
 
     return sprintf('Hello, %s!', htmlspecialchars($name));
 }
-

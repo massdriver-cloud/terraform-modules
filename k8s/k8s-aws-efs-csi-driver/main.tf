@@ -2,8 +2,8 @@ locals {
   // Resource names (other than the service accounts) in the helm chart don't support templatization right now
   // so so hardcoding the service account names to match
   controller_service_account_name = "efs-csi-controller"
-  node_service_account_name = "efs-csi-node"
-  chart_version = "2.2.7"
+  node_service_account_name       = "efs-csi-node"
+  chart_version                   = "2.2.7"
 }
 
 resource "helm_release" "main" {
