@@ -1,5 +1,4 @@
 resource "azurerm_storage_account" "main" {
-  # Not enabling CMKs because we don't have a way to manage the key vault yet.
   name                          = local.storage_account_name
   resource_group_name           = azurerm_resource_group.main.name
   location                      = azurerm_resource_group.main.location
@@ -8,7 +7,7 @@ resource "azurerm_storage_account" "main" {
   account_replication_type      = "LRS"
   public_network_access_enabled = false
   min_tls_version               = "TLS1_2"
-  tags                          = var.tags
+  tags                          = var.md_metadata.default_tags
 
   queue_properties {
     logging {

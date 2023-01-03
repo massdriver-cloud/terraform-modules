@@ -10,23 +10,23 @@ data "azurerm_subnet" "default" {
 }
 
 resource "azurerm_public_ip" "main" {
-  name                = var.name
+  name                = var.md_metadata.name_prefix
   resource_group_name = azurerm_resource_group.main.name
   location            = azurerm_resource_group.main.location
   allocation_method   = "Static"
   sku                 = "Standard"
   sku_tier            = "Regional"
-  domain_name_label   = var.name
-  tags                = var.tags
+  domain_name_label   = var.md_metadata.name_prefix
+  tags                = var.md_metadata.default_tags
 }
 
 resource "azurerm_lb" "main" {
-  name                = var.name
+  name                = var.md_metadata.name_prefix
   resource_group_name = azurerm_resource_group.main.name
   location            = azurerm_resource_group.main.location
   sku                 = "Standard"
   sku_tier            = "Regional"
-  tags                = var.tags
+  tags                = var.md_metadata.default_tags
 
   frontend_ip_configuration {
     name                 = "PublicIPAddress"
@@ -35,12 +35,12 @@ resource "azurerm_lb" "main" {
 }
 
 resource "azurerm_lb_backend_address_pool" "main" {
-  name            = var.name
+  name            = var.md_metadata.name_prefix
   loadbalancer_id = azurerm_lb.main.id
 }
 
 resource "azurerm_lb_probe" "main" {
-  name            = var.name
+  name            = var.md_metadata.name_prefix
   loadbalancer_id = azurerm_lb.main.id
   protocol        = "Http"
   port            = 80
