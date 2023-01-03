@@ -1,0 +1,29 @@
+#cloud-config
+package_upgrade: true
+packages:
+  - docker
+  - docker-compose
+write_files:
+  - path: /etc/systemd/system/composer.service
+    encoding: b64
+    content: ${systemd_service_file_b64}
+  - path: /etc/composer/docker-compose.yml
+    encoding: b64
+    content: ${docker_compose_file_b64}
+%{ for configfile in container_config_files ~}
+  - path: ${configfile.host_path}
+    encoding: b64
+    content: ${configfile.file_content_b64}
+%{ endfor ~}
+runcmd:
+  - echo "systemctl daemon-reload..."
+  - systemctl daemon-reload
+  - echo "enabling composer.service..."
+  - systemctl enable composer.service
+  - echo "starting composer.service..."
+  - systemctl start composer.service
+  - echo "checking composer status after 5 seconds..."
+  - sleep 5
+  - systemctl status composer.service
+  - echo "listing containers..."
+  - docker ps

@@ -21,7 +21,7 @@ resource "azurerm_resource_group" "main" {
   tags     = var.md_metadata.default_tags
 }
 
-resource "random_password" "master_password" {
+resource "random_password" "main" {
   length      = 16
   special     = false
   min_lower   = 1
@@ -33,17 +33,18 @@ resource "azurerm_linux_virtual_machine_scale_set" "main" {
   name                            = var.md_metadata.name_prefix
   resource_group_name             = azurerm_resource_group.main.name
   location                        = azurerm_resource_group.main.location
+  disable_password_authentication = false
   admin_username                  = "placeholder"
-  admin_password                  = random_password.master_password.result
+  admin_password                  = random_password.main.result
   # instances                       = var.auto_scaling.enabled ? var.scaleset.instances : 1
-  instances                       =  1
-  sku                             = "Standard_F2"
-  # custom_data                     = data.template_cloudinit_config.config.rendered
-  health_probe_id                 = azurerm_lb_probe.main.id
-  disable_password_authentication = true
+  instances   = 1
+  sku         = "Standard_F2"
+  custom_data = base64encode(local.cloud_init_rendered)
+  # health_probe_id                 = azurerm_lb_probe.main.id
 
-  extension_operations_enabled    = false
-  tags                            = var.md_metadata.default_tags
+
+  extension_operations_enabled = false
+  tags                         = var.md_metadata.default_tags
 
   network_interface {
     name    = var.md_metadata.name_prefix
@@ -51,10 +52,10 @@ resource "azurerm_linux_virtual_machine_scale_set" "main" {
 
     # This will create a /24 subnet for the VMSS if they want autoscaling, otherwise it'll just add the VMSS to the default subnet.
     ip_configuration {
-      name                                   = var.md_metadata.name_prefix
-      subnet_id                              = data.azurerm_subnet.default.id
-      load_balancer_backend_address_pool_ids = [azurerm_lb_backend_address_pool.main.id]
-      primary                                = true
+      name      = var.md_metadata.name_prefix
+      subnet_id = data.azurerm_subnet.default.id
+      # load_balancer_backend_address_pool_ids = [azurerm_lb_backend_address_pool.main.id]
+      primary = true
     }
   }
 
@@ -86,3 +87,11 @@ resource "azurerm_linux_virtual_machine_scale_set" "main" {
     ]
   }
 }
+
+# resource "azurerm_lb_probe" "main" {
+#   name            = var.md_metadata.name_prefix
+#   loadbalancer_id = azurerm_lb.main.id
+#   protocol        = "Http"
+#   port            = var.health_check.port
+#   request_path    = var.health_check.path
+# }

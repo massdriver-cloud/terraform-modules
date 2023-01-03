@@ -1,0 +1,16 @@
+[Unit]
+Description=composer
+Requires=docker.service
+After=docker.service
+
+[Service]
+Restart=always
+
+# Compose up
+ExecStart=/usr/bin/docker-compose -f /etc/composer/docker-compose.yml up
+
+# Compose down, remove containers and volumes
+ExecStop=/usr/bin/docker-compose -f /etc/composer/docker-compose.yml down -v
+
+[Install]
+WantedBy=multi-user.target
