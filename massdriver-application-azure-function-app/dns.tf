@@ -37,19 +37,14 @@ resource "azurerm_app_service_custom_hostname_binding" "main" {
   hostname            = join(".", [var.dns.subdomain, azurerm_dns_cname_record.main[0].zone_name])
   app_service_name    = azurerm_linux_function_app.main.name
   resource_group_name = azurerm_resource_group.main.name
-  depends_on = [
-    azurerm_dns_cname_record.main
-  ]
 }
 
 resource "azurerm_app_service_managed_certificate" "main" {
   count                      = var.dns.enable_dns ? 1 : 0
   custom_hostname_binding_id = azurerm_app_service_custom_hostname_binding.main[0].id
-  tags                       = var.md_metadata.default_tags
-  depends_on = [
-    azurerm_dns_txt_record.main,
-    azurerm_dns_cname_record.main
-  ]
+  # there's a bug with this resource.
+  # on _every_ plan, TF says these need to be added
+  tags = var.md_metadata.default_tags
 }
 
 resource "azurerm_app_service_certificate_binding" "main" {
