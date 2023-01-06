@@ -30,14 +30,6 @@ variable "dns" {
   type = any
 }
 
-variable "name" {
-  type = string
-}
-
-variable "tags" {
-  type = any
-}
-
 variable "virtual_network_id" {
   type = string
 }
