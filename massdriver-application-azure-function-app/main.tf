@@ -1,11 +1,11 @@
 locals {
   max_length           = 24
-  storage_account_name = substr(replace(var.name, "/[^a-z0-9]/", ""), 0, local.max_length)
+  storage_account_name = substr(replace(var.md_metadata.name_prefix, "/[^a-z0-9]/", ""), 0, local.max_length)
 }
 
 module "application" {
   source                  = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=22d422e"
-  name                    = var.name
+  name                    = var.md_metadata.name_prefix
   service                 = "function"
   application_identity_id = azurerm_linux_function_app.main.identity[0].principal_id
   # We aren't creating an application identity for this module because we are assigning permissions directly to the system-assigned managed identity of the function app.
@@ -13,24 +13,24 @@ module "application" {
 }
 
 resource "azurerm_resource_group" "main" {
-  name     = var.name
+  name     = var.md_metadata.name_prefix
   location = var.location
-  tags     = var.tags
+  tags     = var.md_metadata.default_tags
 }
 
 resource "azurerm_service_plan" "main" {
-  name                   = var.name
+  name                   = var.md_metadata.name_prefix
   resource_group_name    = azurerm_resource_group.main.name
   location               = azurerm_resource_group.main.location
   os_type                = "Linux"
   sku_name               = var.application.sku_name
   worker_count           = var.application.zone_balancing ? (var.application.minimum_worker_count * 3) : var.application.minimum_worker_count
   zone_balancing_enabled = var.application.zone_balancing
-  tags                   = var.tags
+  tags                   = var.md_metadata.default_tags
 }
 
 resource "azurerm_linux_function_app" "main" {
-  name                        = var.name
+  name                        = var.md_metadata.name_prefix
   resource_group_name         = azurerm_resource_group.main.name
   location                    = azurerm_resource_group.main.location
   service_plan_id             = azurerm_service_plan.main.id
@@ -40,7 +40,7 @@ resource "azurerm_linux_function_app" "main" {
   storage_account_name        = azurerm_storage_account.main.name
   storage_account_access_key  = azurerm_storage_account.main.primary_access_key
   virtual_network_subnet_id   = azurerm_subnet.main.id
-  tags                        = var.tags
+  tags                        = var.md_metadata.default_tags
 
 
   site_config {

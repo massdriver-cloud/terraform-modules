@@ -28,7 +28,7 @@ resource "utility_available_cidr" "cidr" {
 }
 
 resource "azurerm_subnet" "main" {
-  name                 = var.name
+  name                 = var.md_metadata.name_prefix
   resource_group_name  = local.vnet_resource_group
   virtual_network_name = local.vnet_name
   address_prefixes     = [local.cidr]
