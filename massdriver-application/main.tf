@@ -20,24 +20,25 @@ locals {
 
   base_envs = { for k, v in local.app_envs : k => jsondecode(data.jq_query.envs[k].result) }
   # Needed by Azure k8s until Workload Identity is out of preview.
-  azure_envs = (local.is_azure && local.is_kubernetes) ? mdxc_application_identity.main[0].azure_application_identity : {}
+  azure_envs = (local.is_azure_k8s && mdxc_application_identity.main[0] != null) ? mdxc_application_identity.main[0].azure_application_identity : {}
+  azure_aks_envs = local.is_azure && local.is_azure_k8s ? {
+    AZURE_TENANT_ID : local.azure_envs.application_id
+    AZURE_CLIENT_ID : local.azure_envs.service_principal_client_id
+    AZURE_CLIENT_SECRET : local.azure_envs.service_principal_secret
+  } : {}
 
   cloud_envs = {
-    azure = merge(local.base_envs, {
-      # aplication_id is the other option
-      AZURE_TENANT_ID : local.azure_envs.service_principal_id
-      AZURE_CLIENT_ID : local.azure_envs.service_principal_client_id
-      AZURE_CLIENT_SECRET : local.azure_envs.service_principal_secret
-    })
-    aws = local.base_envs
-    gcp = local.base_envs
+    azure = merge(local.base_envs, local.azure_aks_envs)
+    aws   = local.base_envs
+    gcp   = local.base_envs
   }
 
   envs = local.cloud_envs[data.mdxc_cloud.current.cloud]
 
-  is_aws   = data.mdxc_cloud.current.cloud == "aws"
-  is_azure = data.mdxc_cloud.current.cloud == "azure"
-  is_gcp   = data.mdxc_cloud.current.cloud == "gcp"
+  is_aws       = data.mdxc_cloud.current.cloud == "aws"
+  is_azure     = data.mdxc_cloud.current.cloud == "azure"
+  is_azure_k8s = local.is_azure && local.is_kubernetes
+  is_gcp       = data.mdxc_cloud.current.cloud == "gcp"
 
   is_function   = var.service == "function"
   is_vm         = var.service == "vm"
