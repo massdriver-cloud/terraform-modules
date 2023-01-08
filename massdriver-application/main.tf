@@ -19,12 +19,18 @@ locals {
   policies = { for p in local.app_policies : p => jsondecode(data.jq_query.policies[p].result) }
 
   base_envs = { for k, v in local.app_envs : k => jsondecode(data.jq_query.envs[k].result) }
+  # Needed by Azure k8s until Workload Identity is out of preview.
+  azure_envs = (local.is_azure && local.is_kubernetes) ? mdxc_application_identity.main[0].azure_application_identity : {}
+
   cloud_envs = {
-    # TODO: Azure will need to inject its service account credentials into ENVs
-    # since it doesnt have a mechanism of "assuming" a role / service account like AWS & GCP
-    azure = local.base_envs
-    aws   = local.base_envs
-    gcp   = local.base_envs
+    azure = merge(local.base_envs, {
+      # aplication_id is the other option
+      AZURE_TENANT_ID : local.azure_envs.service_principal_id
+      AZURE_CLIENT_ID : local.azure_envs.service_principal_client_id
+      AZURE_CLIENT_SECRET : local.azure_envs.service_principal_secret
+    })
+    aws = local.base_envs
+    gcp = local.base_envs
   }
 
   envs = local.cloud_envs[data.mdxc_cloud.current.cloud]
