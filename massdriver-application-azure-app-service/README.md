@@ -16,6 +16,7 @@ No requirements.
 |------|--------|---------|
 | <a name="module_alarm_channel"></a> [alarm\_channel](#module\_alarm\_channel) | github.com/massdriver-cloud/terraform-modules//azure-alarm-channel | 40d6e54 |
 | <a name="module_application"></a> [application](#module\_application) | github.com/massdriver-cloud/terraform-modules//massdriver-application | 9e3a1b4 |
+| <a name="module_dns"></a> [dns](#module\_dns) | ../azure/dns | n/a |
 | <a name="module_http_4xx_metric_alert"></a> [http\_4xx\_metric\_alert](#module\_http\_4xx\_metric\_alert) | github.com/massdriver-cloud/terraform-modules//azure-monitor-metrics-alarm | 40d6e54 |
 | <a name="module_http_5xx_metric_alert"></a> [http\_5xx\_metric\_alert](#module\_http\_5xx\_metric\_alert) | github.com/massdriver-cloud/terraform-modules//azure-monitor-metrics-alarm | 40d6e54 |
 | <a name="module_response_metric_alert"></a> [response\_metric\_alert](#module\_response\_metric\_alert) | github.com/massdriver-cloud/terraform-modules//azure-monitor-metrics-alarm | 40d6e54 |
@@ -24,11 +25,6 @@ No requirements.
 
 | Name | Type |
 |------|------|
-| [azurerm_app_service_certificate_binding.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/app_service_certificate_binding) | resource |
-| [azurerm_app_service_custom_hostname_binding.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/app_service_custom_hostname_binding) | resource |
-| [azurerm_app_service_managed_certificate.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/app_service_managed_certificate) | resource |
-| [azurerm_dns_cname_record.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/dns_cname_record) | resource |
-| [azurerm_dns_txt_record.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/dns_txt_record) | resource |
 | [azurerm_linux_web_app.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_web_app) | resource |
 | [azurerm_monitor_autoscale_setting.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/monitor_autoscale_setting) | resource |
 | [azurerm_resource_group.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) | resource |
@@ -37,7 +33,6 @@ No requirements.
 | [azurerm_subnet.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subnet) | resource |
 | [utility_available_cidr.cidr](https://registry.terraform.io/providers/massdriver-cloud/utility/latest/docs/resources/available_cidr) | resource |
 | [azurerm_client_config.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/client_config) | data source |
-| [azurerm_dns_zone.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/dns_zone) | data source |
 | [azurerm_subnet.lookup](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/subnet) | data source |
 | [azurerm_virtual_network.lookup](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/virtual_network) | data source |
 
