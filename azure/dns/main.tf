@@ -1,5 +1,5 @@
 locals {
-  which_one = var.azurerm_linux_function_app != null ? var.azurerm_linux_function_app : var.azurerm_linux_web_app
+  runtime = var.function_app != null ? var.function_app : var.app_service
 }
 
 data "azurerm_dns_zone" "main" {
@@ -18,7 +18,7 @@ resource "azurerm_dns_txt_record" "main" {
   ttl                 = "300"
   tags                = var.tags
   record {
-    value = local.which_one.custom_domain_verification_id
+    value = local.runtime.custom_domain_verification_id
   }
 }
 
@@ -27,13 +27,13 @@ resource "azurerm_dns_cname_record" "main" {
   zone_name           = data.azurerm_dns_zone.main.name
   resource_group_name = data.azurerm_dns_zone.main.resource_group_name
   ttl                 = "300"
-  record              = local.which_one.default_hostname
+  record              = local.runtime.default_hostname
   tags                = var.tags
 }
 
 resource "azurerm_app_service_custom_hostname_binding" "main" {
   hostname            = join(".", [var.subdomain, azurerm_dns_cname_record.main.zone_name])
-  app_service_name    = local.which_one.name
+  app_service_name    = local.runtime.name
   resource_group_name = data.azurerm_resource_group.main.name
 }
 

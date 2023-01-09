@@ -31,8 +31,8 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_azurerm_linux_function_app"></a> [azurerm\_linux\_function\_app](#input\_azurerm\_linux\_function\_app) | n/a | `any` | `null` | no |
-| <a name="input_azurerm_linux_web_app"></a> [azurerm\_linux\_web\_app](#input\_azurerm\_linux\_web\_app) | n/a | `any` | `null` | no |
+| <a name="input_app_service"></a> [app\_service](#input\_app\_service) | n/a | `any` | `null` | no |
+| <a name="input_function_app"></a> [function\_app](#input\_function\_app) | n/a | `any` | `null` | no |
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | n/a | `string` | n/a | yes |
 | <a name="input_subdomain"></a> [subdomain](#input\_subdomain) | n/a | `string` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | n/a | `any` | n/a | yes |
