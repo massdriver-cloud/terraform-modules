@@ -18,12 +18,12 @@ variable "resource_group_name" {
   type = string
 }
 
-variable "azurerm_linux_function_app" {
+variable "function_app" {
   type    = any
   default = null
 }
 
-variable "azurerm_linux_web_app" {
+variable "app_service" {
   type    = any
   default = null
 }
