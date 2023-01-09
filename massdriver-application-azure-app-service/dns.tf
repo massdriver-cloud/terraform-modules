@@ -12,7 +12,7 @@ module "dns" {
   zone_name                = local.zone_name
   zone_resource_group_name = local.zone_resource_group
   tags                     = var.md_metadata.default_tags
-    # the data resource in this module uses azurerm_resource_group.main
+  # the data resource in this module uses azurerm_resource_group.main
   # and the implicity dependency above _does not_ prevent it from trying to fetch
   # before the resource group has been created.
   depends_on = [
