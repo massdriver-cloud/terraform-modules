@@ -4,7 +4,7 @@ locals {
 }
 
 module "application" {
-  source                  = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=13246f9"
+  source                  = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=4001e6c"
   name                    = var.md_metadata.name_prefix
   service                 = "function"
   application_identity_id = azurerm_linux_function_app.main.identity[0].principal_id
