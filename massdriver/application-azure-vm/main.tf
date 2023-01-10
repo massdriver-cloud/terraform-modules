@@ -6,6 +6,9 @@ locals {
   storage_account_name = substr(replace(var.md_metadata.name_prefix, "/[^a-z0-9]/", ""), 0, local.max_length)
 }
 
+
+
+
 module "application" {
   source                  = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=22d422e"
   name                    = var.md_metadata.name_prefix
@@ -29,6 +32,11 @@ resource "random_password" "main" {
   min_numeric = 1
 }
 
+resource "tls_private_key" "main" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
 resource "azurerm_linux_virtual_machine_scale_set" "main" {
   name                            = var.md_metadata.name_prefix
   resource_group_name             = azurerm_resource_group.main.name
@@ -36,29 +44,51 @@ resource "azurerm_linux_virtual_machine_scale_set" "main" {
   disable_password_authentication = false
   admin_username                  = "placeholder"
   admin_password                  = random_password.main.result
+  admin_ssh_key {
+    username   = "placeholder"
+    public_key = tls_private_key.main.public_key_openssh
+  }
+
   # instances                       = var.auto_scaling.enabled ? var.scaleset.instances : 1
   instances   = 1
   sku         = "Standard_F2"
   custom_data = base64encode(local.cloud_init_rendered)
-  # health_probe_id                 = azurerm_lb_probe.main.id
-
-
+  # health_probe_id              = var.endpoint.enabled ? module.public_endpoint[0].azurerm_lb_probe : null
   extension_operations_enabled = false
   tags                         = var.md_metadata.default_tags
 
   network_interface {
-    name    = var.md_metadata.name_prefix
-    primary = true
+    name                      = var.md_metadata.name_prefix
+    primary                   = true
+    network_security_group_id = module.public_endpoint[0].azurerm_network_security_group_id
 
-    # This will create a /24 subnet for the VMSS if they want autoscaling, otherwise it'll just add the VMSS to the default subnet.
-    ip_configuration {
-      name      = var.md_metadata.name_prefix
-      subnet_id = data.azurerm_subnet.default.id
-      # load_balancer_backend_address_pool_ids = [azurerm_lb_backend_address_pool.main.id]
-      primary = true
+    dynamic "ip_configuration" {
+      for_each = var.endpoint.enabled ? [] : [1]
+      content {
+        name      = var.md_metadata.name_prefix
+        subnet_id = data.azurerm_subnet.default.id
+        primary   = true
+      }
+    }
+
+    dynamic "ip_configuration" {
+      for_each = var.endpoint.enabled ? [1] : []
+      content {
+        name                                   = var.md_metadata.name_prefix
+        subnet_id                              = data.azurerm_subnet.default.id
+        load_balancer_backend_address_pool_ids = module.public_endpoint[0].load_balancer_backend_address_pool_ids
+        load_balancer_inbound_nat_rules_ids    = module.public_endpoint[0].load_balancer_inbound_nat_rules_ids
+        primary                                = true
+        # public_ip_address {
+        #   name = "public"
+        # }
+      }
     }
   }
 
+  # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_virtual_machine_scale_set#storage_account_uri
+  # Passing a null value will utilize a Managed Storage Account to store Boot Diagnostics.
+  # might be able to drop the storage account for this
   boot_diagnostics {
     storage_account_uri = azurerm_storage_account.main.primary_blob_endpoint
   }
@@ -72,13 +102,59 @@ resource "azurerm_linux_virtual_machine_scale_set" "main" {
     type = "SystemAssigned"
   }
 
+  provision_vm_agent = true
+
+  # az vm image list-offers --publisher Canonical --location westeurope -o table | grep server
+  # az vm image list-skus --publisher Canonical --offer 0001-com-ubuntu-server-jammy --location westeurope -o table
   source_image_reference {
     publisher = "Canonical"
-    offer     = "UbuntuServer"
-    sku       = "18.04-LTS"
+    offer     = "0001-com-ubuntu-server-jammy"
+    sku       = "22_04-lts"
     version   = "latest"
   }
 
+  scale_in {
+    rule = "OldestVM"
+  }
+
+  # upgrade_mode = "Automatic"
+
+  # rolling_upgrade_policy {
+  #   max_batch_instance_percent              = 30
+  #   max_unhealthy_instance_percent          = 60
+  #   max_unhealthy_upgraded_instance_percent = 60
+  #   pause_time_between_batches              = "PT5M"
+  # }
+
+  #   automatic_os_upgrade_policy {
+  #     enable_automatic_os_upgrade = true
+  #     disable_automatic_rollback  = false
+  #   }
+
+  # # https://learn.microsoft.com/en-us/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-health-extension#when-to-use-the-application-health-extension
+  #    extension {
+  #     name                       = "HealthExtension"
+  #     publisher                  = "Microsoft.ManagedServices"
+  #     type                       = "ApplicationHealthLinux"
+  #     type_handler_version       = "1.0"
+  #     auto_upgrade_minor_version = false
+
+  #     settings = jsonencode({
+  #       protocol    = "http"
+  #       port        = var.health_check.port
+  #       requestPath = var.health_check.path
+  #     })
+  #   }
+
+
+  # To enable the automatic instance repair, this Virtual Machine Scale Set must have a valid health_probe_id o
+  # dynamic "automatic_instance_repair" {
+  #   for_each = var.endpoint.enabled ? [1] : []
+  #   content {
+  #     enabled      = true
+  #     grace_period = "PT30M"
+  #   }
+  # }
 
   lifecycle {
     ignore_changes = [
@@ -88,10 +164,3 @@ resource "azurerm_linux_virtual_machine_scale_set" "main" {
   }
 }
 
-# resource "azurerm_lb_probe" "main" {
-#   name            = var.md_metadata.name_prefix
-#   loadbalancer_id = azurerm_lb.main.id
-#   protocol        = "Http"
-#   port            = var.health_check.port
-#   request_path    = var.health_check.path
-# }

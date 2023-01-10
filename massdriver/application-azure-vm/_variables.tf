@@ -10,6 +10,13 @@ variable "location" {
   type = string
 }
 
+variable "container" {
+  type = object({
+    repository = string
+    tag        = optional(string, "latest")
+  })
+}
+
 variable "health_check" {
   type = object({
     port = optional(number, 80)
@@ -19,7 +26,16 @@ variable "health_check" {
 
 variable "auto_scaling" {
   type = object({
-    enabled = optional(bool, false)
+    enabled = bool
+
+  })
+}
+
+variable "endpoint" {
+  type = object({
+    enabled   = bool
+    zone      = optional(string, null)
+    subdomain = optional(string, null)
   })
 }
 
