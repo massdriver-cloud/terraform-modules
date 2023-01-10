@@ -9,9 +9,9 @@ resource "azurerm_user_assigned_identity" "main" {
 }
 
 resource "azurerm_role_assignment" "blob" {
-  scope = "/subscriptions/${data.azurerm_client_config.main.subscription_id}"
+  scope                = "/subscriptions/${data.azurerm_client_config.main.subscription_id}"
   role_definition_name = "Storage Blob Data Contributor"
-  principal_id       = azurerm_user_assigned_identity.main.principal_id
+  principal_id         = azurerm_user_assigned_identity.main.principal_id
 }
 
 resource "azurerm_role_assignment" "acr" {

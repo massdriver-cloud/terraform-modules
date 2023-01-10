@@ -5,9 +5,9 @@ locals {
 
 module "application" {
   # source                  = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=4001e6c"
-  source = "../massdriver-application"
-  name                    = "sp-${var.md_metadata.name_prefix}"
-  service                 = "function"
+  source  = "../massdriver-application"
+  name    = "sp-${var.md_metadata.name_prefix}"
+  service = "function"
 }
 
 resource "azurerm_resource_group" "main" {
@@ -38,7 +38,7 @@ resource "azurerm_linux_function_app" "main" {
   storage_account_name        = azurerm_storage_account.main.name
   storage_account_access_key  = azurerm_storage_account.main.primary_access_key
   # storage_key_vault_secret_id = azurerm_key_vault.main.id
-  tags                        = var.md_metadata.default_tags
+  tags = var.md_metadata.default_tags
 
   site_config {
     always_on                               = true
@@ -65,19 +65,11 @@ resource "azurerm_linux_function_app" "main" {
   }
 
   identity {
-    type = "UserAssigned"
+    type         = "UserAssigned"
     identity_ids = [azurerm_user_assigned_identity.main.id]
   }
 
   depends_on = [
     azurerm_service_plan.main
   ]
-}
-
-output "identity_ids" {
-  value = azurerm_user_assigned_identity.main.id
-}
-
-output "client_id" {
-  value = azurerm_user_assigned_identity.main.client_id
 }
