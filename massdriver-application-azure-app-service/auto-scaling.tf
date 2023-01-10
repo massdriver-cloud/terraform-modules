@@ -1,5 +1,5 @@
 resource "azurerm_monitor_autoscale_setting" "main" {
-  name                = var.name
+  name                = var.md_metadata.name_prefix
   resource_group_name = azurerm_resource_group.main.name
   location            = azurerm_resource_group.main.location
   target_resource_id  = azurerm_service_plan.main.id
@@ -62,5 +62,5 @@ resource "azurerm_monitor_autoscale_setting" "main" {
   depends_on = [
     azurerm_service_plan.main
   ]
-  tags = var.tags
+  tags = var.md_metadata.default_tags
 }

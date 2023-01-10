@@ -9,6 +9,13 @@ variable "dns" {
   type = any
 }
 
+variable "health_check" {
+  type = object({
+    port = optional(number, 80)
+    path = optional(string, "/")
+  })
+}
+
 variable "application" {
   type = object({
     sku_name             = string
@@ -16,14 +23,6 @@ variable "application" {
     maximum_worker_count = number
     zone_balancing       = bool
   })
-}
-
-variable "name" {
-  type = string
-}
-
-variable "tags" {
-  type = any
 }
 
 variable "contact_email" {

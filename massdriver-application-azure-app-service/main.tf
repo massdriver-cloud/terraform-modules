@@ -2,7 +2,7 @@ module "application" {
   source                  = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=4001e6c"
   name                    = var.md_metadata.name_prefix
   service                 = "function"
-  application_identity_id = azurerm_linux_function_app.main.identity[0].principal_id
+  application_identity_id = azurerm_linux_web_app.main.identity[0].principal_id
   # We aren't creating an application identity for this module because we are assigning permissions directly to the system-assigned managed identity of the function app.
   create_application_identity = false
   # The permission-assignment goes like this
@@ -10,12 +10,15 @@ module "application" {
   # MDXC tries to assign the role
   # The storage account is not ready yet
   # Without this depends_on we get intermitent, hard to debug failures.
-  depends_on = [
-    azurerm_storage_account.main
-  ]
+  # depends_on = [
+  #   azurerm_storage_account.main
+  # ]
 }
 
-data "azurerm_subscription" "primary" {
+resource "azurerm_resource_group" "main" {
+  name     = var.md_metadata.name_prefix
+  location = var.location
+  tags     = var.md_metadata.default_tags
 }
 
 resource "azurerm_service_plan" "main" {
@@ -60,8 +63,8 @@ resource "azurerm_linux_web_app" "main" {
   virtual_network_subnet_id = azurerm_subnet.main.id
 
   site_config {
-    always_on         = true
-    auto_heal_enabled = true
+    always_on                               = true
+    auto_heal_enabled                       = true
     health_check_path                       = var.health_check.path
     http2_enabled                           = true
     container_registry_use_managed_identity = true
@@ -104,9 +107,13 @@ resource "azurerm_linux_web_app" "main" {
   ]
 }
 
-# TODO: push to mdxc
+## TODO: push to mdxc
+data "azurerm_client_config" "main" {
+}
+
 resource "azurerm_role_assignment" "acr" {
   scope                = "/subscriptions/${data.azurerm_client_config.main.subscription_id}"
   role_definition_name = "AcrPull"
-  principal_id         = azurerm_linux_function_app.main.identity[0].principal_id
+  principal_id         = azurerm_linux_web_app.main.identity[0].principal_id
 }
+##

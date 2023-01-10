@@ -57,7 +57,7 @@ resource "azurerm_linux_function_app" "main" {
     app_scale_limit                         = var.application.maximum_worker_count
     container_registry_use_managed_identity = true
     ftps_state                              = "FtpsOnly"
-    health_check_path                       = var.application.health_check_path
+    health_check_path                       = var.health_check.path
     vnet_route_all_enabled                  = true
 
     application_stack {
@@ -83,12 +83,13 @@ resource "azurerm_linux_function_app" "main" {
   ]
 }
 
+## TODO: push to mdxc
 data "azurerm_client_config" "main" {
 }
 
-# TODO: push to mdxc
 resource "azurerm_role_assignment" "acr" {
   scope                = "/subscriptions/${data.azurerm_client_config.main.subscription_id}"
   role_definition_name = "AcrPull"
   principal_id         = azurerm_linux_function_app.main.identity[0].principal_id
 }
+##
