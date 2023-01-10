@@ -5,7 +5,7 @@ locals {
   app_specification    = try(yamldecode(file("${path.root}/../massdriver.yaml")), {})
   connections          = try(jsondecode(file("${path.root}/_connections.auto.tfvars.json")), {})
   params               = try(jsondecode(file("${path.root}/_params.auto.tfvars.json")), {})
-  secrets              = try(jsondecode(file("${path.root}/secrets.json")), {})
+  secrets              = try(jsondecode(file("${path.root}/../secrets.json")), {})
   app_block            = lookup(local.app_specification, "app", {})
   app_envs_queries     = lookup(local.app_block, "envs", {})
   app_policies_queries = toset(lookup(local.app_block, "policies", []))
