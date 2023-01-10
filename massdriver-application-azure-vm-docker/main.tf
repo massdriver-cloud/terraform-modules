@@ -6,16 +6,10 @@ locals {
   storage_account_name = substr(replace(var.md_metadata.name_prefix, "/[^a-z0-9]/", ""), 0, local.max_length)
 }
 
-
-
-
 module "application" {
-  source                  = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=22d422e"
-  name                    = var.md_metadata.name_prefix
-  service                 = "function"
-  application_identity_id = azurerm_linux_virtual_machine_scale_set.main.identity[0].principal_id
-  # We aren't creating an application identity for this module because we are assigning permissions directly to the system-assigned managed identity of the function app.
-  create_application_identity = false
+  source  = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=22d422e"
+  name    = "sp-${var.md_metadata.name_prefix}"
+  service = "function"
 }
 
 resource "azurerm_resource_group" "main" {
@@ -50,6 +44,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "main" {
   }
 
   # instances                       = var.auto_scaling.enabled ? var.scaleset.instances : 1
+  # TODO: better var
   instances   = 1
   sku         = "Standard_F2"
   custom_data = base64encode(local.cloud_init_rendered)
@@ -60,7 +55,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "main" {
   network_interface {
     name                      = var.md_metadata.name_prefix
     primary                   = true
-    network_security_group_id = module.public_endpoint[0].azurerm_network_security_group_id
+    network_security_group_id = var.endpoint.enabled ? module.public_endpoint[0].azurerm_network_security_group_id : null
 
     dynamic "ip_configuration" {
       for_each = var.endpoint.enabled ? [] : [1]
@@ -99,7 +94,8 @@ resource "azurerm_linux_virtual_machine_scale_set" "main" {
   }
 
   identity {
-    type = "SystemAssigned"
+    type         = "UserAssigned"
+    identity_ids = [azurerm_user_assigned_identity.main.id]
   }
 
   provision_vm_agent = true
@@ -162,5 +158,8 @@ resource "azurerm_linux_virtual_machine_scale_set" "main" {
       instances
     ]
   }
-}
 
+  depends_on = [
+    module.public_endpoint
+  ]
+}

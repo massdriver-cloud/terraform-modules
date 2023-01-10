@@ -34,7 +34,7 @@ variable "auto_scaling" {
 variable "endpoint" {
   type = object({
     enabled   = bool
-    zone      = optional(string, null)
+    zone_id   = optional(string, null)
     subdomain = optional(string, null)
   })
 }
@@ -89,5 +89,3 @@ variable "endpoint" {
 # variable "contact_email" {
 #   type = string
 # }
-
-

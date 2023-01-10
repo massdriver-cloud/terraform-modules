@@ -2,7 +2,7 @@
 # The load balancer resource in Azure in L4
 # Pushing users to use this.
 #
-# However, it doesn't create a cert like app service does.
+
 resource "azurerm_application_gateway" "main" {
   name                = var.name
   resource_group_name = data.azurerm_resource_group.main.name
@@ -15,46 +15,46 @@ resource "azurerm_application_gateway" "main" {
   }
 
   gateway_ip_configuration {
-    name      = "my-gateway-ip-configuration"
-    subnet_id = data.azurerm_subnet.frontend.id
+    name      = "gateway-ip-configuration"
+    subnet_id = var.subnet_id
   }
 
   frontend_port {
-    name = local.frontend_port_name
+    name = "frontend-port"
     port = 80
   }
 
   frontend_ip_configuration {
-    name                 = local.frontend_ip_configuration_name
+    name                 = "frontend-ip"
     public_ip_address_id = azurerm_public_ip.main.id
   }
 
   backend_address_pool {
-    name = local.backend_address_pool_name
+    name = azurerm_lb_backend_address_pool.main.name
   }
 
   backend_http_settings {
-    name                  = local.http_setting_name
+    name                  = "default"
     cookie_based_affinity = "Disabled"
     path                  = "/"
-    port                  = 80
+    port                  = var.port
     protocol              = "Http"
     request_timeout       = 60
   }
 
   http_listener {
-    name                           = local.listener_name
-    frontend_ip_configuration_name = local.frontend_ip_configuration_name
-    frontend_port_name             = local.frontend_port_name
+    name                           = "http-listener"
+    frontend_ip_configuration_name = "frontend-ip"
+    frontend_port_name             = "frontend-port"
     protocol                       = "Https"
-    ssl_certificate_name = module.managed_cert.ssl_certificate_name
+    ssl_certificate_name           = module.managed_certificate.ssl_certificate_name
   }
 
   request_routing_rule {
-    name                       = local.request_routing_rule_name
+    name                       = "routing-rule"
     rule_type                  = "Basic"
-    http_listener_name         = local.listener_name
-    backend_address_pool_name  = local.backend_address_pool_name
-    backend_http_settings_name = local.http_setting_name
+    http_listener_name         = "http-listener"
+    backend_address_pool_name  = azurerm_lb_backend_address_pool.main.name
+    backend_http_settings_name = "backend-settings"
   }
 }

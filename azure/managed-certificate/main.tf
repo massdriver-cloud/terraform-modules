@@ -1,6 +1,6 @@
-resource "azurerm_key_vault_certificate" "example" {
-  name         = "generated-cert"
-  key_vault_id = azurerm_key_vault.example.id
+resource "azurerm_key_vault_certificate" "main" {
+  name         = var.name
+  key_vault_id = azurerm_key_vault.main.id
 
   certificate_policy {
     issuer_parameters {

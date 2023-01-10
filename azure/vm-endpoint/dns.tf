@@ -6,10 +6,27 @@ data "azurerm_public_ip" "main" {
   resource_group_name = data.azurerm_resource_group.main.name
 }
 
-resource "azurerm_dns_a_record" "main" {
-  name                = var.subdomain
-  zone_name           = var.dns_zone_name
+data "azurerm_dns_zone" "main" {
+  name                = var.dns_zone_name
   resource_group_name = var.dns_zone_resource_group_name
-  ttl                 = 300
-  records             = [data.azurerm_public_ip.main.ip_address]
+}
+
+resource "azurerm_dns_txt_record" "main" {
+  name                = "asuid.${var.subdomain}"
+  zone_name           = data.azurerm_dns_zone.main.name
+  resource_group_name = data.azurerm_dns_zone.main.resource_group_name
+  ttl                 = "300"
+  tags                = var.tags
+  record {
+    value = data.azurerm_public_ip.main.ip_address
+  }
+}
+
+resource "azurerm_dns_cname_record" "main" {
+  name                = var.subdomain
+  zone_name           = data.azurerm_dns_zone.main.name
+  resource_group_name = data.azurerm_dns_zone.main.resource_group_name
+  ttl                 = "300"
+  record              = data.azurerm_public_ip.main.ip_address
+  tags                = var.tags
 }

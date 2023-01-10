@@ -25,7 +25,16 @@ variable "health_check" {
   })
 }
 
+variable "subnet_id" {
+  type = string
+}
+
 variable "tags" {
   type    = any
   default = []
+}
+
+variable "port" {
+  type    = number
+  default = 80
 }

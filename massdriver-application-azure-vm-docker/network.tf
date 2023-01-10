@@ -1,6 +1,6 @@
 locals {
-  zone_name                = var.endpoint.enabled ? regex(".*/dns[z|Z]ones/(.*)$", var.endpoint.zone)[0] : null
-  zone_resource_group_name = var.endpoint.enabled ? regex(".*/resource[g|G]roups/(.*)/providers", var.endpoint.zone)[0] : null
+  zone_name                = var.endpoint.enabled ? regex(".*/dns[z|Z]ones/(.*)$", var.endpoint.zone_id)[0] : null
+  zone_resource_group_name = var.endpoint.enabled ? regex(".*/resource[g|G]roups/(.*)/providers", var.endpoint.zone_id)[0] : null
 }
 
 data "azurerm_virtual_network" "main" {
@@ -17,8 +17,9 @@ data "azurerm_subnet" "default" {
 
 module "public_endpoint" {
   count                        = var.endpoint.enabled ? 1 : 0
-  source                       = "/Users/wbeebe/repos/massdriver-cloud/_azure-vm/terraform-modules/azure/vm-endpoint"
+  source                       = "../azure/vm-endpoint"
   name                         = var.md_metadata.name_prefix
+  subnet_id                    = data.azurerm_subnet.default.id
   subdomain                    = var.endpoint.subdomain
   dns_zone_name                = local.zone_name
   dns_zone_resource_group_name = local.zone_resource_group_name
