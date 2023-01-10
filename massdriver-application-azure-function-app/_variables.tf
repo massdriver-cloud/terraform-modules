@@ -6,13 +6,19 @@ variable "docker" {
   })
 }
 
+variable "health_check" {
+  type = object({
+    port = optional(number, 80)
+    path = optional(string, "/")
+  })
+}
+
 variable "application" {
   type = object({
     sku_name             = string
     minimum_worker_count = number
     maximum_worker_count = number
     zone_balancing       = bool
-    health_check_path    = string
     logs = object({
       retention_period_days = number
       disk_quota_mb         = number
@@ -27,14 +33,6 @@ variable "monitoring" {
 }
 
 variable "dns" {
-  type = any
-}
-
-variable "name" {
-  type = string
-}
-
-variable "tags" {
   type = any
 }
 

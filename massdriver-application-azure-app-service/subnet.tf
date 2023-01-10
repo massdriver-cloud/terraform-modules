@@ -1,8 +1,7 @@
 locals {
-  split_id            = split("/", var.virtual_network_id)
-  vnet_name           = element(local.split_id, index(local.split_id, "virtualNetworks") + 1)
-  vnet_resource_group = element(local.split_id, index(local.split_id, "resourceGroups") + 1)
-  cidr                = var.network.auto ? utility_available_cidr.cidr.result : var.network.cidr
+  virtual_network_name                = regex(".*/virtual[n|N]etworks/(.*)$", var.virtual_network_id)[0]
+  virtual_network_resource_group_name = regex(".*/resource[g|G]roups/(.*)/providers", var.virtual_network_id)[0]
+  cidr                                = var.network.auto ? utility_available_cidr.cidr.result : var.network.cidr
 }
 
 # This subnet is for the IPs of the Azure App Service instances.
@@ -32,15 +31,15 @@ locals {
 # For now, we require the user to provide a /24.
 
 data "azurerm_virtual_network" "lookup" {
-  name                = local.vnet_name
-  resource_group_name = local.vnet_resource_group
+  name                = local.virtual_network_name
+  resource_group_name = local.virtual_network_resource_group_name
 }
 
 data "azurerm_subnet" "lookup" {
   for_each             = toset(data.azurerm_virtual_network.lookup.subnets)
   name                 = each.key
-  virtual_network_name = local.vnet_name
-  resource_group_name  = local.vnet_resource_group
+  virtual_network_name = local.virtual_network_name
+  resource_group_name  = local.virtual_network_resource_group_name
 }
 
 resource "utility_available_cidr" "cidr" {
@@ -50,11 +49,11 @@ resource "utility_available_cidr" "cidr" {
 }
 
 resource "azurerm_subnet" "main" {
-  name                 = var.name
-  resource_group_name  = local.vnet_resource_group
-  virtual_network_name = local.vnet_name
+  name                 = var.md_metadata.name_prefix
+  resource_group_name  = local.virtual_network_resource_group_name
+  virtual_network_name = local.virtual_network_name
   address_prefixes     = [local.cidr]
-  service_endpoints    = ["Microsoft.Web"]
+  service_endpoints    = ["Microsoft.Web", "Microsoft.Storage"]
   delegation {
     name = "virtual-network-integration"
 
