@@ -4,12 +4,20 @@ locals {
 }
 
 module "application" {
-  source                  = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=22d422e"
+  source                  = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=13246f9"
   name                    = var.md_metadata.name_prefix
   service                 = "function"
   application_identity_id = azurerm_linux_function_app.main.identity[0].principal_id
   # We aren't creating an application identity for this module because we are assigning permissions directly to the system-assigned managed identity of the function app.
   create_application_identity = false
+  # The permission-assignment goes like this
+  # Azure makes the function
+  # MDXC tries to assign the role
+  # The storage account is not ready yet
+  # Without this depends_on we get intermitent, hard to debug failures.
+  depends_on = [
+    azurerm_storage_account.main
+  ]
 }
 
 resource "azurerm_resource_group" "main" {
@@ -42,7 +50,6 @@ resource "azurerm_linux_function_app" "main" {
   virtual_network_subnet_id   = azurerm_subnet.main.id
   tags                        = var.md_metadata.default_tags
 
-
   site_config {
     always_on                               = true
     application_insights_connection_string  = azurerm_application_insights.main.connection_string
@@ -60,7 +67,7 @@ resource "azurerm_linux_function_app" "main" {
         image_tag    = var.docker.tag
       }
     }
-    # These app log settings will be exposed to the user with the data conversion widget.
+
     app_service_logs {
       disk_quota_mb         = var.application.logs.disk_quota_mb
       retention_period_days = var.application.logs.retention_period_days
@@ -79,6 +86,7 @@ resource "azurerm_linux_function_app" "main" {
 data "azurerm_client_config" "main" {
 }
 
+# TODO: push to mdxc
 resource "azurerm_role_assignment" "acr" {
   scope                = "/subscriptions/${data.azurerm_client_config.main.subscription_id}"
   role_definition_name = "AcrPull"
