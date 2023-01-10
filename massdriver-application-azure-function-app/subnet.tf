@@ -1,7 +1,7 @@
 locals {
-  virtual_network_name        = regex(".*/virtual[n|N]etworks/(.*)$", var.virtual_network_id)[0]
+  virtual_network_name                = regex(".*/virtual[n|N]etworks/(.*)$", var.virtual_network_id)[0]
   virtual_network_resource_group_name = regex(".*/resource[g|G]roups/(.*)/providers", var.virtual_network_id)[0]
-  cidr                = var.network.auto ? utility_available_cidr.cidr.result : var.network.cidr
+  cidr                                = var.network.auto ? utility_available_cidr.cidr.result : var.network.cidr
 }
 
 data "azurerm_virtual_network" "lookup" {
