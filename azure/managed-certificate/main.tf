@@ -43,7 +43,7 @@ resource "azurerm_key_vault_certificate" "main" {
       ]
 
       subject_alternative_names {
-        dns_names = ["internal.contoso.com", "domain.hello.world"]
+        dns_names = [var.full_domain]
       }
 
       subject            = "CN=hello-world"

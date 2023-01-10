@@ -3,6 +3,20 @@
 # Pushing users to use this.
 #
 
+locals {
+  frontend_port_name             = "frontend_port"
+  frontend_ip_configuration_name = "frontend_ip"
+  listener_name                  = "listener_name"
+  http_setting_name              = "http_setting"
+  request_routing_rule_name      = "rrr_name"
+}
+
+resource "azurerm_user_assigned_identity" "main" {
+  resource_group_name = data.azurerm_resource_group.main.name
+  location            = data.azurerm_resource_group.main.location
+  name                = "${var.name}-cert"
+}
+
 resource "azurerm_application_gateway" "main" {
   name                = var.name
   resource_group_name = data.azurerm_resource_group.main.name
@@ -20,12 +34,12 @@ resource "azurerm_application_gateway" "main" {
   }
 
   frontend_port {
-    name = "frontend-port"
+    name = local.frontend_port_name
     port = 80
   }
 
   frontend_ip_configuration {
-    name                 = "frontend-ip"
+    name                 = local.frontend_ip_configuration_name
     public_ip_address_id = azurerm_public_ip.main.id
   }
 
@@ -43,18 +57,24 @@ resource "azurerm_application_gateway" "main" {
   }
 
   http_listener {
-    name                           = "http-listener"
-    frontend_ip_configuration_name = "frontend-ip"
-    frontend_port_name             = "frontend-port"
+    name                           = local.listener_name
+    frontend_ip_configuration_name = local.frontend_ip_configuration_name
+    frontend_port_name             = local.frontend_port_name
     protocol                       = "Https"
     ssl_certificate_name           = module.managed_certificate.ssl_certificate_name
   }
 
   request_routing_rule {
-    name                       = "routing-rule"
+    name                       = local.request_routing_rule_name
     rule_type                  = "Basic"
-    http_listener_name         = "http-listener"
+    http_listener_name         = local.listener_name
     backend_address_pool_name  = azurerm_lb_backend_address_pool.main.name
-    backend_http_settings_name = "backend-settings"
+    backend_http_settings_name = local.http_setting_name
+  }
+
+  # So the gateway can access vault to create and store / rotate the cert!
+  identity {
+    type         = "UserAssigned"
+    identity_ids = [azurerm_user_assigned_identity.main.id]
   }
 }

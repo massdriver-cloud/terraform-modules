@@ -6,6 +6,10 @@ variable "subdomain" {
   type = string
 }
 
+variable "domain" {
+  type = string
+}
+
 variable "resource_group_name" {
   type = string
 }

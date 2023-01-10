@@ -21,6 +21,7 @@ module "public_endpoint" {
   name                         = var.md_metadata.name_prefix
   subnet_id                    = data.azurerm_subnet.default.id
   subdomain                    = var.endpoint.subdomain
+  domain = "mdazuresbx.com"
   dns_zone_name                = local.zone_name
   dns_zone_resource_group_name = local.zone_resource_group_name
   tags                         = var.md_metadata.default_tags
