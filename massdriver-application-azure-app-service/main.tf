@@ -1,20 +1,8 @@
 module "application" {
-  source                  = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=4001e6c"
-  name                    = var.md_metadata.name_prefix
+  # source                  = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=4001e6c"
+  source = "../massdriver-application"
+  name                    = "sp-${var.md_metadata.name_prefix}"
   service                 = "function"
-  application_identity_id = azurerm_linux_web_app.main.identity[0].principal_id
-  # We aren't creating an application identity for this module because we are assigning permissions directly to the system-assigned managed identity of the function app.
-  create_application_identity = false
-  # FUNCTION APP uses storage, we might want to here
-  # but this comment is important if so.
-  # The permission-assignment goes like this
-  # Azure makes the function
-  # MDXC tries to assign the role
-  # The storage account is not ready yet
-  # Without this depends_on we get intermitent, hard to debug failures.
-  # depends_on = [
-  #   azurerm_storage_account.main
-  # ]
 }
 
 resource "azurerm_resource_group" "main" {
@@ -43,7 +31,8 @@ resource "azurerm_linux_web_app" "main" {
   tags                = var.md_metadata.default_tags
 
   identity {
-    type = "SystemAssigned"
+    type = "UserAssigned"
+    identity_ids = [azurerm_user_assigned_identity.main.id]
   }
 
   # To get application logs, we need to set app logging level and retention.
@@ -109,13 +98,10 @@ resource "azurerm_linux_web_app" "main" {
   ]
 }
 
-## TODO: push to mdxc
-data "azurerm_client_config" "main" {
+output "identity_ids" {
+  value = azurerm_user_assigned_identity.main.id
 }
 
-resource "azurerm_role_assignment" "acr" {
-  scope                = "/subscriptions/${data.azurerm_client_config.main.subscription_id}"
-  role_definition_name = "AcrPull"
-  principal_id         = azurerm_linux_web_app.main.identity[0].principal_id
+output "client_id" {
+  value = azurerm_user_assigned_identity.main.client_id
 }
-##
