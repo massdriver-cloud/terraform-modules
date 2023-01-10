@@ -1,35 +1,41 @@
 module "application" {
-  source                      = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=9e3a1b4"
-  name                        = var.name
-  service                     = "function"
-  application_identity_id     = azurerm_linux_web_app.main.identity[0].principal_id
+  source                  = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=13246f9"
+  name                    = var.md_metadata.name_prefix
+  service                 = "function"
+  application_identity_id = azurerm_linux_function_app.main.identity[0].principal_id
+  # We aren't creating an application identity for this module because we are assigning permissions directly to the system-assigned managed identity of the function app.
   create_application_identity = false
+  # The permission-assignment goes like this
+  # Azure makes the function
+  # MDXC tries to assign the role
+  # The storage account is not ready yet
+  # Without this depends_on we get intermitent, hard to debug failures.
+  depends_on = [
+    azurerm_storage_account.main
+  ]
 }
 
-resource "azurerm_resource_group" "main" {
-  name     = var.name
-  location = var.location
-  tags     = var.tags
+data "azurerm_subscription" "primary" {
 }
 
 resource "azurerm_service_plan" "main" {
-  name                   = var.name
+  name                   = var.md_metadata.name_prefix
   location               = azurerm_resource_group.main.location
   resource_group_name    = azurerm_resource_group.main.name
   os_type                = "Linux"
   sku_name               = var.application.sku_name
   worker_count           = var.application.zone_balancing ? (var.application.minimum_worker_count * 3) : var.application.minimum_worker_count
   zone_balancing_enabled = var.application.zone_balancing
-  tags                   = var.tags
+  tags                   = var.md_metadata.default_tags
 }
 
 resource "azurerm_linux_web_app" "main" {
-  name                = var.name
+  name                = var.md_metadata.name_prefix
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
   service_plan_id     = azurerm_service_plan.main.id
   https_only          = true
-  tags                = var.tags
+  tags                = var.md_metadata.default_tags
 
   identity {
     type = "SystemAssigned"
@@ -54,9 +60,9 @@ resource "azurerm_linux_web_app" "main" {
   virtual_network_subnet_id = azurerm_subnet.main.id
 
   site_config {
-    always_on                               = true
-    auto_heal_enabled                       = true
-    health_check_path                       = "/health"
+    always_on         = true
+    auto_heal_enabled = true
+    health_check_path                       = var.health_check.path
     http2_enabled                           = true
     container_registry_use_managed_identity = true
     ftps_state                              = "FtpsOnly"
@@ -98,11 +104,9 @@ resource "azurerm_linux_web_app" "main" {
   ]
 }
 
-data "azurerm_client_config" "main" {
-}
-
-resource "azurerm_role_assignment" "main" {
+# TODO: push to mdxc
+resource "azurerm_role_assignment" "acr" {
   scope                = "/subscriptions/${data.azurerm_client_config.main.subscription_id}"
   role_definition_name = "AcrPull"
-  principal_id         = azurerm_linux_web_app.main.identity[0].principal_id
+  principal_id         = azurerm_linux_function_app.main.identity[0].principal_id
 }
