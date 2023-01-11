@@ -4,6 +4,7 @@ resource "azurerm_monitor_autoscale_setting" "main" {
   location            = azurerm_resource_group.main.location
   target_resource_id  = azurerm_service_plan.main.id
   enabled             = true
+  tags                = var.md_metadata.default_tags
 
   profile {
     name = "autoscale-profile"
@@ -11,7 +12,7 @@ resource "azurerm_monitor_autoscale_setting" "main" {
     capacity {
       default = azurerm_service_plan.main.worker_count
       minimum = azurerm_service_plan.main.worker_count
-      maximum = var.application.maximum_worker_count
+      maximum = var.application.zone_balancing ? (var.application.maximum_worker_count * 3) : var.application.maximum_worker_count
     }
 
     rule {
@@ -62,5 +63,4 @@ resource "azurerm_monitor_autoscale_setting" "main" {
   depends_on = [
     azurerm_service_plan.main
   ]
-  tags = var.md_metadata.default_tags
 }
