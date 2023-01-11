@@ -19,9 +19,9 @@ variable "health_check" {
 variable "application" {
   type = object({
     sku_name             = string
-    minimum_worker_count = number
-    maximum_worker_count = number
-    zone_balancing       = bool
+    minimum_worker_count = optional(number)
+    maximum_worker_count = optional(number)
+    zone_balancing       = optional(bool)
   })
 }
 
