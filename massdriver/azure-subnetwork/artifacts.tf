@@ -1,23 +1,30 @@
 locals {
-  # I always get the order of split wrong. What's it in Javascript, Ruby, etc...
-  split_name_prefix = split("-", var.md_metadata.name_prefix)
-  # funny thing is, I think this is shorter than what some of these are today
-  human_slug = "Azure Subnetwork connected to `Beebe's` Azure Virtual Network located in the `South Africa North` region."
-  # TODO: ChatGPT, say ^ better.
+  split_name_prefix                 = split("-", var.md_metadata.name_prefix)
+  virtual_network_human_name        = "Beebz Netz"
+  virtual_network_region_human_name = "South Africa North"
+  subnetwork_human_name             = "Subby"
+
+  # https://developer.hashicorp.com/terraform/language/functions/templatefile
+  human_friendly_name = templatefile("${path.module}/slug.html.tftpl", {
+    subnetwork_human_name             = local.subnetwork_human_name,
+    virtual_network_human_name        = local.virtual_network_human_name,
+    virtual_network_region_human_name = local.virtual_network_region_human_name
+  })
+  # ChatGPT, privision this module, take the the value of `human_slug` and make it more clear, give me 100 results.
 
   artifact_subnetwork = {
-    # TODO: think about how to take the ability away from users to make our UI and thier platform gross-looking
-    human_friendly_name = local.human_slug
     data = {
       infrastructure = {
         id                = azurerm_subnet.main.id
-        cidr              = var.network_mask
+        cidr              = local.cidr
         default_subnet_id = azurerm_subnet.main.id
       }
     }
     specs = {
+      # human_friendly_name = local.human_friendly_name
       azure = {
         region = var.region
+        # resource_group_name = ""
       }
     }
   }
@@ -26,7 +33,6 @@ locals {
 resource "massdriver_artifact" "subnetwork" {
   field                = "subnetwork"
   provider_resource_id = azurerm_subnet.main.id
-  # TODO: go through these on all clouds.
-  name     = local.artifact_subnetwork.human_friendly_name
-  artifact = jsonencode(local.artifact_subnetwork)
+  name                 = local.human_friendly_name
+  artifact             = jsonencode(local.artifact_subnetwork)
 }

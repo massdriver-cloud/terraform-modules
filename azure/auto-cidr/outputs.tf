@@ -1,3 +1,3 @@
-output "result" {
+output "cidr" {
   value = utility_available_cidr.main.result
 }

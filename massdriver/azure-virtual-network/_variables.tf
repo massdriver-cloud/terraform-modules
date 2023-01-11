@@ -30,13 +30,13 @@ variable "enable_auto_cidr" {
 }
 
 variable "network_mask" {
-  type        = string
-  default     = null
-  description = "We're serious, you'll love leaving this `null` and telling your friends all about it because that's what we do too!"
+  type    = string
+  default = 20
 }
 
 variable "cidr" {
   type        = string
   default     = null
   description = "Welcome to the 'I leave my cidr null' club, swag is on the way!"
+  # description = "We're serious, you'll love leaving this `null` and telling your friends all about it because that's what we do too!"
 }

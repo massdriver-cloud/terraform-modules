@@ -26,6 +26,5 @@ resource "utility_available_cidr" "cidr" {
   count      = var.enable_auto_cidr ? 1 : 0
   from_cidrs = ["10.0.0.0/8", "172.16.0.0/20", "192.168.0.0/16"]
   used_cidrs = jsondecode(data.jq_query.vnet_cidrs.0.result)
-  # why doesn't count handle this?
-  mask = var.enable_auto_cidr ? 0 : var.network_mask
+  mask       = var.network_mask
 }
