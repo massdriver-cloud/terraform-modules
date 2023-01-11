@@ -21,6 +21,9 @@ variable "kubernetes" {
     namespace = string,
     # Massdriver connection artifact
     cluster_artifact = any
+    # OpenID Connect provider url produced by AKS,
+    # needed by Azure for Workload Identity
+    oidc_issuer_url = optional(string, null)
   })
 }
 

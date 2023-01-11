@@ -11,8 +11,18 @@ locals {
     }
   }
 
-  # TODO: Azure doesn't support WI yet, so not annotations to add
-  azure_service_account = {}
+  # https://learn.microsoft.com/en-us/azure/aks/workload-identity-overview#service-account-labels-and-annotations
+  azure_service_account = {
+    labels = {
+      "azure.workload.identity/use" = true
+    }
+    annotations = {
+      # https://learn.microsoft.com/en-us/azure/aks/learn/tutorial-kubernetes-workload-identity#create-kubernetes-service-account
+      "azure.workload.identity/client-id" = var.massdriver_application.envs["USER_ASSIGNED_CLIENT_ID"]
+      # optional, not sure what the pros and cons are
+      # "azure.workload.identity/tenant-id" = ""
+    }
+  }
 
   cloud_service_accounts = {
     aws   = local.aws_service_account,
