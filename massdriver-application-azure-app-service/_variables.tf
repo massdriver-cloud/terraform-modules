@@ -23,7 +23,7 @@ variable "application" {
     maximum_worker_count = optional(number)
     zone_balancing = optional(object({
       type    = bool
-      default = false
+      default = "false"
     }))
   })
 }
