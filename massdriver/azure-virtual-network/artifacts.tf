@@ -1,4 +1,15 @@
 locals {
+  split_name_prefix                 = split("-", var.md_metadata.name_prefix)
+  virtual_network_human_name        = "Beebz Netz"
+  virtual_network_region_human_name = "South Africa North"
+
+  # https://developer.hashicorp.com/terraform/language/functions/templatefile
+  human_friendly_name = templatefile("${path.module}/slug.html.tftpl", {
+    virtual_network_human_name        = local.virtual_network_human_name,
+    virtual_network_region_human_name = local.virtual_network_region_human_name
+  })
+  # ChatGPT, privision this module, take the the value of `human_slug` and make it more clear, give me 100 results.
+
   artifact_virtual_network = {
     data = {
       infrastructure = {
@@ -18,6 +29,7 @@ locals {
     specs = {
       azure = {
         region = azurerm_virtual_network.main.location
+        # This feels useful
         # resource_group_name = ""
       }
     }
@@ -27,8 +39,6 @@ locals {
 resource "massdriver_artifact" "virtual_network" {
   field                = "virtual_network"
   provider_resource_id = azurerm_virtual_network.main.id
-  # We need to inspect these evvvverryyyywhere. I mean everywheree. All of GCP, I don't know about AWS, all of Azure
-  # There's not much consistency and in some places it's v gross in the UI
-  name     = "Virtual Network ${var.md_metadata.name_prefix}"
-  artifact = jsonencode(local.artifact_virtual_network)
+  name                 = local.human_friendly_name
+  artifact             = jsonencode(local.artifact_virtual_network)
 }

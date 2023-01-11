@@ -21,7 +21,6 @@ locals {
       }
     }
     specs = {
-      # human_friendly_name = local.human_friendly_name
       azure = {
         region = var.region
         # resource_group_name = ""
