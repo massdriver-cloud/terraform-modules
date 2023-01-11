@@ -21,10 +21,7 @@ variable "application" {
     sku_name             = string
     minimum_worker_count = optional(number)
     maximum_worker_count = optional(number)
-    zone_balancing = optional(object({
-      type    = bool
-      default = "false"
-    }))
+    zone_balancing       = optional(bool)
   })
 }
 
