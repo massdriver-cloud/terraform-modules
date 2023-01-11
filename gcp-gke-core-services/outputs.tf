@@ -1,4 +1,4 @@
 output "kubernetes_token" {
-  value     = lookup(kubernetes_secret_v1.main.data, "token")
+  value     = lookup(module.core_services_service_account.secret.data, "token")
   sensitive = true
 }
