@@ -23,11 +23,7 @@ variable "application" {
     maximum_worker_count = optional(number)
     zone_balancing       = optional(bool)
   })
-  default = [
-    {
-      zone_balancing       = false
-    }
-  ]
+  default = []
 }
 
 variable "contact_email" {
