@@ -29,6 +29,7 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_labels"></a> [labels](#input\_labels) | n/a | `any` | n/a | yes |
 | <a name="input_name"></a> [name](#input\_name) | n/a | `string` | n/a | yes |
+| <a name="input_namespace"></a> [namespace](#input\_namespace) | n/a | `string` | n/a | yes |
 
 ## Outputs
 
