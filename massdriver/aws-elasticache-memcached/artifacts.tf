@@ -1,9 +1,9 @@
 locals {
-  clustered_endpoint     = aws_elasticache_replication_group.main.configuration_endpoint_address
-  non_clustered_endpoint = aws_elasticache_replication_group.main.primary_endpoint_address
+  clustered_endpoint     = aws_elasticache_cluster.main.configuration_endpoint_address
+  non_clustered_endpoint = aws_elasticache_cluster.main.primary_endpoint_address
 
   data_infrastructure = {
-    arn = aws_elasticache_replication_group.main.arn
+    arn = aws_elasticache_cluster.main.arn
   }
   data_authentication = {
     hostname = var.cluster_mode_enabled ? local.clustered_endpoint : local.non_clustered_endpoint
@@ -12,8 +12,8 @@ locals {
     port     = 6379
   }
   specs_cache = {
-    "engine"  = "redis"
-    "version" = aws_elasticache_replication_group.main.engine_version_actual
+    "engine"  = "memcached"
+    "version" = aws_elasticache_cluster.main.engine_version_actual
   }
 
   artifact_authentication = {
@@ -30,7 +30,7 @@ locals {
 
 resource "massdriver_artifact" "authentication" {
   field                = "authentication"
-  provider_resource_id = aws_elasticache_replication_group.main.arn
+  provider_resource_id = aws_elasticache_cluster.main.arn
   name                 = "${var.md_metadata.name_prefix}: Elasticache Redis"
   artifact             = jsonencode(local.artifact_authentication)
 }

@@ -2,7 +2,7 @@
 
 locals {
   member_clusters_count = var.cluster_mode_enabled ? (var.node_groups * (var.replicas + 1)) : var.replicas + 1
-  member_clusters_list  = tolist(aws_elasticache_replication_group.main.member_clusters)
+  member_clusters_list  = tolist(aws_elasticache_cluster.main.member_clusters)
 
   cpu_utilization_threshold        = "90"
   engine_cpu_utilization_threshold = "90"
@@ -20,7 +20,7 @@ module "engine_cpu_utilization_alarm" {
   count         = local.member_clusters_count
   sns_topic_arn = module.alarm_channel.arn
   depends_on = [
-    aws_elasticache_replication_group.main
+    aws_elasticache_cluster.main
   ]
 
   md_metadata         = var.md_metadata
@@ -45,7 +45,7 @@ module "cpu_utilization_alarm" {
   count         = local.member_clusters_count
   sns_topic_arn = module.alarm_channel.arn
   depends_on = [
-    aws_elasticache_replication_group.main
+    aws_elasticache_cluster.main
   ]
 
   md_metadata         = var.md_metadata
@@ -70,7 +70,7 @@ module "memory_usage_alarm" {
   count         = local.member_clusters_count
   sns_topic_arn = module.alarm_channel.arn
   depends_on = [
-    aws_elasticache_replication_group.main
+    aws_elasticache_cluster.main
   ]
 
   md_metadata         = var.md_metadata
