@@ -41,3 +41,10 @@ resource "kubernetes_cluster_role_binding_v1" "massdriver-cloud-provisioner" {
     namespace = kubernetes_namespace_v1.md-core-services.metadata.0.name
   }
 }
+
+// Doing a data lookup after secret creation so we can get the generated token
+data "kubernetes_secret_v1" "massdriver-cloud-provisioner_token" {
+  metadata {
+    name = kubernetes_secret_v1.massdriver-cloud-provisioner_token.metadata.0.name
+  }
+}
