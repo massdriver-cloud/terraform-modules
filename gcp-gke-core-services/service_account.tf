@@ -5,7 +5,7 @@ resource "kubernetes_namespace_v1" "md-core-services" {
   }
 }
 
-resource "kubernetes_service_account_v1" "cloud_provisioner" {
+resource "kubernetes_service_account_v1" "massdriver-cloud-provisioner" {
   metadata {
     name      = "massdriver-cloud-provisioner"
     labels    = var.md_metadata.default_tags
@@ -13,18 +13,18 @@ resource "kubernetes_service_account_v1" "cloud_provisioner" {
   }
 }
 
-resource "kubernetes_secret_v1" "main" {
+resource "kubernetes_secret_v1" "massdriver-cloud-provisioner_token" {
   metadata {
     name      = "massdriver-cloud-provisioner"
     namespace = kubernetes_namespace_v1.md-core-services.metadata.0.name
     annotations = {
-      "kubernetes.io/service-account.name" = kubernetes_service_account_v1.cloud_provisioner.metadata.0.name
+      "kubernetes.io/service-account.name" = kubernetes_service_account_v1.massdriver-cloud-provisioner.metadata.0.name
     }
   }
   type = "kubernetes.io/service-account-token"
 }
 
-resource "kubernetes_cluster_role_binding" "massdriver-cloud-provisioner" {
+resource "kubernetes_cluster_role_binding_v1" "massdriver-cloud-provisioner" {
   metadata {
     name   = "massdriver-cloud-provisioner"
     labels = var.md_metadata.default_tags
@@ -36,7 +36,7 @@ resource "kubernetes_cluster_role_binding" "massdriver-cloud-provisioner" {
   }
   subject {
     kind      = "ServiceAccount"
-    name      = kubernetes_service_account_v1.cloud_provisioner.metadata.0.name
+    name      = kubernetes_service_account_v1.massdriver-cloud-provisioner.metadata.0.name
     namespace = kubernetes_namespace_v1.md-core-services.metadata.0.name
   }
 }
