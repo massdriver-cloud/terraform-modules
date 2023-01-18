@@ -6,6 +6,7 @@ variable "domain_name" {
 variable "subject_alternative_names" {
   type        = set(string)
   description = "Set of domains that should be SANs in the issued certificate."
+  default     = []
 }
 
 variable "private_zone" {
