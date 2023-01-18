@@ -3,8 +3,13 @@ variable "name" {
 }
 
 variable "endpoint_configuration" {
-  type    = string
-  default = "EDGE"
+  type        = string
+  description = "Regional or Global API Gateway. Accepted values are \"EDGE\" or \"REGIONAL\""
+
+  validation {
+    condition     = contains(["REGIONAL", "EDGE"], var.endpoint_configuration)
+    error_message = "Allowed values are \"EDGE\" or \"REGIONAL\""
+  }
 }
 
 variable "stage_name" {
@@ -21,8 +26,4 @@ variable "hosted_zone_id" {
 
 variable "certificate_arn" {
   type = string
-}
-
-variable "enable_ssl" {
-  type = bool
 }

@@ -1,6 +1,6 @@
 locals {
-  enable_edge_ssl     = var.enable_ssl && var.certificate_arn != null && var.endpoint_configuration == "EDGE"
-  enable_regional_ssl = var.enable_ssl && var.certificate_arn != null && var.endpoint_configuration == "REGIONAL"
+  is_edge     = var.endpoint_configuration == "EDGE"
+  is_regional = var.endpoint_configuration == "REGIONAL"
 }
 
 resource "aws_api_gateway_rest_api" "main" {
@@ -70,8 +70,8 @@ resource "aws_api_gateway_stage" "main" {
 }
 
 resource "aws_api_gateway_domain_name" "main" {
-  certificate_arn          = local.enable_edge_ssl ? var.certificate_arn : null
-  regional_certificate_arn = local.enable_regional_ssl ? var.certificate_arn : null
+  certificate_arn          = local.is_edge ? var.certificate_arn : null
+  regional_certificate_arn = local.is_regional ? var.certificate_arn : null
   domain_name              = var.domain
 
   endpoint_configuration {
@@ -92,7 +92,7 @@ resource "aws_route53_record" "main" {
 
   alias {
     evaluate_target_health = true
-    name                   = var.endpoint_configuration == "REGIONAL" ? aws_api_gateway_domain_name.main.regional_domain_name : aws_api_gateway_domain_name.main.cloudfront_domain_name
-    zone_id                = var.endpoint_configuration == "REGIONAL" ? aws_api_gateway_domain_name.main.regional_zone_id : aws_api_gateway_domain_name.main.cloudfront_zone_id
+    name                   = local.is_regional ? aws_api_gateway_domain_name.main.regional_domain_name : aws_api_gateway_domain_name.main.cloudfront_domain_name
+    zone_id                = local.is_regional ? aws_api_gateway_domain_name.main.regional_zone_id : aws_api_gateway_domain_name.main.cloudfront_zone_id
   }
 }
