@@ -24,7 +24,7 @@ module "ingress_nginx" {
   kubernetes_cluster = var.kubernetes_cluster_artifact
   md_metadata        = var.md_metadata
   release            = "ingress-nginx"
-  namespace          = module.core_services_service_account.namespace.metadata.0.name
+  namespace          = kubernetes_namespace_v1.md-core-services.metadata.0.name
 }
 
 module "external_dns" {
@@ -33,7 +33,7 @@ module "external_dns" {
   kubernetes_cluster      = var.kubernetes_cluster_artifact
   md_metadata             = var.md_metadata
   release                 = "external-dns"
-  namespace               = module.core_services_service_account.namespace.metadata.0.name
+  namespace               = kubernetes_namespace_v1.md-core-services.metadata.0.name
   cloud_dns_managed_zones = local.cloud_dns_managed_zones_to_domain_map
   gcp_project_id          = var.gcp_config.project_id
 }
@@ -44,6 +44,6 @@ module "cert_manager" {
   kubernetes_cluster = var.kubernetes_cluster_artifact
   md_metadata        = var.md_metadata
   release            = "cert-manager"
-  namespace          = module.core_services_service_account.namespace.metadata.0.name
+  namespace          = kubernetes_namespace_v1.md-core-services.metadata.0.name
   gcp_project_id     = var.gcp_config.project_id
 }
