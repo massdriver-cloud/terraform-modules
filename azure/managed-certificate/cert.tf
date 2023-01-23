@@ -1,15 +1,9 @@
-data "azurerm_key_vault_secret" "main" {
-  name         = var.name
-  key_vault_id = azurerm_key_vault.main.id
-}
 
+
+# https://learn.microsoft.com/en-us/azure/api-management/configure-custom-domain?tabs=key-vault#domain-certificate-options
 resource "azurerm_key_vault_certificate" "main" {
   name         = var.name
   key_vault_id = azurerm_key_vault.main.id
-
-  certificate {
-    contents = data.azurerm_key_vault_secret.main.value
-  }
 
   certificate_policy {
     issuer_parameters {

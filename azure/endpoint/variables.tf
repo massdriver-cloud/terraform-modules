@@ -10,11 +10,6 @@ variable "subdomain" {
   type = string
 }
 
-
-variable "azure_service_principal" {
-  type = any
-}
-
 variable "tags" {
   type = any
 }
