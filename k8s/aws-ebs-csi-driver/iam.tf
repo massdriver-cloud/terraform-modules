@@ -1,7 +1,8 @@
 locals {
   eks_oidc_short = replace(var.eks_oidc_issuer_url, "https://", "")
   cluster_name   = element(split("/", data.aws_arn.eks_cluster.resource), 1)
-  // from https://docs.aws.amazon.com/eks/latest/userguide/csi-iam-role.html
+
+  // namespace, service_account_name and policy from https://docs.aws.amazon.com/eks/latest/userguide/csi-iam-role.html
   namespace             = "kube-system"
   service_account_name  = "ebs-csi-controller-sa"
   ebs_csi_driver_policy = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
