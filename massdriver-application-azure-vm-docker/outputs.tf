@@ -1,3 +1,3 @@
-output "cloud_init_rendered" {
-  value = local.cloud_init_rendered
+output "thing" {
+  value = module.public_endpoint.0.backend_address_pool
 }

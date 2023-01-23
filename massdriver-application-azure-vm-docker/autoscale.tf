@@ -37,7 +37,7 @@
 # }
 
 # resource "azurerm_monitor_autoscale_setting" "main" {
-#   name                = var.md_metadata.name_prefix
+#   name                = var.name
 #   resource_group_name = azurerm_resource_group.main.name
 #   location            = azurerm_resource_group.main.location
 #   target_resource_id  = azurerm_linux_virtual_machine_scale_set.main.id

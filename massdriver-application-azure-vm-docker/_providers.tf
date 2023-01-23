@@ -1,7 +1,7 @@
 terraform {
   required_providers {
-    jq = {
-      source = "massdriver-cloud/jq"
+    mdxc = {
+      source = "massdriver-cloud/mdxc"
     }
 
     massdriver = {
@@ -12,8 +12,28 @@ terraform {
       source = "massdriver-cloud/utility"
     }
 
-    mdxc = {
-      source = "massdriver-cloud/mdxc"
+    azurerm = {
+      source = "hashicorp/azurerm"
     }
+  }
+}
+
+
+provider "azurerm" {
+  features {}
+
+  client_id       = var.azure_service_principal.data.client_id
+  tenant_id       = var.azure_service_principal.data.tenant_id
+  client_secret   = var.azure_service_principal.data.client_secret
+  subscription_id = var.azure_service_principal.data.subscription_id
+}
+
+
+provider "mdxc" {
+  azure = {
+    client_id       = var.azure_service_principal.data.client_id
+    tenant_id       = var.azure_service_principal.data.tenant_id
+    client_secret   = var.azure_service_principal.data.client_secret
+    subscription_id = var.azure_service_principal.data.subscription_id
   }
 }

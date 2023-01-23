@@ -41,7 +41,7 @@
 #   display_name = "CPU usage"
 #   message      = "High CPU usage"
 
-#   alarm_name       = "${var.md_metadata.name_prefix}-highCPUUsage"
+#   alarm_name       = "${var.name}-highCPUUsage"
 #   operator         = local.alarms.cpu_metric_alert.operator
 #   metric_name      = "Percentage CPU"
 #   metric_namespace = "microsoft.compute/virtualmachinescalesets"

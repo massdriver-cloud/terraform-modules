@@ -1,4 +1,12 @@
-variable "md_metadata" {
+variable "azure_service_principal" {
+  type = any
+}
+
+variable "name" {
+  type = string
+}
+
+variable "tags" {
   type = any
 }
 
@@ -20,15 +28,16 @@ variable "container" {
 variable "health_check" {
   type = object({
     port = optional(number, 80)
-    path = optional(string, "/health")
+    path = optional(string, "/")
   })
+  default = {
+    path = "/"
+  }
 }
 
-variable "auto_scaling" {
-  type = object({
-    enabled = bool
-
-  })
+variable "auto_scaling_enabled" {
+  type    = bool
+  default = false
 }
 
 variable "endpoint" {
@@ -37,6 +46,9 @@ variable "endpoint" {
     zone_id   = optional(string, null)
     subdomain = optional(string, null)
   })
+  default = {
+    enabled = false
+  }
 }
 
 # variable "vm" {

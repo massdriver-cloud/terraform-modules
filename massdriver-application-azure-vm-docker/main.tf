@@ -3,19 +3,22 @@ locals {
   vnet_name            = element(local.split_vnet_id, length(local.split_vnet_id) - 1)
   vnet_resource_group  = element(local.split_vnet_id, index(local.split_vnet_id, "resourceGroups") + 1)
   max_length           = 24
-  storage_account_name = substr(replace(var.md_metadata.name_prefix, "/[^a-z0-9]/", ""), 0, local.max_length)
+  storage_account_name = substr(replace(var.name, "/[^a-z0-9]/", ""), 0, local.max_length)
 }
 
 module "application" {
-  source  = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=22d422e"
-  name    = "sp-${var.md_metadata.name_prefix}"
-  service = "function"
+  # source  = "github.com/massdriver-cloud/terraform-modules//massdriver-application"
+  source              = "/Users/wbeebe/repos/massdriver-cloud/_azure-identity/terraform-modules/massdriver-application"
+  name                = var.name
+  service             = "function"
+  resource_group_name = azurerm_resource_group.main.name
+  location            = azurerm_resource_group.main.location
 }
 
 resource "azurerm_resource_group" "main" {
-  name     = var.md_metadata.name_prefix
+  name     = var.name
   location = var.location
-  tags     = var.md_metadata.default_tags
+  tags     = var.tags
 }
 
 resource "random_password" "main" {
@@ -26,22 +29,24 @@ resource "random_password" "main" {
   min_numeric = 1
 }
 
-resource "tls_private_key" "main" {
-  algorithm = "RSA"
-  rsa_bits  = 4096
-}
+# resource "tls_private_key" "main" {
+#   algorithm = "RSA"
+#   rsa_bits  = 4096
+# }
+
+
 
 resource "azurerm_linux_virtual_machine_scale_set" "main" {
-  name                            = var.md_metadata.name_prefix
+  name                            = var.name
   resource_group_name             = azurerm_resource_group.main.name
   location                        = azurerm_resource_group.main.location
   disable_password_authentication = false
   admin_username                  = "placeholder"
   admin_password                  = random_password.main.result
-  admin_ssh_key {
-    username   = "placeholder"
-    public_key = tls_private_key.main.public_key_openssh
-  }
+  # admin_ssh_key {
+  #   username   = "placeholder"
+  #   public_key = tls_private_key.main.public_key_openssh
+  # }
 
   # instances                       = var.auto_scaling.enabled ? var.scaleset.instances : 1
   # TODO: better var
@@ -50,17 +55,17 @@ resource "azurerm_linux_virtual_machine_scale_set" "main" {
   custom_data = base64encode(local.cloud_init_rendered)
   # health_probe_id              = var.endpoint.enabled ? module.public_endpoint[0].azurerm_lb_probe : null
   extension_operations_enabled = false
-  tags                         = var.md_metadata.default_tags
+  tags                         = var.tags
 
   network_interface {
-    name                      = var.md_metadata.name_prefix
+    name                      = var.name
     primary                   = true
     network_security_group_id = var.endpoint.enabled ? module.public_endpoint[0].azurerm_network_security_group_id : null
 
     dynamic "ip_configuration" {
       for_each = var.endpoint.enabled ? [] : [1]
       content {
-        name      = var.md_metadata.name_prefix
+        name      = var.name
         subnet_id = data.azurerm_subnet.default.id
         primary   = true
       }
@@ -69,11 +74,12 @@ resource "azurerm_linux_virtual_machine_scale_set" "main" {
     dynamic "ip_configuration" {
       for_each = var.endpoint.enabled ? [1] : []
       content {
-        name                                   = var.md_metadata.name_prefix
-        subnet_id                              = data.azurerm_subnet.default.id
-        load_balancer_backend_address_pool_ids = module.public_endpoint[0].load_balancer_backend_address_pool_ids
-        load_balancer_inbound_nat_rules_ids    = module.public_endpoint[0].load_balancer_inbound_nat_rules_ids
-        primary                                = true
+        name      = var.name
+        subnet_id = data.azurerm_subnet.default.id
+        # load_balancer_backend_address_pool_ids = module.public_endpoint.0.load_balancer_backend_address_pool_ids
+        # load_balancer_inbound_nat_rules_ids    = module.public_endpoint.0.load_balancer_inbound_nat_rules_ids
+        application_gateway_backend_address_pool_ids = module.public_endpoint.0.load_balancer_backend_address_pool_ids
+        primary                                      = true
         # public_ip_address {
         #   name = "public"
         # }
@@ -84,9 +90,9 @@ resource "azurerm_linux_virtual_machine_scale_set" "main" {
   # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_virtual_machine_scale_set#storage_account_uri
   # Passing a null value will utilize a Managed Storage Account to store Boot Diagnostics.
   # might be able to drop the storage account for this
-  boot_diagnostics {
-    storage_account_uri = azurerm_storage_account.main.primary_blob_endpoint
-  }
+  # boot_diagnostics {
+  #   storage_account_uri = azurerm_storage_account.main.primary_blob_endpoint
+  # }
 
   os_disk {
     caching              = "ReadWrite"
@@ -95,7 +101,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "main" {
 
   identity {
     type         = "UserAssigned"
-    identity_ids = [azurerm_user_assigned_identity.main.id]
+    identity_ids = [module.application.identity.azure_application_identity.resource_id]
   }
 
   provision_vm_agent = true
