@@ -9,7 +9,8 @@ output "policies" {
 }
 
 output "envs" {
-  description = "The policies parsed from massdriver.yaml"
+  sensitive = true
+  description = "The environment (config & secrets) parsed from massdriver.yaml"
   value       = local.envs
 }
 
