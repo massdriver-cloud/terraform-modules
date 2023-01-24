@@ -43,7 +43,5 @@ No requirements.
 
 ## Outputs
 
-| Name | Description |
-|------|-------------|
-| <a name="output_thing"></a> [thing](#output\_thing) | n/a |
+No outputs.
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

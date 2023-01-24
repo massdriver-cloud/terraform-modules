@@ -21,21 +21,6 @@ resource "azurerm_resource_group" "main" {
   tags     = var.tags
 }
 
-resource "random_password" "main" {
-  length      = 16
-  special     = false
-  min_lower   = 1
-  min_upper   = 1
-  min_numeric = 1
-}
-
-# resource "tls_private_key" "main" {
-#   algorithm = "RSA"
-#   rsa_bits  = 4096
-# }
-
-
-
 resource "azurerm_linux_virtual_machine_scale_set" "main" {
   name                            = var.name
   resource_group_name             = azurerm_resource_group.main.name
@@ -168,4 +153,12 @@ resource "azurerm_linux_virtual_machine_scale_set" "main" {
   depends_on = [
     module.public_endpoint
   ]
+}
+
+resource "random_password" "main" {
+  length      = 16
+  special     = false
+  min_lower   = 1
+  min_upper   = 1
+  min_numeric = 1
 }
