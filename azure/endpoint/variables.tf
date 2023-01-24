@@ -14,6 +14,10 @@ variable "tags" {
   type = any
 }
 
+variable "resource_group_name" {
+  type = string
+}
+
 variable "dns_zone_name" {
   type = string
 }
@@ -39,5 +43,13 @@ variable "health_check" {
 }
 
 variable "subnet_id" {
+  type = string
+}
+
+variable "user_assigned_identity_principal_id" {
+  type = string
+}
+
+variable "user_assigned_identity_resource_id" {
   type = string
 }

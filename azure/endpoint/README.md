@@ -27,7 +27,6 @@ No requirements.
 | [azurerm_network_security_group.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_security_group) | resource |
 | [azurerm_network_security_rule.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_security_rule) | resource |
 | [azurerm_public_ip.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/public_ip) | resource |
-| [azurerm_user_assigned_identity.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/user_assigned_identity) | resource |
 | [azurerm_dns_zone.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/dns_zone) | data source |
 | [azurerm_public_ip.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/public_ip) | data source |
 | [azurerm_resource_group.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/resource_group) | data source |
@@ -42,9 +41,12 @@ No requirements.
 | <a name="input_health_check"></a> [health\_check](#input\_health\_check) | n/a | <pre>object({<br>    path = optional(string, "/")<br>    port = optional(number, 80)<br>  })</pre> | <pre>{<br>  "path": "/",<br>  "port": 80<br>}</pre> | no |
 | <a name="input_name"></a> [name](#input\_name) | n/a | `string` | n/a | yes |
 | <a name="input_port"></a> [port](#input\_port) | n/a | `number` | `80` | no |
+| <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | n/a | `string` | n/a | yes |
 | <a name="input_subdomain"></a> [subdomain](#input\_subdomain) | n/a | `string` | n/a | yes |
 | <a name="input_subnet_id"></a> [subnet\_id](#input\_subnet\_id) | n/a | `string` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | n/a | `any` | n/a | yes |
+| <a name="input_user_assigned_identity_principal_id"></a> [user\_assigned\_identity\_principal\_id](#input\_user\_assigned\_identity\_principal\_id) | n/a | `string` | n/a | yes |
+| <a name="input_user_assigned_identity_resource_id"></a> [user\_assigned\_identity\_resource\_id](#input\_user\_assigned\_identity\_resource\_id) | n/a | `string` | n/a | yes |
 
 ## Outputs
 
@@ -54,4 +56,5 @@ No requirements.
 | <a name="output_backend_address_pool"></a> [backend\_address\_pool](#output\_backend\_address\_pool) | n/a |
 | <a name="output_load_balancer_backend_address_pool_ids"></a> [load\_balancer\_backend\_address\_pool\_ids](#output\_load\_balancer\_backend\_address\_pool\_ids) | backend\_address\_pool https://github.com/hashicorp/terraform-provider-azurerm/issues/16855 this can be 1-many regional load balancers |
 | <a name="output_load_balancer_inbound_nat_rules_ids"></a> [load\_balancer\_inbound\_nat\_rules\_ids](#output\_load\_balancer\_inbound\_nat\_rules\_ids) | n/a |
+| <a name="output_v"></a> [v](#output\_v) | n/a |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

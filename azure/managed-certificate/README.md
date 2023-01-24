@@ -24,7 +24,6 @@ No modules.
 | [azurerm_key_vault_access_policy.terraform](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/key_vault_access_policy) | resource |
 | [azurerm_key_vault_certificate.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/key_vault_certificate) | resource |
 | [azurerm_client_config.current](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/client_config) | data source |
-| [azurerm_key_vault_certificate.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/key_vault_certificate) | data source |
 | [azurerm_resource_group.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/resource_group) | data source |
 
 ## Inputs
@@ -40,7 +39,13 @@ No modules.
 
 | Name | Description |
 |------|-------------|
+| <a name="output_azurerm_key_vault_certificate_secret_id"></a> [azurerm\_key\_vault\_certificate\_secret\_id](#output\_azurerm\_key\_vault\_certificate\_secret\_id) | n/a |
 | <a name="output_key_vault_id"></a> [key\_vault\_id](#output\_key\_vault\_id) | n/a |
+| <a name="output_key_vault_secret_id"></a> [key\_vault\_secret\_id](#output\_key\_vault\_secret\_id) | n/a |
 | <a name="output_ssl_certificate_data"></a> [ssl\_certificate\_data](#output\_ssl\_certificate\_data) | n/a |
 | <a name="output_ssl_certificate_name"></a> [ssl\_certificate\_name](#output\_ssl\_certificate\_name) | n/a |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+
+
+Refernce Links
+- https://terraformguru.com/terraform-real-world-on-azure-cloud/31-Azure-Application-Gateway-SSL-SelfSigned-KeyVault/

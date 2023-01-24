@@ -1,5 +1,5 @@
 data "azurerm_resource_group" "main" {
-  name = "local-beebe-func-001"
+  name = var.resource_group_name
 }
 
 resource "azurerm_public_ip" "main" {
@@ -8,55 +8,33 @@ resource "azurerm_public_ip" "main" {
   location            = data.azurerm_resource_group.main.location
   allocation_method   = "Static"
   sku                 = "Standard"
-  sku_tier            = "Regional"
-  domain_name_label   = var.subdomain
-  tags                = var.tags
+  # SKU Standard_v2 can only reference public ip with Regional Tier
+  sku_tier          = "Regional"
+  domain_name_label = var.subdomain
+  tags              = var.tags
 }
 
-# resource "azurerm_lb" "main" {
-#   name                = var.name
-#   resource_group_name = data.azurerm_resource_group.main.name
+# https://learn.microsoft.com/en-us/azure/developer/terraform/deploy-application-gateway-v2#2-implement-the-terraform-code
+
+# https://learn.microsoft.com/en-us/azure/developer/terraform/deploy-application-gateway-v2
+# resource "azurerm_network_interface" "main" {
+#   name                = "nic"
 #   location            = data.azurerm_resource_group.main.location
-#   sku                 = "Standard"
-#   sku_tier            = "Regional"
-#   tags                = var.tags
+#   resource_group_name = data.azurerm_resource_group.main.name
 
-#   frontend_ip_configuration {
-#     name                 = var.name
-#     public_ip_address_id = azurerm_public_ip.main.id
+#   ip_configuration {
+#     name                          = "nic-ipconfig"
+#     subnet_id                     = var.subnet_id
+#     private_ip_address_allocation = "Dynamic"
 #   }
 # }
 
-# resource "azurerm_lb_backend_address_pool" "main" {
-#   name            = var.name
-#   loadbalancer_id = azurerm_lb.main.id
-# }
+output "v" {
+  value = azurerm_application_gateway.main.backend_address_pool
+}
 
-# resource "azurerm_lb_probe" "main" {
-#   name            = var.name
-#   loadbalancer_id = azurerm_lb.main.id
-#   protocol        = "Http"
-#   port            = var.health_check.port
-#   request_path    = var.health_check.path
-# }
-
-# resource "azurerm_lb_nat_pool" "main" {
-#   resource_group_name            = data.azurerm_resource_group.main.name
-#   loadbalancer_id                = azurerm_lb.main.id
-#   name                           = var.name
-#   protocol                       = "Tcp"
-#   frontend_port_start            = 5000
-#   frontend_port_end              = 6000
-#   backend_port                   = 80
-#   frontend_ip_configuration_name = azurerm_lb.main.frontend_ip_configuration.0.name
-# }
-
-# resource "azurerm_lb_outbound_rule" "main" {
-#   name            = var.name
-#   loadbalancer_id = azurerm_lb.main.id
-#   frontend_ip_configuration {
-#     name = azurerm_lb.main.frontend_ip_configuration.0.name
-#   }
-#   backend_address_pool_id = azurerm_lb_backend_address_pool.main.id
-#   protocol                = "Tcp"
+# resource "azurerm_network_interface_application_gateway_backend_address_pool_association" "main" {
+#   network_interface_id    = azurerm_network_interface.main.id
+#   ip_configuration_name   = "nic-ipconfig"
+#   backend_address_pool_id = azurerm_application_gateway.main.backend_address_pool.*.id
 # }
