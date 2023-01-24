@@ -7,5 +7,6 @@ output "service_account" {
 }
 
 output "secret" {
-  value = kubernetes_secret_v1.main
+  value     = kubernetes_secret_v1.main
+  sensitive = true
 }
