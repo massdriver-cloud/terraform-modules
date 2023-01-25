@@ -58,6 +58,8 @@ resource "azurerm_key_vault_access_policy" "service" {
   ]
 }
 
+# Sometimes after the key vault is created, it's not ready yet
+# This is advice from issues on GH.
 resource "time_sleep" "wait_240_seconds" {
   depends_on = [azurerm_key_vault.main]
 
