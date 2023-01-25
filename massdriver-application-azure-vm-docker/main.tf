@@ -28,14 +28,10 @@ resource "azurerm_linux_virtual_machine_scale_set" "main" {
   disable_password_authentication = false
   admin_username                  = "placeholder"
   admin_password                  = random_password.main.result
-  # admin_ssh_key {
-  #   username   = "placeholder"
-  #   public_key = tls_private_key.main.public_key_openssh
-  # }
-
   # instances                       = var.auto_scaling.enabled ? var.scaleset.instances : 1
   # TODO: better var
-  instances   = 1
+  instances = 1
+  # TODO: configurable
   sku         = "Standard_F2"
   custom_data = base64encode(local.cloud_init_rendered)
   # health_probe_id              = var.endpoint.enabled ? module.public_endpoint[0].azurerm_lb_probe : null
@@ -43,9 +39,9 @@ resource "azurerm_linux_virtual_machine_scale_set" "main" {
   tags                         = var.tags
 
   network_interface {
-    name                      = var.name
-    primary                   = true
-    network_security_group_id = var.endpoint.enabled ? module.public_endpoint[0].azurerm_network_security_group_id : null
+    name    = var.name
+    primary = true
+    # network_security_group_id = var.endpoint.enabled ? module.public_endpoint[0].azurerm_network_security_group_id : null
 
     dynamic "ip_configuration" {
       for_each = var.endpoint.enabled ? [] : [1]

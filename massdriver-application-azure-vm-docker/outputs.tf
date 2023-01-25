@@ -1,3 +1,7 @@
-# output "thing" {
-#   value = module.public_endpoint.0.backend_address_pool
-# }
+output "id" {
+  value = module.application.id
+}
+
+output "cloud_init_rendered" {
+  value = local.cloud_init_rendered
+}

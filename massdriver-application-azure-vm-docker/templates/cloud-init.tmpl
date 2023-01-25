@@ -41,7 +41,7 @@ write_files:
         [Service]
         Restart=always
         ExecStartPre=-/usr/bin/docker rm container
-        ExecStart=/usr/bin/docker run --rm --name container -p 4000:${container_port} ${container_image}:${container_tag}
+        ExecStart=/usr/bin/docker run --rm --name container -p 4000:${container_port} ${environment_variables} ${container_image}:${container_tag}
         ExecStop=/usr/bin/docker stop -t 2 container
 
   - owner: www-data:www-data

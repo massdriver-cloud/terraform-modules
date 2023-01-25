@@ -1,7 +1,3 @@
-variable "azure_service_principal" {
-  type = any
-}
-
 variable "name" {
   type = string
 }
@@ -23,6 +19,10 @@ variable "container" {
     repository = string
     tag        = optional(string, "latest")
   })
+}
+
+variable "port" {
+  type = number
 }
 
 variable "health_check" {
@@ -51,22 +51,6 @@ variable "endpoint" {
   }
 }
 
-# variable "vm" {
-#   type = object({
-#     vm_size        = string
-#     disk_size      = number
-#     disk_type      = string
-#     admin_username = string
-#   })
-# }
-
-# variable "scaleset" {
-#   type = object({
-#     enable_scaleset = bool
-#     instances       = number
-#     max_instances   = number
-#   })
-# }
 
 # variable "autoscaling" {
 #   type = any
@@ -76,28 +60,4 @@ variable "endpoint" {
 #   type = object({
 #     mode = string
 #   })
-# }
-
-# variable "dns" {
-#   type = any
-# }
-
-# variable "name" {
-#   type = string
-# }
-
-# variable "tags" {
-#   type = any
-# }
-
-# variable "virtual_network_id" {
-#   type = string
-# }
-
-
-
-
-
-# variable "contact_email" {
-#   type = string
 # }
