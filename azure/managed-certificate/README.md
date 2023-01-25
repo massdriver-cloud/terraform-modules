@@ -45,7 +45,7 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_dns_zone_resource_group_name"></a> [dns\_zone\_resource\_group\_name](#input\_dns\_zone\_resource\_group\_name) | n/a | `string` | n/a | yes |
 | <a name="input_full_domain"></a> [full\_domain](#input\_full\_domain) | n/a | `string` | n/a | yes |
-| <a name="input_identity"></a> [identity](#input\_identity) | n/a | `any` | n/a | yes |
+| <a name="input_gateway_identity_principal_id"></a> [gateway\_identity\_principal\_id](#input\_gateway\_identity\_principal\_id) | n/a | `string` | n/a | yes |
 | <a name="input_name"></a> [name](#input\_name) | n/a | `string` | n/a | yes |
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | n/a | `string` | n/a | yes |
 

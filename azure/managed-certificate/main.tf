@@ -50,7 +50,7 @@ resource "azurerm_key_vault_access_policy" "service" {
   key_vault_id = azurerm_key_vault.main.id
 
   tenant_id = data.azurerm_client_config.current.tenant_id
-  object_id = var.identity.principal_id
+  object_id = var.gateway_identity_principal_id
 
   # the certificate is accessed like a secret...
   secret_permissions = [
@@ -58,8 +58,8 @@ resource "azurerm_key_vault_access_policy" "service" {
   ]
 }
 
-# Sometimes after the key vault is created, it's not ready yet
-# This is advice from issues on GH.
+# Often, right after the key vault is created, it's not ready.
+# Waiting for a certain period of time for it to be ready, is advice from issues on GH.
 resource "time_sleep" "wait_240_seconds" {
   depends_on = [azurerm_key_vault.main]
 
