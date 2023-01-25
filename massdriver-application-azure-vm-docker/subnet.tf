@@ -28,12 +28,4 @@ resource "azurerm_subnet" "main" {
   virtual_network_name = local.virtual_network_name
   address_prefixes     = [local.cidr]
   service_endpoints    = ["Microsoft.Web", "Microsoft.Storage"]
-  # delegation {
-  #   name = "virtual-network-integration"
-
-  #   service_delegation {
-  #     name    = "Microsoft.Web/serverFarms"
-  #     actions = ["Microsoft.Network/virtualNetworks/subnets/action"]
-  #   }
-  # }
 }
