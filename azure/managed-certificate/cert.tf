@@ -5,6 +5,17 @@ resource "azuread_application" "external_dns" {
   owners       = [data.azuread_client_config.current.object_id]
 }
 
+# A Service Principal? Why not a Managed Identity?
+# Good question! Here, we need to create a "classic" Service Principal
+# So that ACME can create a TXT record in the target DNS zone to verify
+# the domain and create an SSL certificate.
+# ACME lives outside of Azure,
+# things that access Azure from outside the cloud use a Service Principal
+# and explicitly can't use a Managed Identity.
+#
+# I think this changes in AKS though. The request to modify the DNS record
+# would be coming from the AKS pod. That pod can use a Managed Identity,
+# or in the case of AKS, it would use a Managed Indetity via "workload identity".
 resource "azuread_service_principal" "external_dns" {
   application_id = azuread_application.external_dns.application_id
   owners         = [data.azuread_client_config.current.object_id]
