@@ -1,8 +1,11 @@
-# Might be the only way to get SSL termination
-# The load balancer resource in Azure in L4
-# Pushing users to use this.
-#
+# The Application Gateway might be the only way
+# to get SSL termination in Azure (outside of of AKS ngninx / managed servicces)
+# The load balancer resource in Azure in L4 and their docs encourage use of the Gateway.
 
+# These locals feel weird but are the recommended way.
+# If you look at the Gateway resource, these keys tie together various components.
+# It doesn't matter what these keys are, as long as they are unique and connected to
+# the right arguments in this resource.
 locals {
   gateway_ip_configuration_name    = "gateway_ip_name"
   frontend_port_name_http          = "frontend_port_http"
@@ -83,14 +86,13 @@ resource "azurerm_application_gateway" "main" {
   }
 
   probe {
-    name                = local.backend_probe
-    unhealthy_threshold = 2
-    interval            = 30
-    timeout             = 30
-    protocol            = "Http"
-    path                = var.health_check.path
-    port                = 80
-    # host = local.full_domain
+    name                                      = local.backend_probe
+    unhealthy_threshold                       = 2
+    interval                                  = 30
+    timeout                                   = 30
+    protocol                                  = "Http"
+    path                                      = var.health_check.path
+    port                                      = var.health_check.port
     pick_host_name_from_backend_http_settings = true
   }
 

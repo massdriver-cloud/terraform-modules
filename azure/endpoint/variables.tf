@@ -22,10 +22,6 @@ variable "dns_zone_resource_group_name" {
   type = string
 }
 
-variable "port" {
-  type = number
-}
-
 variable "health_check" {
   type = object({
     path = optional(string, "/")

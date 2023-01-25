@@ -38,7 +38,6 @@ No requirements.
 | <a name="input_dns_zone_resource_group_name"></a> [dns\_zone\_resource\_group\_name](#input\_dns\_zone\_resource\_group\_name) | n/a | `string` | n/a | yes |
 | <a name="input_health_check"></a> [health\_check](#input\_health\_check) | n/a | <pre>object({<br>    path = optional(string, "/")<br>    port = optional(number, 80)<br>  })</pre> | <pre>{<br>  "path": "/",<br>  "port": 80<br>}</pre> | no |
 | <a name="input_name"></a> [name](#input\_name) | n/a | `string` | n/a | yes |
-| <a name="input_port"></a> [port](#input\_port) | n/a | `number` | n/a | yes |
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | n/a | `string` | n/a | yes |
 | <a name="input_subdomain"></a> [subdomain](#input\_subdomain) | n/a | `string` | n/a | yes |
 | <a name="input_subnet_id"></a> [subnet\_id](#input\_subnet\_id) | n/a | `string` | n/a | yes |
