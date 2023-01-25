@@ -15,7 +15,7 @@ No requirements.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_managed_certificate"></a> [managed\_certificate](#module\_managed\_certificate) | ../../../managed-certificate/azure/managed-certificate | n/a |
+| <a name="module_managed_certificate"></a> [managed\_certificate](#module\_managed\_certificate) | github.com/massdriver-cloud/terraform-modules//azure/managed-certificate | bf36471 |
 
 ## Resources
 
