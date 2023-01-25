@@ -1,57 +1,68 @@
+data "azuread_client_config" "current" {}
 
+resource "azuread_application" "external_dns" {
+  display_name = "${var.name}-externaldns"
+  owners       = [data.azuread_client_config.current.object_id]
+}
+
+resource "azuread_service_principal" "external_dns" {
+  application_id = azuread_application.external_dns.application_id
+  owners         = [data.azuread_client_config.current.object_id]
+}
+
+resource "azuread_service_principal_password" "external_dns" {
+  service_principal_id = azuread_service_principal.external_dns.id
+}
+
+resource "azurerm_role_assignment" "cert_manager" {
+  for_each             = toset(["Reader", "DNS Zone Contributor"])
+  scope                = "/subscriptions/${data.azurerm_client_config.current.subscription_id}"
+  principal_id         = azuread_service_principal.external_dns.id
+  role_definition_name = each.key
+}
+
+# Creates a private key in PEM format
+resource "tls_private_key" "main" {
+  algorithm = "RSA"
+}
+
+resource "acme_registration" "main" {
+  account_key_pem = tls_private_key.main.private_key_pem
+  email_address   = "support+letsencrypt@massdriver.cloud"
+}
+
+resource "acme_certificate" "main" {
+  account_key_pem = acme_registration.main.account_key_pem
+  common_name     = var.full_domain
+
+  # https://registry.terraform.io/providers/getstackhead/acme/latest/docs/guides/dns-providers-azure
+  dns_challenge {
+    provider = "azure"
+
+    config = {
+      AZURE_CLIENT_ID       = azuread_service_principal.external_dns.application_id
+      AZURE_TENANT_ID       = azuread_service_principal.external_dns.application_tenant_id
+      AZURE_CLIENT_SECRET   = azuread_service_principal_password.external_dns.value
+      AZURE_SUBSCRIPTION_ID = data.azurerm_client_config.current.subscription_id
+      AZURE_ENVIRONMENT     = "public"
+      AZURE_RESOURCE_GROUP  = var.dns_zone_resource_group_name
+    }
+  }
+
+  depends_on = [
+    acme_registration.main,
+    azurerm_key_vault_access_policy.terraform,
+    azurerm_key_vault_access_policy.service
+  ]
+}
 
 # https://learn.microsoft.com/en-us/azure/api-management/configure-custom-domain?tabs=key-vault#domain-certificate-options
 resource "azurerm_key_vault_certificate" "main" {
   name         = var.name
   key_vault_id = azurerm_key_vault.main.id
 
-  certificate_policy {
-    issuer_parameters {
-      name = "Self"
-    }
-
-    key_properties {
-      exportable = true
-      key_size   = 2048
-      key_type   = "RSA"
-      reuse_key  = true
-    }
-
-    lifetime_action {
-      action {
-        action_type = "AutoRenew"
-      }
-
-      trigger {
-        days_before_expiry = 30
-      }
-    }
-
-    secret_properties {
-      content_type = "application/x-pkcs12"
-    }
-
-    x509_certificate_properties {
-      # Server Authentication = 1.3.6.1.5.5.7.3.1
-      # Client Authentication = 1.3.6.1.5.5.7.3.2
-      extended_key_usage = ["1.3.6.1.5.5.7.3.1"]
-
-      key_usage = [
-        "cRLSign",
-        "dataEncipherment",
-        "digitalSignature",
-        "keyAgreement",
-        "keyCertSign",
-        "keyEncipherment",
-      ]
-
-      subject_alternative_names {
-        dns_names = [var.full_domain]
-      }
-
-      subject            = "CN=hello-world"
-      validity_in_months = 12
-    }
+  certificate {
+    contents = acme_certificate.main.certificate_p12
   }
 
   depends_on = [

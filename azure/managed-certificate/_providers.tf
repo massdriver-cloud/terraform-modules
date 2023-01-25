@@ -6,5 +6,11 @@ terraform {
     time = {
       source = "hashicorp/time"
     }
+    tls = {
+      source = "hashicorp/tls"
+    }
+    acme = {
+      source = "vancluever/acme"
+    }
   }
 }

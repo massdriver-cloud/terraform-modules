@@ -50,7 +50,7 @@ resource "azurerm_key_vault_access_policy" "service" {
   key_vault_id = azurerm_key_vault.main.id
 
   tenant_id = data.azurerm_client_config.current.tenant_id
-  object_id = var.user_assigned_identity_principal_id
+  object_id = var.identity.principal_id
 
   # the certificate is accessed like a secret...
   secret_permissions = [
