@@ -28,7 +28,7 @@ locals {
   envs_with_secrets = merge(local.base_envs, local.secrets)
     
   # Needed by Azure k8s until Workload Identity is out of preview.
-  azure_envs = (local.is_azure_k8s && mdxc_application_identity.main[0] != null) ? mdxc_application_identity.main[0].azure_application_identity : {}
+  azure_envs = (local.is_azure_k8s && mdxc_application_identity.main != null) ? mdxc_application_identity.main[0].azure_application_identity : {}
   azure_aks_envs = local.is_azure_k8s ? {
     AZURE_TENANT_ID : local.azure_envs.application_id
     AZURE_CLIENT_ID : local.azure_envs.service_principal_client_id
