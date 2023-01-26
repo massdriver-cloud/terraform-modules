@@ -57,7 +57,7 @@ resource "azurerm_linux_function_app" "main" {
     app_scale_limit                         = var.application.maximum_worker_count
     container_registry_use_managed_identity = true
     ftps_state                              = "FtpsOnly"
-    health_check_path                       = var.health_check_path
+    health_check_path                       = var.application.health_check_path
     vnet_route_all_enabled                  = true
 
     application_stack {
