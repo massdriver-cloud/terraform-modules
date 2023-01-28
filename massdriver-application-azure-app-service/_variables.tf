@@ -1,3 +1,15 @@
+variable "name" {
+  type = string
+}
+
+variable "tags" {
+  type = any
+}
+
+variable "md_metadata" {
+  type = any
+}
+
 variable "image" {
   type = object({
     repository = string
@@ -50,8 +62,4 @@ variable "monitoring" {
   type = object({
     mode = string
   })
-}
-
-variable "md_metadata" {
-  type = any
 }

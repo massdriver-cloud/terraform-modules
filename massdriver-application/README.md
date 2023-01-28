@@ -48,7 +48,7 @@ No requirements.
 | Name | Version |
 |------|---------|
 | <a name="provider_jq"></a> [jq](#provider\_jq) | 0.2.1 |
-| <a name="provider_mdxc"></a> [mdxc](#provider\_mdxc) | 0.0.9 |
+| <a name="provider_mdxc"></a> [mdxc](#provider\_mdxc) | 0.10.3 |
 
 ## Modules
 
@@ -79,7 +79,7 @@ No modules.
 | Name | Description |
 |------|-------------|
 | <a name="output_cloud"></a> [cloud](#output\_cloud) | The cloud provisioning executed in. |
-| <a name="output_envs"></a> [envs](#output\_envs) | The policies parsed from massdriver.yaml |
+| <a name="output_envs"></a> [envs](#output\_envs) | The environment (config & secrets) parsed from massdriver.yaml |
 | <a name="output_id"></a> [id](#output\_id) | Cloud ID for application IAM (AWS Role, GCP Service Account, Azure Service Account, etc) |
 | <a name="output_params"></a> [params](#output\_params) | Parameters provided to bundle. |
 | <a name="output_policies"></a> [policies](#output\_policies) | The policies parsed from massdriver.yaml |

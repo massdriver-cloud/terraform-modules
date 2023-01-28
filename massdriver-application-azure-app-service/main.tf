@@ -1,49 +1,47 @@
 module "application" {
-  source                  = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=4001e6c"
-  name                    = var.md_metadata.name_prefix
-  service                 = "function"
-  application_identity_id = azurerm_linux_web_app.main.identity[0].principal_id
-  # We aren't creating an application identity for this module because we are assigning permissions directly to the system-assigned managed identity of the function app.
-  create_application_identity = false
-  # FUNCTION APP uses storage, we might want to here
-  # but this comment is important if so.
-  # The permission-assignment goes like this
-  # Azure makes the function
-  # MDXC tries to assign the role
-  # The storage account is not ready yet
-  # Without this depends_on we get intermitent, hard to debug failures.
-  # depends_on = [
-  #   azurerm_storage_account.main
-  # ]
+  source              = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=99769ba"
+  name                = var.name
+  service             = "function"
+  resource_group_name = azurerm_resource_group.main.name
+  location            = azurerm_resource_group.main.location
 }
 
 resource "azurerm_resource_group" "main" {
-  name     = var.md_metadata.name_prefix
+  name     = var.name
   location = var.location
-  tags     = var.md_metadata.default_tags
+  tags     = var.tags
 }
 
 resource "azurerm_service_plan" "main" {
-  name                   = var.md_metadata.name_prefix
+  name                   = var.name
   location               = azurerm_resource_group.main.location
   resource_group_name    = azurerm_resource_group.main.name
   os_type                = "Linux"
   sku_name               = var.application.sku_name
   worker_count           = var.application.zone_balancing ? (var.application.minimum_worker_count * 3) : var.application.minimum_worker_count
   zone_balancing_enabled = var.application.zone_balancing
-  tags                   = var.md_metadata.default_tags
+  tags                   = var.tags
 }
 
+locals {
+  # https://learn.microsoft.com/en-us/azure/app-service/reference-app-settings?tabs=kudu%2Cdotnet#custom-containers
+  service_settings = {
+    # DOCKER_ENABLE_CI = "true"
+  }
+}
+
+
 resource "azurerm_linux_web_app" "main" {
-  name                = var.md_metadata.name_prefix
+  name                = var.name
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
   service_plan_id     = azurerm_service_plan.main.id
   https_only          = true
-  tags                = var.md_metadata.default_tags
+  tags                = var.tags
 
   identity {
-    type = "SystemAssigned"
+    type         = "UserAssigned"
+    identity_ids = [module.application.identity.azure_application_identity.resource_id]
   }
 
   # To get application logs, we need to set app logging level and retention.
@@ -69,8 +67,9 @@ resource "azurerm_linux_web_app" "main" {
     auto_heal_enabled                       = true
     health_check_path                       = var.health_check.path
     http2_enabled                           = true
-    container_registry_use_managed_identity = true
-    ftps_state                              = "FtpsOnly"
+    container_registry_use_managed_identity = false
+    # container_registry_managed_identity_client_id = module.application.identity.azure_application_identity.client_id
+    ftps_state = "FtpsOnly"
 
     auto_heal_setting {
       action {
@@ -102,7 +101,7 @@ resource "azurerm_linux_web_app" "main" {
     app_command_line = var.command
   }
 
-  app_settings = module.application.envs
+  app_settings = merge(local.service_settings, module.application.envs)
 
   depends_on = [
     azurerm_service_plan.main
@@ -116,6 +115,6 @@ data "azurerm_client_config" "main" {
 resource "azurerm_role_assignment" "acr" {
   scope                = "/subscriptions/${data.azurerm_client_config.main.subscription_id}"
   role_definition_name = "AcrPull"
-  principal_id         = azurerm_linux_web_app.main.identity[0].principal_id
+  principal_id         = module.application.id
 }
 ##

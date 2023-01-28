@@ -23,10 +23,10 @@ locals {
 
   # env vars that have been resolved. additional vars may be added per cloud
   base_envs = { for k, v in local.app_envs_queries : k => jsondecode(data.jq_query.envs[k].result) }
-    
+
   # Auto generate ENV Vars for each secret
   envs_with_secrets = merge(local.base_envs, local.secrets)
-    
+
   # Needed by Azure k8s until Workload Identity is out of preview.
   azure_envs = (local.is_azure_k8s && mdxc_application_identity.main[0] != null) ? mdxc_application_identity.main[0].azure_application_identity : {}
   azure_aks_envs = local.is_azure_k8s ? {
