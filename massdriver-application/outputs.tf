@@ -23,6 +23,11 @@ output "params" {
 }
 
 output "id" {
-  description = "Cloud ID for application IAM (AWS Role, GCP Service Account, Azure Service Account, etc)"
+  description = "Cloud ID for application IAM (AWS Role, GCP Service Account, Azure Managed Identity, etc)"
   value       = local.application_identity_id
+}
+
+output "identity" {
+  description = "The full MDXC Cloud Identity object, for accessing additional values beyond the ID of the Identity."
+  value       = mdxc_application_identity.main
 }

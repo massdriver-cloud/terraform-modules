@@ -41,14 +41,16 @@ module "application" {
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
-No requirements.
+| Name | Version |
+|------|---------|
+| <a name="requirement_mdxc"></a> [mdxc](#requirement\_mdxc) | >= 0.1.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
 | <a name="provider_jq"></a> [jq](#provider\_jq) | 0.2.1 |
-| <a name="provider_mdxc"></a> [mdxc](#provider\_mdxc) | 0.0.9 |
+| <a name="provider_mdxc"></a> [mdxc](#provider\_mdxc) | 0.1.0 |
 
 ## Modules
 
@@ -68,10 +70,10 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_application_identity_id"></a> [application\_identity\_id](#input\_application\_identity\_id) | If an application identity already exists, you can specify it here to skip the process of creating a new application identity. | `string` | `null` | no |
-| <a name="input_create_application_identity"></a> [create\_application\_identity](#input\_create\_application\_identity) | If an application identity already exists, you can specify it here to skip the process of creating a new application identity. | `bool` | `true` | no |
-| <a name="input_kubernetes"></a> [kubernetes](#input\_kubernetes) | Kubernetes configuration for binding the application identity to k8s workload identity (GCP) or federated assume role (AWS). Required if service='kubernetes'. | <pre>object({<br>    # k8s namespace workload will run in<br>    namespace = string,<br>    # Massdriver connection artifact<br>    cluster_artifact = any<br>  })</pre> | `null` | no |
+| <a name="input_kubernetes"></a> [kubernetes](#input\_kubernetes) | Kubernetes configuration for binding the application identity to k8s workload identity (GCP) or federated assume role (AWS). Required if service='kubernetes'. | <pre>object({<br>    # k8s namespace workload will run in<br>    namespace = string,<br>    # Massdriver connection artifact<br>    cluster_artifact = any<br>    # Azure AKS cluster produces this URL, needed for Workload Identity<br>    oidc_issuer_url = optional(string, null)<br>  })</pre> | `null` | no |
+| <a name="input_location"></a> [location](#input\_location) | Azure only, the location of the resource group. | `string` | `null` | no |
 | <a name="input_name"></a> [name](#input\_name) | The name of the application. This should be the Massdriver package name. var.md\_metadata.name\_prefix | `string` | n/a | yes |
+| <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | Azure only, the name of resource group to create the Managed Identity in. | `string` | `null` | no |
 | <a name="input_service"></a> [service](#input\_service) | The cloud service type that will run this workload. | `string` | n/a | yes |
 
 ## Outputs
@@ -80,7 +82,8 @@ No modules.
 |------|-------------|
 | <a name="output_cloud"></a> [cloud](#output\_cloud) | The cloud provisioning executed in. |
 | <a name="output_envs"></a> [envs](#output\_envs) | The environment (config & secrets) parsed from massdriver.yaml |
-| <a name="output_id"></a> [id](#output\_id) | Cloud ID for application IAM (AWS Role, GCP Service Account, Azure Service Account, etc) |
+| <a name="output_id"></a> [id](#output\_id) | Cloud ID for application IAM (AWS Role, GCP Service Account, Azure Managed Identity, etc) |
+| <a name="output_identity"></a> [identity](#output\_identity) | The full MDXC Cloud Identity object, for accessing additional values beyond the ID of the Identity. |
 | <a name="output_params"></a> [params](#output\_params) | Parameters provided to bundle. |
 | <a name="output_policies"></a> [policies](#output\_policies) | The policies parsed from massdriver.yaml |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

@@ -21,17 +21,19 @@ variable "kubernetes" {
     namespace = string,
     # Massdriver connection artifact
     cluster_artifact = any
+    # Azure AKS cluster produces this URL, needed for Workload Identity
+    oidc_issuer_url = optional(string, null)
   })
 }
 
-variable "create_application_identity" {
-  description = "If an application identity already exists, you can specify it here to skip the process of creating a new application identity."
-  type        = bool
-  default     = true
+variable "resource_group_name" {
+  description = "Azure only, the name of resource group to create the Managed Identity in."
+  type        = string
+  default     = null
 }
 
-variable "application_identity_id" {
-  description = "If an application identity already exists, you can specify it here to skip the process of creating a new application identity."
+variable "location" {
+  description = "Azure only, the location of the resource group."
   type        = string
   default     = null
 }
