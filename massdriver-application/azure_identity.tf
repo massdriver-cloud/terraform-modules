@@ -6,6 +6,6 @@ locals {
       namespace            = var.kubernetes.namespace
       service_account_name = var.name
       oidc_issuer_url      = var.kubernetes.oidc_issuer_url
-    } : {}
+    } : null
   }
 }
