@@ -42,13 +42,23 @@ resource "azurerm_linux_function_app" "main" {
   resource_group_name         = azurerm_resource_group.main.name
   location                    = azurerm_resource_group.main.location
   service_plan_id             = azurerm_service_plan.main.id
-  app_settings                = module.application.envs
   functions_extension_version = "~4"
   https_only                  = true
   storage_account_name        = azurerm_storage_account.main.name
   storage_account_access_key  = azurerm_storage_account.main.primary_access_key
   virtual_network_subnet_id   = azurerm_subnet.main.id
   tags                        = var.tags
+
+  # environment variables
+  app_settings = merge(local.service_settings, module.application.envs)
+
+  identity {
+    type = "UserAssigned"
+    identity_ids = [
+      module.application.identity.azure_application_identity.resource_id,
+      azurerm_user_assigned_identity.container.id
+    ]
+  }
 
   site_config {
     always_on                                     = true
@@ -73,14 +83,6 @@ resource "azurerm_linux_function_app" "main" {
       disk_quota_mb         = var.application.logs.disk_quota_mb
       retention_period_days = var.application.logs.retention_period_days
     }
-  }
-
- identity {
-    type         = "UserAssigned"
-    identity_ids = [
-      module.application.identity.azure_application_identity.resource_id,
-      azurerm_user_assigned_identity.container.id
-    ]
   }
 
   depends_on = [

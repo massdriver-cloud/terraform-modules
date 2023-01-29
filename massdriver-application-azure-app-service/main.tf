@@ -40,8 +40,11 @@ resource "azurerm_linux_web_app" "main" {
   https_only          = true
   tags                = var.tags
 
+  # environment variables
+  app_settings = merge(local.service_settings, module.application.envs)
+
   identity {
-    type         = "UserAssigned"
+    type = "UserAssigned"
     identity_ids = [
       module.application.identity.azure_application_identity.resource_id,
       azurerm_user_assigned_identity.container.id
@@ -105,8 +108,6 @@ resource "azurerm_linux_web_app" "main" {
 
     app_command_line = var.command
   }
-
-  app_settings = merge(local.service_settings, module.application.envs)
 
   depends_on = [
     azurerm_service_plan.main
