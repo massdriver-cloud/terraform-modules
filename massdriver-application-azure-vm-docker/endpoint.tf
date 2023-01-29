@@ -1,9 +1,9 @@
 module "public_endpoint" {
-  count                        = var.endpoint.enabled ? 1 : 0
+  count                        = var.dns.enable_dns ? 1 : 0
   source                       = "github.com/massdriver-cloud/terraform-modules//azure/endpoint?ref=2cad7a7"
   name                         = var.name
   subnet_id                    = azurerm_subnet.main.id
-  subdomain                    = var.endpoint.subdomain
+  subdomain                    = var.dns.subdomain
   resource_group_name          = azurerm_resource_group.main.name
   dns_zone_name                = local.zone_name
   dns_zone_resource_group_name = local.zone_resource_group_name

@@ -7,10 +7,9 @@ locals {
 }
 
 module "application" {
-  # source  = "github.com/massdriver-cloud/terraform-modules//massdriver-application"
-  source              = "/Users/wbeebe/repos/massdriver-cloud/_azure-identity/terraform-modules/massdriver-application"
+  source              = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=99769ba"
   name                = var.name
-  service             = "function"
+  service             = "vm"
   resource_group_name = azurerm_resource_group.main.name
   location            = azurerm_resource_group.main.location
 }
@@ -34,17 +33,17 @@ resource "azurerm_linux_virtual_machine_scale_set" "main" {
   # TODO: configurable
   sku         = "Standard_F2"
   custom_data = base64encode(local.cloud_init_rendered)
-  # health_probe_id              = var.endpoint.enabled ? module.public_endpoint[0].azurerm_lb_probe : null
+  # health_probe_id              = var.dns.enable_dns ? module.public_endpoint[0].azurerm_lb_probe : null
   extension_operations_enabled = false
   tags                         = var.tags
 
   network_interface {
     name    = var.name
     primary = true
-    # network_security_group_id = var.endpoint.enabled ? module.public_endpoint[0].azurerm_network_security_group_id : null
+    # network_security_group_id = var.dns.enable_dns ? module.public_endpoint[0].azurerm_network_security_group_id : null
 
     dynamic "ip_configuration" {
-      for_each = var.endpoint.enabled ? [] : [1]
+      for_each = var.dns.enable_dns ? [] : [1]
       content {
         name      = var.name
         subnet_id = data.azurerm_subnet.default.id
@@ -53,7 +52,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "main" {
     }
 
     dynamic "ip_configuration" {
-      for_each = var.endpoint.enabled ? [1] : []
+      for_each = var.dns.enable_dns ? [1] : []
       content {
         name      = var.name
         subnet_id = data.azurerm_subnet.default.id
@@ -132,7 +131,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "main" {
 
   # To enable the automatic instance repair, this Virtual Machine Scale Set must have a valid health_probe_id o
   # dynamic "automatic_instance_repair" {
-  #   for_each = var.endpoint.enabled ? [1] : []
+  #   for_each = var.dns.enable_dns ? [1] : []
   #   content {
   #     enabled      = true
   #     grace_period = "PT30M"

@@ -11,5 +11,9 @@ terraform {
     azurerm = {
       source = "hashicorp/azurerm"
     }
+
+    acme = {
+      source = "vancluever/acme"
+    }
   }
 }

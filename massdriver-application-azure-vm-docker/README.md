@@ -7,15 +7,15 @@ No requirements.
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.40.0 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.41.0 |
 | <a name="provider_random"></a> [random](#provider\_random) | 3.4.3 |
-| <a name="provider_utility"></a> [utility](#provider\_utility) | 0.0.1 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_application"></a> [application](#module\_application) | /Users/wbeebe/repos/massdriver-cloud/_azure-identity/terraform-modules/massdriver-application | n/a |
+| <a name="module_application"></a> [application](#module\_application) | github.com/massdriver-cloud/terraform-modules//massdriver-application | 99769ba |
+| <a name="module_auto_cidr"></a> [auto\_cidr](#module\_auto\_cidr) | github.com/massdriver-cloud/terraform-modules//azure/auto-cidr | 93bc06c |
 | <a name="module_public_endpoint"></a> [public\_endpoint](#module\_public\_endpoint) | github.com/massdriver-cloud/terraform-modules//azure/endpoint | 2cad7a7 |
 
 ## Resources
@@ -26,10 +26,7 @@ No requirements.
 | [azurerm_resource_group.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) | resource |
 | [azurerm_subnet.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subnet) | resource |
 | [random_password.main](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password) | resource |
-| [utility_available_cidr.cidr](https://registry.terraform.io/providers/massdriver-cloud/utility/latest/docs/resources/available_cidr) | resource |
 | [azurerm_subnet.default](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/subnet) | data source |
-| [azurerm_subnet.lookup](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/subnet) | data source |
-| [azurerm_virtual_network.lookup](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/virtual_network) | data source |
 | [azurerm_virtual_network.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/virtual_network) | data source |
 
 ## Inputs
@@ -38,10 +35,12 @@ No requirements.
 |------|-------------|------|---------|:--------:|
 | <a name="input_auto_scaling_enabled"></a> [auto\_scaling\_enabled](#input\_auto\_scaling\_enabled) | n/a | `bool` | `false` | no |
 | <a name="input_container"></a> [container](#input\_container) | n/a | <pre>object({<br>    repository = string<br>    tag        = optional(string, "latest")<br>  })</pre> | n/a | yes |
-| <a name="input_endpoint"></a> [endpoint](#input\_endpoint) | n/a | <pre>object({<br>    enabled   = bool<br>    zone_id   = optional(string, null)<br>    subdomain = optional(string, null)<br>  })</pre> | <pre>{<br>  "enabled": false<br>}</pre> | no |
+| <a name="input_dns"></a> [dns](#input\_dns) | n/a | `any` | n/a | yes |
 | <a name="input_health_check"></a> [health\_check](#input\_health\_check) | n/a | <pre>object({<br>    port = optional(number, 80)<br>    path = optional(string, "/")<br>  })</pre> | <pre>{<br>  "path": "/"<br>}</pre> | no |
 | <a name="input_location"></a> [location](#input\_location) | n/a | `string` | n/a | yes |
+| <a name="input_monitoring"></a> [monitoring](#input\_monitoring) | n/a | <pre>object({<br>    mode = string<br>  })</pre> | n/a | yes |
 | <a name="input_name"></a> [name](#input\_name) | n/a | `string` | n/a | yes |
+| <a name="input_network"></a> [network](#input\_network) | n/a | `any` | n/a | yes |
 | <a name="input_port"></a> [port](#input\_port) | n/a | `number` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | n/a | `any` | n/a | yes |
 | <a name="input_virtual_network_id"></a> [virtual\_network\_id](#input\_virtual\_network\_id) | n/a | `any` | n/a | yes |

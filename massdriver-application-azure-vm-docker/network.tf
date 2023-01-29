@@ -1,6 +1,6 @@
 locals {
-  zone_name                = var.endpoint.enabled ? regex(".*/dns[z|Z]ones/(.*)$", var.endpoint.zone_id)[0] : null
-  zone_resource_group_name = var.endpoint.enabled ? regex(".*/resource[g|G]roups/(.*)/providers", var.endpoint.zone_id)[0] : null
+  zone_name                = var.dns.enable_dns ? regex(".*/dns[z|Z]ones/(.*)$", var.dns.zone_id)[0] : null
+  zone_resource_group_name = var.dns.enable_dns ? regex(".*/resource[g|G]roups/(.*)/providers", var.dns.zone_id)[0] : null
 }
 
 data "azurerm_virtual_network" "main" {

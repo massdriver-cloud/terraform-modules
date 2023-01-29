@@ -6,12 +6,12 @@ variable "tags" {
   type = any
 }
 
-variable "virtual_network_id" {
-  type = any
-}
-
 variable "location" {
   type = string
+}
+
+variable "dns" {
+  type = any
 }
 
 variable "container" {
@@ -40,24 +40,20 @@ variable "auto_scaling_enabled" {
   default = false
 }
 
-variable "endpoint" {
+variable "monitoring" {
   type = object({
-    enabled   = bool
-    zone_id   = optional(string, null)
-    subdomain = optional(string, null)
+    mode = string
   })
-  default = {
-    enabled = false
-  }
 }
 
+variable "virtual_network_id" {
+  type = any
+}
+
+variable "network" {
+  type = any
+}
 
 # variable "autoscaling" {
 #   type = any
-# }
-
-# variable "monitoring" {
-#   type = object({
-#     mode = string
-#   })
 # }
