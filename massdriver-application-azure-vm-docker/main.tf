@@ -70,9 +70,10 @@ resource "azurerm_linux_virtual_machine_scale_set" "main" {
   # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_virtual_machine_scale_set#storage_account_uri
   # Passing a null value will utilize a Managed Storage Account to store Boot Diagnostics.
   # might be able to drop the storage account for this
-  # boot_diagnostics {
-  #   storage_account_uri = azurerm_storage_account.main.primary_blob_endpoint
-  # }
+  boot_diagnostics {
+    storage_account_uri = null
+    # storage_account_uri = azurerm_storage_account.main.primary_blob_endpoint
+  }
 
   os_disk {
     caching              = "ReadWrite"
@@ -113,20 +114,20 @@ resource "azurerm_linux_virtual_machine_scale_set" "main" {
   #     disable_automatic_rollback  = false
   #   }
 
-  # # https://learn.microsoft.com/en-us/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-health-extension#when-to-use-the-application-health-extension
-  #    extension {
-  #     name                       = "HealthExtension"
-  #     publisher                  = "Microsoft.ManagedServices"
-  #     type                       = "ApplicationHealthLinux"
-  #     type_handler_version       = "1.0"
-  #     auto_upgrade_minor_version = false
+  # https://learn.microsoft.com/en-us/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-health-extension#when-to-use-the-application-health-extension
+    #  extension {
+    #   name                       = "HealthExtension"
+    #   publisher                  = "Microsoft.ManagedServices"
+    #   type                       = "ApplicationHealthLinux"
+    #   type_handler_version       = "1.0"
+    #   auto_upgrade_minor_version = false
 
-  #     settings = jsonencode({
-  #       protocol    = "http"
-  #       port        = var.health_check.port
-  #       requestPath = var.health_check.path
-  #     })
-  #   }
+    #   settings = jsonencode({
+    #     protocol    = "http"
+    #     port        = var.health_check.port
+    #     requestPath = var.health_check.path
+    #   })
+    # }
 
 
   # To enable the automatic instance repair, this Virtual Machine Scale Set must have a valid health_probe_id o
