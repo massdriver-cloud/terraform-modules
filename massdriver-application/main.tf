@@ -27,8 +27,16 @@ locals {
   # Auto generate ENV Vars for each secret
   envs_with_secrets = merge(local.base_envs, local.secrets)
 
+  # App Serivce / Function App will auto-inject the secret, but still need these env-vars added.
+  # AKS auto-injects everything (we add the Client ID and Tenant ID as annotations).
+  # I don't think having these added to all runtimes will hurt Workload Identity or other auth solutions.
+  azure_envs = {
+    AZURE_CLIENT_ID = mdxc_application_identity.main.azure_application_identity.client_id
+    AZURE_TENANT_ID = mdxc_application_identity.main.azure_application_identity.tenant_id
+  }
+
   cloud_envs = {
-    azure = local.envs_with_secrets
+    azure = merge(local.azure_envs, local.envs_with_secrets)
     aws   = local.envs_with_secrets
     gcp   = local.envs_with_secrets
   }
