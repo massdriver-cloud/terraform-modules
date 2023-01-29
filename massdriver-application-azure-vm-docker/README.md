@@ -14,7 +14,7 @@ No requirements.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_application"></a> [application](#module\_application) | github.com/massdriver-cloud/terraform-modules//massdriver-application | 99769ba |
+| <a name="module_application"></a> [application](#module\_application) | github.com/massdriver-cloud/terraform-modules//massdriver-application | c1a20f3 |
 | <a name="module_auto_cidr"></a> [auto\_cidr](#module\_auto\_cidr) | github.com/massdriver-cloud/terraform-modules//azure/auto-cidr | 93bc06c |
 | <a name="module_public_endpoint"></a> [public\_endpoint](#module\_public\_endpoint) | github.com/massdriver-cloud/terraform-modules//azure/endpoint | 2cad7a7 |
 
