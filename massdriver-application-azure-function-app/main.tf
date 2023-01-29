@@ -74,9 +74,12 @@ resource "azurerm_linux_function_app" "main" {
     }
   }
 
-  identity {
+ identity {
     type         = "UserAssigned"
-    identity_ids = [module.application.identity.azure_application_identity.resource_id]
+    identity_ids = [
+      module.application.identity.azure_application_identity.resource_id,
+      azurerm_user_assigned_identity.container.id
+    ]
   }
 
   depends_on = [
