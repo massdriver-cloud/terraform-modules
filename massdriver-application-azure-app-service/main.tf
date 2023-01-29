@@ -27,6 +27,8 @@ locals {
   # https://learn.microsoft.com/en-us/azure/app-service/reference-app-settings?tabs=kudu%2Cdotnet#custom-containers
   service_settings = {
     # DOCKER_ENABLE_CI = "true"
+    AZURE_CLIENT_ID = module.application.identity.azure_application_identity.client_id
+    AZURE_TENANT_ID = module.application.identity.azure_application_identity.tenant_id
   }
 }
 
