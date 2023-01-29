@@ -50,15 +50,15 @@ resource "azurerm_linux_function_app" "main" {
   tags                        = var.tags
 
   site_config {
-    always_on                               = true
-    application_insights_connection_string  = azurerm_application_insights.main.connection_string
-    application_insights_key                = azurerm_application_insights.main.instrumentation_key
-    app_scale_limit                         = var.application.maximum_worker_count
-    container_registry_use_managed_identity = false
-    # container_registry_managed_identity_client_id = module.application.identity.azure_application_identity.client_id
-    ftps_state             = "FtpsOnly"
-    health_check_path      = var.health_check.path
-    vnet_route_all_enabled = true
+    always_on                                     = true
+    application_insights_connection_string        = azurerm_application_insights.main.connection_string
+    application_insights_key                      = azurerm_application_insights.main.instrumentation_key
+    app_scale_limit                               = var.application.maximum_worker_count
+    container_registry_use_managed_identity       = true
+    container_registry_managed_identity_client_id = azurerm_user_assigned_identity.container.client_id
+    ftps_state                                    = "FtpsOnly"
+    health_check_path                             = var.health_check.path
+    vnet_route_all_enabled                        = true
 
     application_stack {
       docker {
@@ -84,13 +84,17 @@ resource "azurerm_linux_function_app" "main" {
   ]
 }
 
-## TODO: push to mdxc
+resource "azurerm_user_assigned_identity" "container" {
+  location            = azurerm_resource_group.main.location
+  name                = "${var.name}-acr"
+  resource_group_name = azurerm_resource_group.main.name
+}
+
 data "azurerm_client_config" "main" {
 }
 
 resource "azurerm_role_assignment" "acr" {
   scope                = "/subscriptions/${data.azurerm_client_config.main.subscription_id}"
   role_definition_name = "AcrPull"
-  principal_id         = module.application.id
+  principal_id         = azurerm_user_assigned_identity.container.principal_id
 }
-##

@@ -30,7 +30,6 @@ locals {
   }
 }
 
-
 resource "azurerm_linux_web_app" "main" {
   name                = var.name
   location            = azurerm_resource_group.main.location
@@ -63,13 +62,14 @@ resource "azurerm_linux_web_app" "main" {
   virtual_network_subnet_id = azurerm_subnet.main.id
 
   site_config {
-    always_on                               = true
-    auto_heal_enabled                       = true
-    health_check_path                       = var.health_check.path
-    http2_enabled                           = true
-    container_registry_use_managed_identity = false
-    # container_registry_managed_identity_client_id = module.application.identity.azure_application_identity.client_id
-    ftps_state = "FtpsOnly"
+    always_on                                     = true
+    auto_heal_enabled                             = true
+    health_check_path                             = var.health_check.path
+    http2_enabled                                 = true
+    container_registry_use_managed_identity       = true
+    container_registry_managed_identity_client_id = azurerm_user_assigned_identity.container.client_id
+    ftps_state                                    = "FtpsOnly"
+    vnet_route_all_enabled                        = true
 
     auto_heal_setting {
       action {
@@ -108,13 +108,17 @@ resource "azurerm_linux_web_app" "main" {
   ]
 }
 
-## TODO: push to mdxc
+resource "azurerm_user_assigned_identity" "container" {
+  location            = azurerm_resource_group.main.location
+  name                = "${var.name}-acr"
+  resource_group_name = azurerm_resource_group.main.name
+}
+
 data "azurerm_client_config" "main" {
 }
 
 resource "azurerm_role_assignment" "acr" {
   scope                = "/subscriptions/${data.azurerm_client_config.main.subscription_id}"
   role_definition_name = "AcrPull"
-  principal_id         = module.application.id
+  principal_id         = azurerm_user_assigned_identity.container.principal_id
 }
-##
