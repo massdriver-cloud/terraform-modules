@@ -1,3 +1,15 @@
+variable "name" {
+  type = string
+}
+
+variable "tags" {
+  type = any
+}
+
+variable "md_metadata" {
+  type = any
+}
+
 variable "image" {
   type = object({
     repository = string
@@ -6,7 +18,8 @@ variable "image" {
 }
 
 variable "dns" {
-  type = any
+  type        = any
+  description = "DNS configuration."
 }
 
 variable "health_check" {
@@ -50,8 +63,4 @@ variable "monitoring" {
   type = object({
     mode = string
   })
-}
-
-variable "md_metadata" {
-  type = any
 }

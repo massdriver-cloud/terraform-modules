@@ -13,7 +13,8 @@ terraform {
     }
 
     mdxc = {
-      source = "massdriver-cloud/mdxc"
+      source  = "massdriver-cloud/mdxc"
+      version = ">= 0.10.3"
     }
   }
 }
