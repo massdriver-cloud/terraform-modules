@@ -18,11 +18,11 @@ locals {
 }
 
 resource "azurerm_application_insights" "main" {
-  name                = var.md_metadata.name_prefix
+  name                = var.name
   resource_group_name = azurerm_resource_group.main.name
   location            = azurerm_resource_group.main.location
   application_type    = "other"
-  tags                = var.md_metadata.default_tags
+  tags                = var.tags
 }
 
 module "alarm_channel" {
@@ -49,7 +49,7 @@ module "latency_metric_alert" {
   display_name = "Latency"
   message      = "High latency"
 
-  alarm_name       = "${var.md_metadata.name_prefix}-highLatency"
+  alarm_name       = "${var.name}-highLatency"
   operator         = local.alarms.latency_metric_alert.operator
   metric_name      = "requests/duration"
   metric_namespace = "microsoft.insights/components"
