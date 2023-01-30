@@ -57,7 +57,7 @@ module "response_metric_alert" {
   display_name = "Response Time"
   message      = "High response time"
 
-  alarm_name       = "${var.md_metadata.name_prefix}-highResponseTime"
+  alarm_name       = "${var.name}-highResponseTime"
   operator         = local.alarms.response_metric_alert.operator
   metric_name      = "HttpResponseTime"
   metric_namespace = "microsoft.web/sites"
@@ -83,7 +83,7 @@ module "http_4xx_metric_alert" {
   display_name = "HTTP 400-499 errors"
   message      = "High HTTP 400-499 errors"
 
-  alarm_name       = "${var.md_metadata.name_prefix}-high4xxErrors"
+  alarm_name       = "${var.name}-high4xxErrors"
   operator         = local.alarms.http_4xx_metric_alert.operator
   metric_name      = "Http4xx"
   metric_namespace = "microsoft.web/sites"
@@ -109,7 +109,7 @@ module "http_5xx_metric_alert" {
   display_name = "HTTP 500-599 errors"
   message      = "High HTTP 500-599 errors"
 
-  alarm_name       = "${var.md_metadata.name_prefix}-high5xxErrors"
+  alarm_name       = "${var.name}-high5xxErrors"
   operator         = local.alarms.http_5xx_metric_alert.operator
   metric_name      = "Http5xx"
   metric_namespace = "microsoft.web/sites"

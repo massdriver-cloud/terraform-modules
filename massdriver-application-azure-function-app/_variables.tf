@@ -1,3 +1,15 @@
+variable "name" {
+  type = string
+}
+
+variable "tags" {
+  type = any
+}
+
+variable "md_metadata" {
+  type = any
+}
+
 variable "docker" {
   type = object({
     registry = string
@@ -46,10 +58,6 @@ variable "contact_email" {
 
 variable "location" {
   type = string
-}
-
-variable "md_metadata" {
-  type = any
 }
 
 variable "network" {
