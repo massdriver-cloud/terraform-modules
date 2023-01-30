@@ -30,4 +30,5 @@ output "id" {
 output "identity" {
   description = "The full MDXC Cloud Identity object, for accessing additional values beyond the ID of the Identity."
   value       = mdxc_application_identity.main
+  sensitive   = true
 }
