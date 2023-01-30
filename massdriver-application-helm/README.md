@@ -35,14 +35,14 @@ No requirements.
 
 | Name | Version |
 |------|---------|
-| <a name="provider_helm"></a> [helm](#provider\_helm) | n/a |
+| <a name="provider_helm"></a> [helm](#provider\_helm) | 2.8.0 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_application"></a> [application](#module\_application) | github.com/massdriver-cloud/terraform-modules//massdriver-application | n/a |
-| <a name="module_massdriver_helm_values"></a> [massdriver\_helm\_values](#module\_massdriver\_helm\_values) | github.com/massdriver-cloud/terraform-modules//massdriver-helm-values | n/a |
+| <a name="module_application"></a> [application](#module\_application) | github.com/massdriver-cloud/terraform-modules//massdriver-application | 4270f29 |
+| <a name="module_massdriver_helm_values"></a> [massdriver\_helm\_values](#module\_massdriver\_helm\_values) | github.com/massdriver-cloud/terraform-modules//massdriver-helm-values | 4b8d47a |
 
 ## Resources
 
@@ -58,8 +58,10 @@ No requirements.
 | <a name="input_chart"></a> [chart](#input\_chart) | The path to your Helm chart | `string` | n/a | yes |
 | <a name="input_helm_additional_values"></a> [helm\_additional\_values](#input\_helm\_additional\_values) | Additional helm values to set | `map(any)` | `{}` | no |
 | <a name="input_kubernetes_cluster"></a> [kubernetes\_cluster](#input\_kubernetes\_cluster) | Massdriver Kubernetes Cluster Artifact | `any` | n/a | yes |
+| <a name="input_location"></a> [location](#input\_location) | Azure only, the location of the resource group. | `string` | `null` | no |
 | <a name="input_name"></a> [name](#input\_name) | The release name of the chart, this should be your var.md\_metadata.name\_prefix | `string` | n/a | yes |
 | <a name="input_namespace"></a> [namespace](#input\_namespace) | Namespace to deploy chart into | `string` | n/a | yes |
+| <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | Azure only, the name of resource group to create the Managed Identity in. | `string` | `null` | no |
 
 ## Outputs
 

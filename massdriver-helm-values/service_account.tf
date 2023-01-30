@@ -11,8 +11,15 @@ locals {
     }
   }
 
-  # TODO: Azure doesn't support WI yet, so not annotations to add
-  azure_service_account = {}
+  azure_service_account = {
+    labels = {
+      "azure.workload.identity/use" = "true"
+    }
+    annotations = {
+      "azure.workload.identity/client-id" = var.massdriver_application.identity.azure_application_identity.client_id
+      "azure.workload.identity/tenant-id" = var.massdriver_application.identity.azure_application_identity.tenant_id
+    }
+  }
 
   cloud_service_accounts = {
     aws   = local.aws_service_account,

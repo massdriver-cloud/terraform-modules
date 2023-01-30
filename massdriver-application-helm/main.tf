@@ -7,14 +7,17 @@ locals {
 }
 
 module "application" {
-  source  = "github.com/massdriver-cloud/terraform-modules//massdriver-application"
+  source  = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=4270f29"
   name    = var.name
   service = "kubernetes"
 
   kubernetes = {
     namespace        = var.namespace
     cluster_artifact = var.kubernetes_cluster
+    oidc_issuer_url  = try(var.kubernetes_cluster.data.infrastructure.oidc_issuer_url, null)
   }
+  resource_group_name = var.resource_group_name
+  location            = var.location
 }
 
 resource "helm_release" "application" {
