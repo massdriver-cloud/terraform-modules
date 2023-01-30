@@ -18,7 +18,8 @@ variable "image" {
 }
 
 variable "dns" {
-  type = any
+  type        = any
+  description = "DNS configuration."
 }
 
 variable "health_check" {
