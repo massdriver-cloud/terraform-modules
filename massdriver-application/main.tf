@@ -29,7 +29,7 @@ locals {
 
   # App Serivce / Function App will auto-inject the secret, but still need these env-vars added.
   # AKS auto-injects everything (we add the Client ID and Tenant ID as annotations).
-  azure_envs = local.is_azure ? {
+  azure_envs = local.is_azure && mdxc_application_identity.main.azure_application_identity != null ? {
     AZURE_CLIENT_ID = try(mdxc_application_identity.main.azure_application_identity.client_id, "")
     AZURE_TENANT_ID = try(mdxc_application_identity.main.azure_application_identity.tenant_id, "")
   } : {}
