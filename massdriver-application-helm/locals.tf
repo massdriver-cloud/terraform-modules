@@ -11,12 +11,12 @@ locals {
   // Each cloud needs service account annotations in order for the application identity to be properly assumed
   aws_service_account = {
     annotations = {
-      "eks.amazonaws.com/role-arn" = var.massdriver_application.id
+      "eks.amazonaws.com/role-arn" = module.application.id
     }
   }
   gcp_service_account = {
     annotations = {
-      "iam.gke.io/gcp-service-account" = var.massdriver_application.id
+      "iam.gke.io/gcp-service-account" = module.application.id
     }
   }
   azure_service_account = {
@@ -24,8 +24,8 @@ locals {
       "azure.workload.identity/use" = "true"
     }
     annotations = {
-      "azure.workload.identity/client-id" = local.is_aks ? try(var.massdriver_application.identity.azure_application_identity.client_id) : ""
-      "azure.workload.identity/tenant-id" = local.is_aks ? try(var.massdriver_application.identity.azure_application_identity.tenant_id) : ""
+      "azure.workload.identity/client-id" = local.is_aks ? try(module.application.identity.azure_application_identity.client_id) : ""
+      "azure.workload.identity/tenant-id" = local.is_aks ? try(module.application.identity.azure_application_identity.tenant_id) : ""
     }
   }
 
