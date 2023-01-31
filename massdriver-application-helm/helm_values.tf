@@ -1,9 +1,9 @@
 locals {
   helm_values = {
-    commonLabels = module.massdriver_helm_values.common_labels
+    commonLabels = module.application.params.md_metadata.default_tags
     pod = {
       annotations = {
-        "md-deployment-id" = module.massdriver_helm_values.deployment_id
+        "md-deployment-id" = lookup(module.application.params.md_metadata.deployment, "id", "")
       }
     }
     envs = [for key, val in local.combined_envs : { name = key, value = tostring(val) }]
@@ -14,11 +14,6 @@ locals {
         "nginx.ingress.kubernetes.io/force-ssl-redirect" = "true" // TODO: hardcoding this for now, dependent on nginx
       }
     }
-    serviceAccount = module.massdriver_helm_values.k8s_service_account
+    serviceAccount = local.cloud_service_accounts[module.application.cloud]
   }
-}
-
-module "massdriver_helm_values" {
-  source                 = "github.com/massdriver-cloud/terraform-modules//massdriver-helm-values?ref=60a1ff3"
-  massdriver_application = module.application
 }

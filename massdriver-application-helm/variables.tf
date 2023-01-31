@@ -35,15 +35,3 @@ variable "additional_envs" {
   )
   default = []
 }
-
-variable "resource_group_name" {
-  description = "Azure only, the name of resource group to create the Managed Identity in."
-  type        = string
-  default     = null
-}
-
-variable "location" {
-  description = "Azure only, the location of the resource group."
-  type        = string
-  default     = null
-}
