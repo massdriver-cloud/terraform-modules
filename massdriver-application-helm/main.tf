@@ -7,7 +7,7 @@ locals {
 }
 
 module "application" {
-  source  = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=911db7e"
+  source  = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=81e27fe"
   name    = var.name
   service = "kubernetes"
 
