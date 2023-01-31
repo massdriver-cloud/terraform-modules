@@ -19,6 +19,6 @@ locals {
 }
 
 module "massdriver_helm_values" {
-  source                 = "github.com/massdriver-cloud/terraform-modules//massdriver-helm-values?ref=89844a8"
+  source                 = "github.com/massdriver-cloud/terraform-modules//massdriver-helm-values?ref=60a1ff3"
   massdriver_application = module.application
 }
