@@ -39,7 +39,7 @@ resource "tls_private_key" "main" {
 
 resource "acme_registration" "main" {
   account_key_pem = tls_private_key.main.private_key_pem
-  email_address   = "support+letsencrypt@massdriver.cloud"
+  email_address   = var.acme_registration_email_address
 }
 
 resource "acme_certificate" "main" {

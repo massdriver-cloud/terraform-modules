@@ -17,3 +17,7 @@ variable "dns_zone_resource_group_name" {
 variable "gateway_identity_principal_id" {
   type = string
 }
+
+variable "acme_registration_email_address" {
+  type = string
+}

@@ -43,6 +43,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_acme_registration_email_address"></a> [acme\_registration\_email\_address](#input\_acme\_registration\_email\_address) | n/a | `string` | n/a | yes |
 | <a name="input_dns_zone_resource_group_name"></a> [dns\_zone\_resource\_group\_name](#input\_dns\_zone\_resource\_group\_name) | n/a | `string` | n/a | yes |
 | <a name="input_full_domain"></a> [full\_domain](#input\_full\_domain) | n/a | `string` | n/a | yes |
 | <a name="input_gateway_identity_principal_id"></a> [gateway\_identity\_principal\_id](#input\_gateway\_identity\_principal\_id) | n/a | `string` | n/a | yes |
