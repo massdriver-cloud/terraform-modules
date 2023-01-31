@@ -6,7 +6,7 @@ locals {
   // For other Azure runtimes (App Service, Function App, etc) we make a separate resource group for the application.
   // For AKS, we use the AKS cluster resource group and location since the identity is associated to the AKS OIDC identity.
   azure_resource_group_name = local.is_aks ? element(split("/", var.kubernetes_cluster.data.infrastructure.ari), index(split("/", var.kubernetes_cluster.data.infrastructure.ari), "resourceGroups") + 1) : null
-  azure_location            = local.is_aks ? var.kubernetes_cluster.specs.azure.location : null
+  azure_location            = local.is_aks ? var.kubernetes_cluster.specs.azure.region : null
 
   // Each cloud needs service account annotations in order for the application identity to be properly assumed
   aws_service_account = {
