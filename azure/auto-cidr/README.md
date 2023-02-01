@@ -30,12 +30,12 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_network_mask"></a> [network\_mask](#input\_network\_mask) | n/a | `number` | `22` | no |
+| <a name="input_network_mask"></a> [network\_mask](#input\_network\_mask) | n/a | `number` | n/a | yes |
 | <a name="input_virtual_network_id"></a> [virtual\_network\_id](#input\_virtual\_network\_id) | n/a | `string` | n/a | yes |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| <a name="output_cidr"></a> [cidr](#output\_cidr) | n/a |
+| <a name="output_result"></a> [result](#output\_result) | n/a |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
