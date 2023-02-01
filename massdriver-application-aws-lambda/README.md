@@ -16,7 +16,7 @@ No providers.
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_application"></a> [application](#module\_application) | github.com/massdriver-cloud/terraform-modules//massdriver-application | fc5f7b1 |
-| <a name="module_aws_lambda_function"></a> [aws\_lambda\_function](#module\_aws\_lambda\_function) | github.com/massdriver-cloud/terraform-modules//aws/aws-lambda-function | n/a |
+| <a name="module_aws_lambda_function"></a> [aws\_lambda\_function](#module\_aws\_lambda\_function) | github.com/massdriver-cloud/terraform-modules//aws/aws-lambda-function | fc5f7b1 |
 
 ## Resources
 

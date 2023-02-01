@@ -10,7 +10,7 @@ module "application" {
 }
 
 module "aws_lambda_function" {
-  source            = "github.com/massdriver-cloud/terraform-modules//aws/aws-lambda-function"
+  source            = "github.com/massdriver-cloud/terraform-modules//aws/aws-lambda-function?ref=fc5f7b1"
   function_name     = var.md_metadata.name_prefix
   role_arn          = module.application.id
   image             = var.image
