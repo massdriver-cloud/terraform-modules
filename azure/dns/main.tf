@@ -35,6 +35,11 @@ resource "azurerm_app_service_custom_hostname_binding" "main" {
   hostname            = join(".", [var.subdomain, azurerm_dns_cname_record.main.zone_name])
   app_service_name    = local.runtime.name
   resource_group_name = data.azurerm_resource_group.main.name
+  # implicit dependeny on the cname record
+  # explicit on the txt record
+  depends_on = [
+    azurerm_dns_txt_record.main
+  ]
 }
 
 resource "azurerm_app_service_managed_certificate" "main" {

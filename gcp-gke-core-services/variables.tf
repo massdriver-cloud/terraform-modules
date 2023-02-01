@@ -17,17 +17,6 @@ variable "enable_ingress" {
   default = false
 }
 
-variable "logging" {
-  type = object({
-    opensearch = optional(object({
-      enabled             = bool
-      persistence_size_gi = optional(number, 10)
-      retention_days      = optional(number, 7)
-    }))
-  })
-  default = null
-}
-
 variable "node_groups" {
   type    = any
   default = []

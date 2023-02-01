@@ -41,8 +41,7 @@ No requirements.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_application"></a> [application](#module\_application) | github.com/massdriver-cloud/terraform-modules//massdriver-application | n/a |
-| <a name="module_massdriver_helm_values"></a> [massdriver\_helm\_values](#module\_massdriver\_helm\_values) | github.com/massdriver-cloud/terraform-modules//massdriver-helm-values | n/a |
+| <a name="module_application"></a> [application](#module\_application) | github.com/massdriver-cloud/terraform-modules//massdriver-application | fc5f7b1 |
 
 ## Resources
 

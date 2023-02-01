@@ -17,36 +17,17 @@ locals {
     secrets     = local.secrets
   })
 
-  application_identity_id = var.create_application_identity ? mdxc_application_identity.main.0.id : var.application_identity_id
+  application_identity_id = mdxc_application_identity.main.id
 
-  policies = { for p in local.app_policies_queries : p => jsondecode(data.jq_query.policies[p].result) }
-
-  # env vars that have been resolved. additional vars may be added per cloud
+  policies  = { for p in local.app_policies_queries : p => jsondecode(data.jq_query.policies[p].result) }
   base_envs = { for k, v in local.app_envs_queries : k => jsondecode(data.jq_query.envs[k].result) }
 
   # Auto generate ENV Vars for each secret
-  envs_with_secrets = merge(local.base_envs, local.secrets)
+  envs = merge(local.base_envs, local.secrets)
 
-  # Needed by Azure k8s until Workload Identity is out of preview.
-  azure_envs = (local.is_azure_k8s && mdxc_application_identity.main[0] != null) ? mdxc_application_identity.main[0].azure_application_identity : {}
-  azure_aks_envs = local.is_azure_k8s ? {
-    AZURE_TENANT_ID : local.azure_envs.application_id
-    AZURE_CLIENT_ID : local.azure_envs.service_principal_client_id
-    AZURE_CLIENT_SECRET : local.azure_envs.service_principal_secret
-  } : {}
-
-  cloud_envs = {
-    azure = merge(local.envs_with_secrets, local.azure_aks_envs)
-    aws   = local.envs_with_secrets
-    gcp   = local.envs_with_secrets
-  }
-
-  envs = local.cloud_envs[data.mdxc_cloud.current.cloud]
-
-  is_aws       = data.mdxc_cloud.current.cloud == "aws"
-  is_azure     = data.mdxc_cloud.current.cloud == "azure"
-  is_azure_k8s = local.is_azure && local.is_kubernetes
-  is_gcp       = data.mdxc_cloud.current.cloud == "gcp"
+  is_aws   = data.mdxc_cloud.current.cloud == "aws"
+  is_azure = data.mdxc_cloud.current.cloud == "azure"
+  is_gcp   = data.mdxc_cloud.current.cloud == "gcp"
 
   is_function   = var.service == "function"
   is_vm         = var.service == "vm"
@@ -68,8 +49,7 @@ data "jq_query" "envs" {
 data "mdxc_cloud" "current" {}
 
 resource "mdxc_application_identity" "main" {
-  count = var.create_application_identity ? 1 : 0
-  name  = var.name
+  name = var.name
 
   gcp_configuration   = local.is_gcp ? local.gcp_identity : null
   azure_configuration = local.is_azure ? local.azure_identity : null
