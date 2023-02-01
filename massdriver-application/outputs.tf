@@ -22,6 +22,14 @@ output "params" {
   value       = local.params
 }
 
+output "connections" {
+  # We provide these as an output as its needed for passing into runtimes (helm, etc)
+  # and we don't want end-developers to have to parse the write files to get them since
+  # we've already done the work
+  description = "Connections provided to bundle."
+  value       = local.connections
+}
+
 output "id" {
   description = "Cloud ID for application IAM (AWS Role, GCP Service Account, Azure Managed Identity, etc)"
   value       = local.application_identity_id

@@ -36,8 +36,8 @@ locals {
 
   # Function App will auto-inject the User-Assigned Identity secret, but still need these env-vars added.
   identity_envs = {
-    AZURE_CLIENT_ID = try(module.application.identity.azure_application_identity.client_id, "")
-    AZURE_TENANT_ID = try(module.application.identity.azure_application_identity.tenant_id, "")
+    AZURE_CLIENT_ID = module.application.identity.azure_application_identity.client_id
+    AZURE_TENANT_ID = module.application.identity.azure_application_identity.tenant_id
   }
 }
 

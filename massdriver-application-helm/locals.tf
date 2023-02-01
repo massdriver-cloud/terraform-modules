@@ -24,8 +24,8 @@ locals {
       "azure.workload.identity/use" = "true"
     }
     annotations = {
-      "azure.workload.identity/client-id" = local.is_aks ? try(module.application.identity.azure_application_identity.client_id) : ""
-      "azure.workload.identity/tenant-id" = local.is_aks ? try(module.application.identity.azure_application_identity.tenant_id) : ""
+      "azure.workload.identity/client-id" = try(module.application.identity.azure_application_identity.client_id, "")
+      "azure.workload.identity/tenant-id" = try(module.application.identity.azure_application_identity.tenant_id, "")
     }
   }
 
