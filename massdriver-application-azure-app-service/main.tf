@@ -1,5 +1,5 @@
 module "application" {
-  source              = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=3ecfef1"
+  source              = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=fc5f7b1"
   name                = var.name
   service             = "function"
   resource_group_name = azurerm_resource_group.main.name
@@ -28,6 +28,12 @@ locals {
   service_settings = {
     # DOCKER_ENABLE_CI = "true"
   }
+
+  # App Serivce will auto-inject the User-Assigned Identity secret, but still need these env-vars added.
+  identity_envs = {
+    AZURE_CLIENT_ID = module.application.identity.azure_application_identity.client_id
+    AZURE_TENANT_ID = module.application.identity.azure_application_identity.tenant_id
+  }
 }
 
 resource "azurerm_linux_web_app" "main" {
@@ -39,7 +45,7 @@ resource "azurerm_linux_web_app" "main" {
   tags                = var.tags
 
   # environment variables
-  app_settings = merge(local.service_settings, module.application.envs)
+  app_settings = merge(local.service_settings, local.identity_envs, module.application.envs)
 
   identity {
     type = "UserAssigned"

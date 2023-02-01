@@ -1,13 +1,6 @@
-locals {
-  // Combine environment variables from application and module variables (params)
-  combined_envs = merge(
-    module.application.envs,
-    { for env in var.additional_envs : env.name => env.value }
-  )
-}
 
 module "application" {
-  source  = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=4270f29"
+  source  = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=fc5f7b1"
   name    = var.name
   service = "kubernetes"
 
@@ -16,8 +9,8 @@ module "application" {
     cluster_artifact = var.kubernetes_cluster
     oidc_issuer_url  = try(var.kubernetes_cluster.data.infrastructure.oidc_issuer_url, null)
   }
-  resource_group_name = var.resource_group_name
-  location            = var.location
+  resource_group_name = local.azure_resource_group_name
+  location            = local.azure_location
 }
 
 resource "helm_release" "application" {
@@ -31,6 +24,7 @@ resource "helm_release" "application" {
   values = [
     fileexists("${var.chart}/values.yaml") ? file("${var.chart}/values.yaml") : "",
     yamlencode(module.application.params),
+    yamlencode(module.application.connections),
     yamlencode(var.helm_additional_values),
     yamlencode(local.helm_values)
   ]

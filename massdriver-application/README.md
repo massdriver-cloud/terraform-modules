@@ -81,6 +81,7 @@ No modules.
 | Name | Description |
 |------|-------------|
 | <a name="output_cloud"></a> [cloud](#output\_cloud) | The cloud provisioning executed in. |
+| <a name="output_connections"></a> [connections](#output\_connections) | Connections provided to bundle. |
 | <a name="output_envs"></a> [envs](#output\_envs) | The environment (config & secrets) parsed from massdriver.yaml |
 | <a name="output_id"></a> [id](#output\_id) | Cloud ID for application IAM (AWS Role, GCP Service Account, Azure Managed Identity, etc) |
 | <a name="output_identity"></a> [identity](#output\_identity) | The full MDXC Cloud Identity object, for accessing additional values beyond the ID of the Identity. |
