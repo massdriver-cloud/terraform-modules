@@ -33,6 +33,12 @@ locals {
   service_settings = {
     # DOCKER_ENABLE_CI = "true"
   }
+
+  # Function App will auto-inject the User-Assigned Identity secret, but still need these env-vars added.
+  identity_envs = {
+    AZURE_CLIENT_ID = try(module.application.identity.azure_application_identity.client_id, "")
+    AZURE_TENANT_ID = try(module.application.identity.azure_application_identity.tenant_id, "")
+  }
 }
 
 resource "azurerm_linux_function_app" "main" {

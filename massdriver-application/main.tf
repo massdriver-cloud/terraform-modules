@@ -19,28 +19,11 @@ locals {
 
   application_identity_id = mdxc_application_identity.main.id
 
-  policies = { for p in local.app_policies_queries : p => jsondecode(data.jq_query.policies[p].result) }
-
-  # env vars that have been resolved. additional vars may be added per cloud
+  policies  = { for p in local.app_policies_queries : p => jsondecode(data.jq_query.policies[p].result) }
   base_envs = { for k, v in local.app_envs_queries : k => jsondecode(data.jq_query.envs[k].result) }
 
   # Auto generate ENV Vars for each secret
-  envs_with_secrets = merge(local.base_envs, local.secrets)
-
-  # App Serivce / Function App will auto-inject the secret, but still need these env-vars added.
-  # AKS auto-injects everything (we add the Client ID and Tenant ID as annotations).
-  azure_envs = local.is_azure && mdxc_application_identity.main.azure_application_identity != null ? {
-    AZURE_CLIENT_ID = try(mdxc_application_identity.main.azure_application_identity.client_id, "")
-    AZURE_TENANT_ID = try(mdxc_application_identity.main.azure_application_identity.tenant_id, "")
-  } : {}
-
-  cloud_envs = {
-    azure = merge(local.azure_envs, local.envs_with_secrets)
-    aws   = local.envs_with_secrets
-    gcp   = local.envs_with_secrets
-  }
-
-  envs = local.cloud_envs[data.mdxc_cloud.current.cloud]
+  envs = merge(local.base_envs, local.secrets)
 
   is_aws   = data.mdxc_cloud.current.cloud == "aws"
   is_azure = data.mdxc_cloud.current.cloud == "azure"
