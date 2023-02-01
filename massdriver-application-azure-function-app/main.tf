@@ -54,7 +54,7 @@ resource "azurerm_linux_function_app" "main" {
   tags                        = var.tags
 
   # environment variables
-  app_settings = merge(local.service_settings, module.application.envs)
+  app_settings = merge(local.service_settings, local.identity_envs, module.application.envs)
 
   identity {
     type = "UserAssigned"
