@@ -1,6 +1,6 @@
 
 module "application" {
-  source  = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=fa3a3b6"
+  source  = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=fc5f7b1"
   name    = var.name
   service = "kubernetes"
 
@@ -24,6 +24,7 @@ resource "helm_release" "application" {
   values = [
     fileexists("${var.chart}/values.yaml") ? file("${var.chart}/values.yaml") : "",
     yamlencode(module.application.params),
+    yamlencode(module.application.connections),
     yamlencode(var.helm_additional_values),
     yamlencode(local.helm_values)
   ]

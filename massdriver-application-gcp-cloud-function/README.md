@@ -19,7 +19,7 @@
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_apis"></a> [apis](#module\_apis) | github.com/massdriver-cloud/terraform-modules//gcp-enable-apis | c336d59 |
-| <a name="module_application"></a> [application](#module\_application) | github.com/massdriver-cloud/terraform-modules//massdriver-application | fa3a3b6 |
+| <a name="module_application"></a> [application](#module\_application) | github.com/massdriver-cloud/terraform-modules//massdriver-application | fc5f7b1 |
 | <a name="module_endpoint"></a> [endpoint](#module\_endpoint) | github.com/massdriver-cloud/terraform-modules//gcp-endpoint | 076ecd7 |
 
 ## Resources

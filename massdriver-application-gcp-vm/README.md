@@ -17,7 +17,7 @@ No requirements.
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_alarm_channel"></a> [alarm\_channel](#module\_alarm\_channel) | github.com/massdriver-cloud/terraform-modules//gcp-alarm-channel | bfcf556 |
-| <a name="module_application"></a> [application](#module\_application) | github.com/massdriver-cloud/terraform-modules//massdriver-application | fa3a3b6 |
+| <a name="module_application"></a> [application](#module\_application) | github.com/massdriver-cloud/terraform-modules//massdriver-application | fc5f7b1 |
 | <a name="module_cpu_alarm"></a> [cpu\_alarm](#module\_cpu\_alarm) | github.com/massdriver-cloud/terraform-modules//gcp-monitoring-utilization-threshold | cafdc89 |
 | <a name="module_endpoint"></a> [endpoint](#module\_endpoint) | github.com/massdriver-cloud/terraform-modules//gcp-endpoint | 076ecd7 |
 
