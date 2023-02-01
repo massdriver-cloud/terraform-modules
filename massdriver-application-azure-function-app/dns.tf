@@ -4,7 +4,7 @@ locals {
 }
 
 module "dns" {
-  source                   = "github.com/massdriver-cloud/terraform-modules//azure/dns?ref=1503a6c"
+  source                   = "github.com/massdriver-cloud/terraform-modules//azure/dns?ref=9df7459"
   count                    = var.dns.enable_dns ? 1 : 0
   function_app             = azurerm_linux_function_app.main
   subdomain                = var.dns.subdomain
