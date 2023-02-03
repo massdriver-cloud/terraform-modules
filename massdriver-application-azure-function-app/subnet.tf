@@ -13,7 +13,7 @@ resource "azurerm_subnet" "main" {
   name                 = var.name
   resource_group_name  = local.virtual_network_resource_group_name
   virtual_network_name = local.virtual_network_name
-  address_prefixes     = [module.auto_cidr.cidr]
+  address_prefixes     = [module.auto_cidr.result]
   service_endpoints    = ["Microsoft.Web", "Microsoft.Storage"]
   delegation {
     name = "virtual-network-integration"
