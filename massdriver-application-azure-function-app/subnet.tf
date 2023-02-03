@@ -4,7 +4,7 @@ locals {
 }
 
 module "auto_cidr" {
-  source             = "github.com/massdriver-cloud/terraform-modules//azure/auto-cidr?ref=93bc06c"
+  source             = "github.com/massdriver-cloud/terraform-modules//azure/auto-cidr?ref=2d85f7a"
   network_mask       = 22
   virtual_network_id = var.virtual_network_id
 }
