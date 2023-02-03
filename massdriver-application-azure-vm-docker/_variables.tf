@@ -57,3 +57,7 @@ variable "network" {
 # variable "autoscaling" {
 #   type = any
 # }
+
+variable "acme_registration_email_address" {
+  type = string
+}
