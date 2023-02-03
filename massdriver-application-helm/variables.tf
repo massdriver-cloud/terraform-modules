@@ -19,6 +19,18 @@ variable "chart" {
   type        = string
 }
 
+variable "version" {
+  description = "(Optional) The helm chart version. Required when not using a local chart."
+  type        = string
+  default     = null
+}
+
+variable "repository" {
+  description = "(Optional) The chart's helm repository. Required when not using a local chart."
+  type        = string
+  default     = null
+}
+
 variable "helm_additional_values" {
   description = "Additional helm values to set"
   type        = map(any)
