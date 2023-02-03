@@ -4,7 +4,7 @@ locals {
 }
 
 module "auto_cidr" {
-  source             = "github.com/massdriver-cloud/terraform-modules//azure/auto-cidr?ref=93bc06c"
+  source             = "github.com/massdriver-cloud/terraform-modules//azure/auto-cidr?ref=2d85f7a"
   network_mask       = 22
   virtual_network_id = var.virtual_network_id
 }
@@ -13,7 +13,7 @@ resource "azurerm_subnet" "main" {
   name                 = var.name
   resource_group_name  = local.virtual_network_resource_group_name
   virtual_network_name = local.virtual_network_name
-  address_prefixes     = [module.auto_cidr.cidr]
+  address_prefixes     = [module.auto_cidr.result]
   service_endpoints    = ["Microsoft.Web", "Microsoft.Storage"]
   delegation {
     name = "virtual-network-integration"
