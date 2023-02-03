@@ -19,13 +19,13 @@ variable "chart" {
   type        = string
 }
 
-variable "version" {
+variable "helm_version" {
   description = "(Optional) The helm chart version. Required when not using a local chart."
   type        = string
   default     = null
 }
 
-variable "repository" {
+variable "helm_repository" {
   description = "(Optional) The chart's helm repository. Required when not using a local chart."
   type        = string
   default     = null
