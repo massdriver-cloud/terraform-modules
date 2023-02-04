@@ -29,9 +29,8 @@ resource "azurerm_linux_virtual_machine_scale_set" "main" {
   admin_password                  = random_password.main.result
   # instances                       = var.auto_scaling.enabled ? var.scaleset.instances : 1
   # TODO: better var
-  instances = 1
-  # TODO: configurable
-  sku         = "Standard_F2"
+  instances   = 1
+  sku         = var.machine_type
   custom_data = base64encode(local.cloud_init_rendered)
   # health_probe_id              = var.dns.enable_dns ? module.public_endpoint[0].azurerm_lb_probe : null
   extension_operations_enabled = false
@@ -100,14 +99,13 @@ resource "azurerm_linux_virtual_machine_scale_set" "main" {
     rule = "OldestVM"
   }
 
-  # upgrade_mode = "Automatic"
-
-  # rolling_upgrade_policy {
-  #   max_batch_instance_percent              = 30
-  #   max_unhealthy_instance_percent          = 60
-  #   max_unhealthy_upgraded_instance_percent = 60
-  #   pause_time_between_batches              = "PT5M"
-  # }
+  upgrade_mode = "Automatic"
+  rolling_upgrade_policy {
+    max_batch_instance_percent              = 30
+    max_unhealthy_instance_percent          = 60
+    max_unhealthy_upgraded_instance_percent = 60
+    pause_time_between_batches              = "PT5M"
+  }
 
   #   automatic_os_upgrade_policy {
   #     enable_automatic_os_upgrade = true
@@ -115,19 +113,19 @@ resource "azurerm_linux_virtual_machine_scale_set" "main" {
   #   }
 
   # https://learn.microsoft.com/en-us/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-health-extension#when-to-use-the-application-health-extension
-    #  extension {
-    #   name                       = "HealthExtension"
-    #   publisher                  = "Microsoft.ManagedServices"
-    #   type                       = "ApplicationHealthLinux"
-    #   type_handler_version       = "1.0"
-    #   auto_upgrade_minor_version = false
+  #  extension {
+  #   name                       = "HealthExtension"
+  #   publisher                  = "Microsoft.ManagedServices"
+  #   type                       = "ApplicationHealthLinux"
+  #   type_handler_version       = "1.0"
+  #   auto_upgrade_minor_version = false
 
-    #   settings = jsonencode({
-    #     protocol    = "http"
-    #     port        = var.health_check.port
-    #     requestPath = var.health_check.path
-    #   })
-    # }
+  #   settings = jsonencode({
+  #     protocol    = "http"
+  #     port        = var.health_check.port
+  #     requestPath = var.health_check.path
+  #   })
+  # }
 
 
   # To enable the automatic instance repair, this Virtual Machine Scale Set must have a valid health_probe_id o

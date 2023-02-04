@@ -61,3 +61,7 @@ variable "network" {
 variable "acme_registration_email_address" {
   type = string
 }
+
+variable "machine_type" {
+  type = string
+}
