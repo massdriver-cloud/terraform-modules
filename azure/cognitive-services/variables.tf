@@ -22,3 +22,8 @@ variable "sku_name" {
   type        = string
   description = "The SKU of the Cognitive service."
 }
+
+variable "custom_subdomain_name" {
+  type        = string
+  description = "The custom subdomain name."
+}

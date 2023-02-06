@@ -24,6 +24,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_custom_subdomain_name"></a> [custom\_subdomain\_name](#input\_custom\_subdomain\_name) | The custom subdomain name. | `string` | n/a | yes |
 | <a name="input_kind"></a> [kind](#input\_kind) | The Cognitive service to deploy. | `string` | n/a | yes |
 | <a name="input_location"></a> [location](#input\_location) | The location of the resource. | `string` | n/a | yes |
 | <a name="input_name"></a> [name](#input\_name) | The name of the resource. | `string` | n/a | yes |
