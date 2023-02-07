@@ -36,7 +36,10 @@ No modules.
 
 | Name | Description |
 |------|-------------|
+| <a name="output_account_id"></a> [account\_id](#output\_account\_id) | n/a |
+| <a name="output_client_id"></a> [client\_id](#output\_client\_id) | n/a |
 | <a name="output_endpoint"></a> [endpoint](#output\_endpoint) | n/a |
 | <a name="output_identity_id"></a> [identity\_id](#output\_identity\_id) | n/a |
 | <a name="output_identity_principal_id"></a> [identity\_principal\_id](#output\_identity\_principal\_id) | n/a |
+| <a name="output_tenant_id"></a> [tenant\_id](#output\_tenant\_id) | n/a |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
