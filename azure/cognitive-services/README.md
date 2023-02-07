@@ -37,6 +37,8 @@ No modules.
 | Name | Description |
 |------|-------------|
 | <a name="output_account_id"></a> [account\_id](#output\_account\_id) | n/a |
+| <a name="output_account_location"></a> [account\_location](#output\_account\_location) | n/a |
+| <a name="output_account_name"></a> [account\_name](#output\_account\_name) | n/a |
 | <a name="output_client_id"></a> [client\_id](#output\_client\_id) | n/a |
 | <a name="output_endpoint"></a> [endpoint](#output\_endpoint) | n/a |
 | <a name="output_identity_id"></a> [identity\_id](#output\_identity\_id) | n/a |
