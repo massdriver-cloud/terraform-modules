@@ -21,3 +21,11 @@ output "endpoint" {
 output "account_id" {
   value = azurerm_cognitive_account.main.id
 }
+
+output "account_name" {
+  value = azurerm_cognitive_account.main.name
+}
+
+output "account_location" {
+  value = azurerm_cognitive_account.main.location
+}
