@@ -80,6 +80,22 @@ resource "google_compute_instance_template" "main" {
     email  = module.application.id
   }
 
+  # https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_instance_template#automatic_restart
+  scheduling {
+    # Spot Instances are the "new" preemptible, but it means the same thing.
+    # To use spot,
+    #   + auto_restart must be turned off (false)
+    #   + preemptible must be set to true
+    #   + provisioning_model must be set to spot
+
+    # this caould be shortened to
+    # preemptible = var.use_spot_instances
+    # but it was done this way to make it easier to read
+    preemptible        = var.use_spot_instances ? true : false
+    automatic_restart  = var.use_spot_instances ? false : true
+    provisioning_model = var.use_spot_instances ? "SPOT" : "STANDARD"
+  }
+
   # We need the new template to be created before the old one is deleted.
   lifecycle {
     create_before_destroy = true
