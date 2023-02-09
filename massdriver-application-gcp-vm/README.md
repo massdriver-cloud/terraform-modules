@@ -48,8 +48,8 @@ No requirements.
 | <a name="input_max_instances"></a> [max\_instances](#input\_max\_instances) | n/a | `number` | n/a | yes |
 | <a name="input_md_metadata"></a> [md\_metadata](#input\_md\_metadata) | Massdriver metadata which is provided by the Massdriver deployment runtime | `any` | n/a | yes |
 | <a name="input_port"></a> [port](#input\_port) | n/a | `number` | n/a | yes |
+| <a name="input_spot_instances_enabled"></a> [spot\_instances\_enabled](#input\_spot\_instances\_enabled) | n/a | `bool` | `false` | no |
 | <a name="input_subnetwork"></a> [subnetwork](#input\_subnetwork) | n/a | `any` | n/a | yes |
-| <a name="input_use_spot_instances"></a> [use\_spot\_instances](#input\_use\_spot\_instances) | n/a | `bool` | `false` | no |
 
 ## Outputs
 
