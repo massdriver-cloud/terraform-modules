@@ -89,11 +89,11 @@ resource "google_compute_instance_template" "main" {
     #   + provisioning_model must be set to spot
 
     # this caould be shortened to
-    # preemptible = var.use_spot_instances
+    # preemptible = var.spot_instances_enabled
     # but it was done this way to make it easier to read
-    preemptible        = var.use_spot_instances ? true : false
-    automatic_restart  = var.use_spot_instances ? false : true
-    provisioning_model = var.use_spot_instances ? "SPOT" : "STANDARD"
+    preemptible        = var.spot_instances_enabled ? true : false
+    automatic_restart  = var.spot_instances_enabled ? false : true
+    provisioning_model = var.spot_instances_enabled ? "SPOT" : "STANDARD"
   }
 
   # We need the new template to be created before the old one is deleted.

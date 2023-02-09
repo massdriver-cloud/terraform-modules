@@ -31,7 +31,7 @@ variable "machine_type" {
   type = string
 }
 
-variable "use_spot_instances" {
+variable "spot_instances_enabled" {
   type    = bool
   default = false
 }
