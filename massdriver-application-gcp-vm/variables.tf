@@ -31,6 +31,11 @@ variable "machine_type" {
   type = string
 }
 
+variable "use_spot_instances" {
+  type    = bool
+  default = false
+}
+
 variable "health_check" {
   type = object({
     port = number

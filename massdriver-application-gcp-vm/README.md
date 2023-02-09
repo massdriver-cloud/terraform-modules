@@ -9,8 +9,8 @@ No requirements.
 
 | Name | Version |
 |------|---------|
-| <a name="provider_google"></a> [google](#provider\_google) | 4.51.0 |
-| <a name="provider_google-beta"></a> [google-beta](#provider\_google-beta) | 4.51.0 |
+| <a name="provider_google"></a> [google](#provider\_google) | 4.52.0 |
+| <a name="provider_google-beta"></a> [google-beta](#provider\_google-beta) | 4.52.0 |
 
 ## Modules
 
@@ -49,6 +49,7 @@ No requirements.
 | <a name="input_md_metadata"></a> [md\_metadata](#input\_md\_metadata) | Massdriver metadata which is provided by the Massdriver deployment runtime | `any` | n/a | yes |
 | <a name="input_port"></a> [port](#input\_port) | n/a | `number` | n/a | yes |
 | <a name="input_subnetwork"></a> [subnetwork](#input\_subnetwork) | n/a | `any` | n/a | yes |
+| <a name="input_use_spot_instances"></a> [use\_spot\_instances](#input\_use\_spot\_instances) | n/a | `bool` | `false` | no |
 
 ## Outputs
 
