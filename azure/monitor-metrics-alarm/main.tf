@@ -7,10 +7,10 @@ resource "azurerm_monitor_metric_alert" "main" {
   resource_group_name = var.resource_group_name
   scopes              = var.scopes
   description         = var.message
-
-  severity    = var.severity
-  frequency   = var.frequency
-  window_size = var.window_size
+  severity            = var.severity
+  frequency           = var.frequency
+  window_size         = var.window_size
+  tags                = var.md_metadata.default_tags
 
   criteria {
     metric_namespace = var.metric_namespace
@@ -38,10 +38,14 @@ resource "azurerm_monitor_metric_alert" "main" {
       }
     )
   }
-  tags = var.md_metadata.default_tags
 }
 
-resource "massdriver_package_alarm" "package_alarm" {
+module "massdriver_package_alarm" {
+  source            = "../../massdriver/package-alarm"
   display_name      = var.display_name
   cloud_resource_id = local.alarm_id
+  metric_name       = var.metric_name
+  metric_namespace  = var.metric_namespace
+  metric_statistic  = var.aggregation
+  metric_dimensions = var.dimensions
 }
