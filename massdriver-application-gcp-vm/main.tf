@@ -88,7 +88,7 @@ resource "google_compute_instance_template" "main" {
     #   + preemptible must be set to true
     #   + provisioning_model must be set to spot
 
-    # this caould be shortened to
+    # this could be shortened to
     # preemptible = var.spot_instances_enabled
     # but it was done this way to make it easier to read
     preemptible        = var.spot_instances_enabled ? true : false
