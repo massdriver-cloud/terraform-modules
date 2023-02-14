@@ -15,7 +15,7 @@ No requirements.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_massdriver_package_alarm"></a> [massdriver\_package\_alarm](#module\_massdriver\_package\_alarm) | ../../massdriver/package-alarm | n/a |
+| <a name="module_massdriver_package_alarm"></a> [massdriver\_package\_alarm](#module\_massdriver\_package\_alarm) | github.com/massdriver-cloud/terraform-modules//massdriver/package-alarm | 3595db4 |
 
 ## Resources
 

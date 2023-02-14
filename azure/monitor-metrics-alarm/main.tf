@@ -42,7 +42,7 @@ resource "azurerm_monitor_metric_alert" "main" {
 }
 
 module "massdriver_package_alarm" {
-  source            = "../../massdriver/package-alarm"
+  source            = "github.com/massdriver-cloud/terraform-modules//massdriver/package-alarm?ref=3595db4"
   display_name      = var.display_name
   cloud_resource_id = local.alarm_id
   metric_name       = var.metric_name
