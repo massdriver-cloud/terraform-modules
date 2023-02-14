@@ -4,7 +4,7 @@ resource "massdriver_package_alarm" "main" {
   metric {
     name       = var.metric_name
     namespace  = var.metric_namespace
-    statistic  = var.statistic
-    dimensions = var.dimensions
+    statistic  = var.metric_statistic
+    dimensions = var.metric_dimensions
   }
 }

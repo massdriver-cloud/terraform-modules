@@ -18,12 +18,12 @@ variable "metric_namespace" {
   type        = string
 }
 
-variable "statistic" {
+variable "metric_statistic" {
   description = "The statistic of the metric."
   type        = string
 }
 
-variable "dimensions" {
+variable "metric_dimensions" {
   description = "Dimensions map for the metric."
   type        = any
 }
