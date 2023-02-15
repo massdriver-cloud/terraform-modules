@@ -9,7 +9,9 @@ output "policies" {
 }
 
 output "envs" {
-  sensitive   = true
+  # We want to make this as sensitive "true" but that breaks dynamic blocks
+  # https://github.com/hashicorp/terraform/issues/29744
+  sensitive   = false
   description = "The environment (config & secrets) parsed from massdriver.yaml"
   value       = local.envs
 }
