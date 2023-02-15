@@ -48,5 +48,5 @@ module "massdriver_package_alarm" {
   metric_name       = var.metric_name
   metric_namespace  = var.metric_namespace
   metric_statistic  = var.aggregation
-  metric_dimensions = var.dimensions
+  metric_dimensions = [var.dimensions]
 }
