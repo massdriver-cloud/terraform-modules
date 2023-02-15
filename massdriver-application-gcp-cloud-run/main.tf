@@ -20,7 +20,8 @@ resource "google_cloud_run_service" "main" {
     }
 
     spec {
-      service_account_name = module.application.id
+      service_account_name  = module.application.id
+      container_concurrency = var.container_concurrency
       containers {
         image = var.container_image
         ports {
