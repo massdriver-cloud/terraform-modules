@@ -19,6 +19,12 @@ variable "max_instances" {
   type = number
 }
 
+variable "container_concurrency" {
+  type        = number
+  default     = 0
+  description = "The maximum allowed in-flight (concurrent) requests per container."
+}
+
 variable "endpoint" {
   type = any
 }
