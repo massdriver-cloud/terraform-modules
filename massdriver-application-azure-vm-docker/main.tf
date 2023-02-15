@@ -28,7 +28,6 @@ resource "azurerm_linux_virtual_machine_scale_set" "main" {
   admin_username                  = "placeholder"
   admin_password                  = random_password.main.result
   # instances                       = var.auto_scaling.enabled ? var.scaleset.instances : 1
-  # TODO: better var
   instances   = 1
   sku         = var.machine_type
   custom_data = base64encode(local.cloud_init_rendered)
@@ -55,13 +54,8 @@ resource "azurerm_linux_virtual_machine_scale_set" "main" {
       content {
         name      = var.name
         subnet_id = data.azurerm_subnet.default.id
-        # load_balancer_backend_address_pool_ids = module.public_endpoint.0.load_balancer_backend_address_pool_ids
-        # load_balancer_inbound_nat_rules_ids    = module.public_endpoint.0.load_balancer_inbound_nat_rules_ids
         application_gateway_backend_address_pool_ids = module.public_endpoint.0.load_balancer_backend_address_pool_ids
         primary                                      = true
-        # public_ip_address {
-        #   name = "public"
-        # }
       }
     }
   }
