@@ -7,7 +7,7 @@ locals {
 }
 
 module "application" {
-  source              = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=b4401ac"
+  source              = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=ead16fe"
   name                = var.name
   service             = "vm"
   resource_group_name = azurerm_resource_group.main.name

@@ -1,5 +1,5 @@
 locals {
-  environment_variables = [for env_key, env_val in module.application.envs : "-e ${env_key}=${env_val}"]
+  environment_variables = [for env_key, env_value in module.application.envs : "-e ${env_key}=${env_value}"]
 
   cloud_init_rendered = templatefile("${path.module}/templates/cloud-init.tmpl",
     {
