@@ -48,5 +48,9 @@ module "massdriver_package_alarm" {
   metric_name       = var.metric_name
   metric_namespace  = var.metric_namespace
   metric_statistic  = var.aggregation
-  metric_dimensions = { for dimension in var.dimensions : dimension.name => dimension }
+  metric_dimensions = var.dimensions
+
+  depends_on = [
+    azurerm_monitor_metric_alert.main
+  ]
 }
