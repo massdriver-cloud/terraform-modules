@@ -44,4 +44,9 @@ resource "azurerm_monitor_metric_alert" "main" {
 resource "massdriver_package_alarm" "package_alarm" {
   display_name      = var.display_name
   cloud_resource_id = local.alarm_id
+  metric {
+    name      = var.metric_name
+    namespace = var.metric_namespace
+    statistic = var.aggregation
+  }
 }

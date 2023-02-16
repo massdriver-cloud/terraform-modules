@@ -9,8 +9,8 @@ No requirements.
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.41.0 |
-| <a name="provider_massdriver"></a> [massdriver](#provider\_massdriver) | 1.1.4 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.43.0 |
+| <a name="provider_massdriver"></a> [massdriver](#provider\_massdriver) | 1.1.5 |
 
 ## Modules
 
