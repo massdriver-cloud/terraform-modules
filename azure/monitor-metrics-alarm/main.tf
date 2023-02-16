@@ -41,16 +41,15 @@ resource "azurerm_monitor_metric_alert" "main" {
   tags = var.md_metadata.default_tags
 }
 
-module "massdriver_package_alarm" {
-  source            = "github.com/massdriver-cloud/terraform-modules//massdriver/package-alarm?ref=3595db4"
-  display_name      = var.display_name
-  cloud_resource_id = local.alarm_id
-  metric_name       = var.metric_name
-  metric_namespace  = var.metric_namespace
-  metric_statistic  = var.aggregation
-  metric_dimensions = var.dimensions
-
-  depends_on = [
-    azurerm_monitor_metric_alert.main
-  ]
-}
+# resource "massdriver_package_alarm" "main" {
+#   display_name      = var.display_name
+#   cloud_resource_id = local.alarm_id
+#   metric {
+#     name      = var.metric_name
+#     namespace = var.metric_namespace
+#     statistic = var.aggregation
+#     dimensions = tomap[{
+#       "name" = "name"
+#     }] #placeholder
+#   }
+# }
