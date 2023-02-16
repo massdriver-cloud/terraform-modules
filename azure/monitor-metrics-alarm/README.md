@@ -9,8 +9,7 @@ No requirements.
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.41.0 |
-| <a name="provider_massdriver"></a> [massdriver](#provider\_massdriver) | 1.1.4 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.43.0 |
 
 ## Modules
 
@@ -21,7 +20,6 @@ No modules.
 | Name | Type |
 |------|------|
 | [azurerm_monitor_metric_alert.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/monitor_metric_alert) | resource |
-| [massdriver_package_alarm.package_alarm](https://registry.terraform.io/providers/massdriver-cloud/massdriver/latest/docs/resources/package_alarm) | resource |
 
 ## Inputs
 
