@@ -41,15 +41,12 @@ resource "azurerm_monitor_metric_alert" "main" {
   tags = var.md_metadata.default_tags
 }
 
-# resource "massdriver_package_alarm" "main" {
-#   display_name      = var.display_name
-#   cloud_resource_id = local.alarm_id
-#   metric {
-#     name      = var.metric_name
-#     namespace = var.metric_namespace
-#     statistic = var.aggregation
-#     dimensions = tomap[{
-#       "name" = "name"
-#     }] #placeholder
-#   }
-# }
+resource "massdriver_package_alarm" "main" {
+  display_name      = var.display_name
+  cloud_resource_id = local.alarm_id
+  metric {
+    name      = var.metric_name
+    namespace = var.metric_namespace
+    statistic = var.aggregation
+  }
+}
