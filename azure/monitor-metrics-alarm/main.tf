@@ -41,7 +41,7 @@ resource "azurerm_monitor_metric_alert" "main" {
   tags = var.md_metadata.default_tags
 }
 
-resource "massdriver_package_alarm" "main" {
+resource "massdriver_package_alarm" "package_alarm" {
   display_name      = var.display_name
   cloud_resource_id = local.alarm_id
   metric {

@@ -21,7 +21,7 @@ No modules.
 | Name | Type |
 |------|------|
 | [azurerm_monitor_metric_alert.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/monitor_metric_alert) | resource |
-| [massdriver_package_alarm.main](https://registry.terraform.io/providers/massdriver-cloud/massdriver/latest/docs/resources/package_alarm) | resource |
+| [massdriver_package_alarm.package_alarm](https://registry.terraform.io/providers/massdriver-cloud/massdriver/latest/docs/resources/package_alarm) | resource |
 
 ## Inputs
 
