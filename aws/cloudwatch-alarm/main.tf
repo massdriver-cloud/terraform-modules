@@ -25,4 +25,10 @@ resource "aws_cloudwatch_metric_alarm" "alarm" {
 resource "massdriver_package_alarm" "package_alarm" {
   display_name      = var.display_name
   cloud_resource_id = aws_cloudwatch_metric_alarm.alarm.arn
+  metric {
+    name       = var.metric_name
+    namespace  = var.namespace
+    statistic  = var.statistic
+    dimensions = var.dimensions
+  }
 }
