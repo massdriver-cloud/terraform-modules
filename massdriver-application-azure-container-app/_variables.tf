@@ -45,3 +45,7 @@ variable "dns" {
 variable "virtual_network_id" {
   type = string
 }
+
+variable "acme_registration_email_address" {
+  type = string
+}

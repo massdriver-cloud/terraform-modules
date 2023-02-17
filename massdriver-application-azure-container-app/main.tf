@@ -59,20 +59,20 @@ resource "azurerm_container_app" "main" {
       }
 
       liveness_probe {
-        port      = 80
-        path      = "/health"
+        port      = var.health_check.port
+        path      = var.health_check.path
         transport = "HTTP"
       }
 
       readiness_probe {
-        port      = 80
-        path      = "/health"
+     port      = var.health_check.port
+        path      = var.health_check.path
         transport = "HTTP"
       }
 
       startup_probe {
-        port      = 80
-        path      = "/health"
+        port      = var.health_check.port
+        path      = var.health_check.path
         transport = "HTTP"
       }
     }
@@ -87,6 +87,9 @@ resource "azurerm_container_app" "main" {
       latest_revision = true
       percentage      = 100
     }
+    # custom_domain {
+    #   name = ""
+    # }
   }
 
   identity {
