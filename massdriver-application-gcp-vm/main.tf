@@ -139,11 +139,18 @@ resource "google_compute_instance_group_manager" "main" {
   }
 }
 
+locals {
+  compute_image_family_to_project = {
+    "cos-101-lts"  = "cos-cloud"
+    "common-cu110" = "deeplearning-platform-release"
+  }
+}
+
 data "google_compute_image" "main" {
   provider = google-beta
 
-  family  = "cos-101-lts"
-  project = "cos-cloud"
+  family  = var.compute_image_family
+  project = local.compute_image_family_to_project[var.compute_image_family]
 }
 
 resource "google_compute_firewall" "main" {

@@ -36,9 +36,19 @@ variable "spot_instances_enabled" {
   default = false
 }
 
+variable "compute_image_family" {
+  type    = string
+  default = "cos-101-lts"
+
+  validation {
+    condition     = contains(["cos-101-lts", "common-cu110"], var.compute_image_family)
+    error_message = "Allowed values for compute_image_family are \"cos-101-lts\", or \"common-cu110\"."
+  }
+}
+
 variable "health_check" {
   type = object({
-    port = number
-    path = string
+    port = optional(number, 80)
+    path = optional(string, "/health")
   })
 }
