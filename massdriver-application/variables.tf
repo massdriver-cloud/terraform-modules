@@ -8,8 +8,8 @@ variable "service" {
   type        = string
 
   validation {
-    condition     = contains(["function", "vm", "kubernetes"], var.service)
-    error_message = "Allowed values for service are \"function\", \"vm\", or \"kubernetes\"."
+    condition     = contains(["function", "container", "vm", "kubernetes"], var.service)
+    error_message = "Allowed values for service are \"function\", \"container\", \"vm\", or \"kubernetes\"."
   }
 }
 
