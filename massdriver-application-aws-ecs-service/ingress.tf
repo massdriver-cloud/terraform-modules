@@ -84,5 +84,4 @@ resource "aws_lb_listener_rule" "service" {
       values = [each.value.hostname]
     }
   }
-
 }
