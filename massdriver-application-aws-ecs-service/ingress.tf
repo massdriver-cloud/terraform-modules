@@ -2,8 +2,8 @@ locals {
   // Flatten the list of ingresses in the ECS service config
   container_ingresses = flatten([
     for container in var.containers : [
-      for port in container.ports : [
-        for ingress in port.ingresses : {
+      for port in lookup(container, "ports", []) : [
+        for ingress in lookup(port, "ingresses", []) : {
           container_name = container.name
           container_port = port.container_port
           hostname       = ingress.hostname
