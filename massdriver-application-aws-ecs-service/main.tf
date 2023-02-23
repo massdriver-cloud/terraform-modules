@@ -21,13 +21,13 @@ resource "aws_ecs_service" "main" {
 
   network_configuration {
     subnets         = local.private_subnet_ids
-    security_groups = [aws_security_group.service.id]
+    security_groups = [aws_security_group.main.id]
   }
 
   dynamic "load_balancer" {
     for_each = local.container_ingress_port_map
     content {
-      target_group_arn = aws_lb_target_group.service[load_balancer.key].arn
+      target_group_arn = aws_lb_target_group.main[load_balancer.key].arn
       container_name   = load_balancer.value.container_name
       container_port   = load_balancer.value.container_port
     }

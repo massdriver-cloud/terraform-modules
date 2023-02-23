@@ -68,8 +68,9 @@ variable "containers" {
     ports = list(object({
       container_port = number
       ingresses = list(object({
-        hostname = string
-        path     = string
+        hostname   = string
+        path       = string
+        create_dns = bool
       }))
     }))
   }))

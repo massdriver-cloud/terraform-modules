@@ -1,4 +1,4 @@
-resource "aws_security_group" "service" {
+resource "aws_security_group" "main" {
   name   = var.md_metadata.name_prefix
   vpc_id = local.vpc_id
 }
@@ -13,7 +13,7 @@ resource "aws_security_group_rule" "alb_ingress" {
   protocol                 = "tcp"
   source_security_group_id = element(split("/", local.domain_to_https_cluster_listener_map[each.value.domain].security_group_arn), 1)
 
-  security_group_id = aws_security_group.service.id
+  security_group_id = aws_security_group.main.id
 }
 
 resource "aws_security_group_rule" "all_egress" {
@@ -25,5 +25,5 @@ resource "aws_security_group_rule" "all_egress" {
   protocol    = "-1"
   cidr_blocks = ["0.0.0.0/0"]
 
-  security_group_id = aws_security_group.service.id
+  security_group_id = aws_security_group.main.id
 }
