@@ -30,6 +30,7 @@ locals {
   is_gcp   = data.mdxc_cloud.current.cloud == "gcp"
 
   is_function   = var.service == "function"
+  is_container  = var.service == "container"
   is_vm         = var.service == "vm"
   is_kubernetes = var.service == "kubernetes"
 }

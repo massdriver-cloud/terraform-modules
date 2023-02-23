@@ -49,8 +49,8 @@ module "application" {
 
 | Name | Version |
 |------|---------|
-| <a name="provider_jq"></a> [jq](#provider\_jq) | n/a |
-| <a name="provider_mdxc"></a> [mdxc](#provider\_mdxc) | >= 0.10.3 |
+| <a name="provider_jq"></a> [jq](#provider\_jq) | 0.2.1 |
+| <a name="provider_mdxc"></a> [mdxc](#provider\_mdxc) | 0.10.3 |
 
 ## Modules
 

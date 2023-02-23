@@ -1,6 +1,7 @@
 locals {
   aws_service_map = {
     function   = "lambda",
+    container  = "ecs-tasks"
     vm         = "ec2",
     kubernetes = "eks"
   }
@@ -27,6 +28,11 @@ locals {
         "Service": [
           "${local.aws_service}.amazonaws.com"
         ]
+      },
+      "Condition":{
+        "StringEquals":{
+          "aws:SourceAccount": "${data.mdxc_cloud.current.id}"
+        }
       }
     }
   ]
