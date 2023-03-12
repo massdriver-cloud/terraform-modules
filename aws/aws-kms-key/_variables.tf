@@ -16,6 +16,7 @@ variable "key_alias_context" {
 }
 
 variable "policy" {
-  description = "IAM policy to apply to the KMS key"
+  description = "IAM policy to apply to the KMS key. If left empty, AWS gives the KMS key a permissive default key policy. Its recommended to specify a narrowly scoped key policy when possible."
   type        = string
+  default     = null
 }
