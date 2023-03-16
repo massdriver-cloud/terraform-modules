@@ -17,7 +17,7 @@ resource "azurerm_storage_account" "main" {
   is_hns_enabled                = var.enable_data_lake
   tags                          = var.tags
 
-  # This is a recommendation from BridgeCrew to enable logging for storage account queues, even though we aren't using queues in this bundle.
+  # This is a recommendation from BridgeCrew to enable queue logging for storage accounts.
   queue_properties {
     logging {
       delete                = true
