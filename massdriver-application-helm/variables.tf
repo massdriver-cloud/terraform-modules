@@ -33,7 +33,7 @@ variable "helm_repository" {
 
 variable "helm_additional_values" {
   description = "Additional helm values to set"
-  type        = map(any)
+  type        = any
   default     = {}
 }
 
