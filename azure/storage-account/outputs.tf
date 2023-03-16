@@ -6,6 +6,9 @@ output "primary_blod_endpoint" {
   value = azurerm_storage_account.main.primary_blob_endpoint
 }
 
+# Secondary endpoints are outputted for use in the event of a failover.
+# When a storage account with geo-replication enabled fails over, the secondary endpoint becomes the primary endpoint.
+
 output "secondary_blob_endpoint" {
   value = azurerm_storage_account.main.secondary_blob_endpoint
 }
