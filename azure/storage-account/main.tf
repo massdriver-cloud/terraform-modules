@@ -13,7 +13,6 @@ resource "azurerm_storage_account" "main" {
   access_tier                   = var.access_tier
   enable_https_traffic_only     = true
   min_tls_version               = "TLS1_2"
-  shared_access_key_enabled     = false
   public_network_access_enabled = true
   is_hns_enabled                = var.enable_data_lake
   tags                          = var.tags
