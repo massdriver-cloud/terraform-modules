@@ -28,11 +28,6 @@ locals {
         "Service": [
           "${local.aws_service}.amazonaws.com"
         ]
-      },
-      "Condition":{
-        "StringEquals":{
-          "aws:SourceAccount": "${data.mdxc_cloud.current.id}"
-        }
       }
     }
   ]
