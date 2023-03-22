@@ -25,12 +25,12 @@ resource "mongodbatlas_advanced_cluster" "main" {
         disk_gb_enabled            = true
         compute_enabled            = true
         compute_scale_down_enabled = true
-        compute_min_instance_size  = var.min_instance_size_name
-        compute_max_instance_size  = var.max_instance_size_name
+        compute_min_instance_size  = var.min_instance_size
+        compute_max_instance_size  = var.max_instance_size
       }
       electable_specs {
         ebs_volume_type = "STANDARD"
-        instance_size   = var.min_instance_size_name
+        instance_size   = var.instance_size
         node_count      = var.electable_node_count
       }
       provider_name = "AWS"

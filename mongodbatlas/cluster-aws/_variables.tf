@@ -35,20 +35,20 @@ variable "electable_node_count" {
   default     = 3
 }
 
-variable "instance_size_name" {
-  description = "The instance size name"
+variable "instance_size" {
+  description = "The instance size"
   type        = string
   default     = "M20"
 }
 
-variable "min_instance_size_name" {
-  description = "The min instance size name"
+variable "min_instance_size" {
+  description = "The min instance size"
   type        = string
   default     = "M10"
 }
 
-variable "max_instance_size_name" {
-  description = "The max instance size name"
+variable "max_instance_size" {
+  description = "The max instance size"
   type        = string
   default     = "M80"
 }

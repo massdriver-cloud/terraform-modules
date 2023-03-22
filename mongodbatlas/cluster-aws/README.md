@@ -39,10 +39,10 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_disk_size_gb"></a> [disk\_size\_gb](#input\_disk\_size\_gb) | The size of the disk for data storage | `number` | `20` | no |
 | <a name="input_electable_node_count"></a> [electable\_node\_count](#input\_electable\_node\_count) | The number of electable nodes | `number` | `3` | no |
-| <a name="input_instance_size_name"></a> [instance\_size\_name](#input\_instance\_size\_name) | The instance size name | `string` | `"M20"` | no |
+| <a name="input_instance_size"></a> [instance\_size](#input\_instance\_size) | The instance size | `string` | `"M20"` | no |
 | <a name="input_labels"></a> [labels](#input\_labels) | Labels to associate with mongodb atlas resources | `map(string)` | n/a | yes |
-| <a name="input_max_instance_size_name"></a> [max\_instance\_size\_name](#input\_max\_instance\_size\_name) | The max instance size name | `string` | `"M80"` | no |
-| <a name="input_min_instance_size_name"></a> [min\_instance\_size\_name](#input\_min\_instance\_size\_name) | The min instance size name | `string` | `"M10"` | no |
+| <a name="input_max_instance_size"></a> [max\_instance\_size](#input\_max\_instance\_size) | The max instance size | `string` | `"M80"` | no |
+| <a name="input_min_instance_size"></a> [min\_instance\_size](#input\_min\_instance\_size) | The min instance size | `string` | `"M10"` | no |
 | <a name="input_mongodb_organization_id"></a> [mongodb\_organization\_id](#input\_mongodb\_organization\_id) | The MongoDB Atlas Organization ID | `string` | n/a | yes |
 | <a name="input_mongodb_version"></a> [mongodb\_version](#input\_mongodb\_version) | The MongoDB version to use in the Cluser | `string` | `"4.4"` | no |
 | <a name="input_name"></a> [name](#input\_name) | Name of project to create in MongoDB atlas | `string` | n/a | yes |
