@@ -25,7 +25,7 @@ variable "shard_count" {
 
   validation {
     condition     = (var.shard_count == null) || try((var.shard_count >= 1 && var.shard_count <= 4096), false)
-    error_message = "shard_count must be greater than 0 or less than 4097"
+    error_message = "shard_count must be greater than 0 and less than 4097"
   }
 }
 
