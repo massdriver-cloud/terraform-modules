@@ -4,7 +4,7 @@ locals {
 
 resource "aws_kinesis_stream" "main" {
   name                      = var.name
-  shard_count               = local.provisioned_mode ? var.shard_count : null
+  shard_count               = local.is_provisioned_mode ? var.shard_count : null
   retention_period          = var.retention_hours
   shard_level_metrics       = var.shard_level_metrics
   enforce_consumer_deletion = true
