@@ -24,10 +24,12 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_access_tier"></a> [access\_tier](#input\_access\_tier) | n/a | `string` | n/a | yes |
+| <a name="input_blob_properties"></a> [blob\_properties](#input\_blob\_properties) | n/a | <pre>object({<br>    delete_retention_policy           = optional(number)<br>    container_delete_retention_policy = optional(number)<br>  })</pre> | `null` | no |
 | <a name="input_enable_data_lake"></a> [enable\_data\_lake](#input\_enable\_data\_lake) | n/a | `bool` | `false` | no |
 | <a name="input_kind"></a> [kind](#input\_kind) | n/a | `string` | n/a | yes |
 | <a name="input_location"></a> [location](#input\_location) | n/a | `string` | n/a | yes |
 | <a name="input_name"></a> [name](#input\_name) | n/a | `string` | n/a | yes |
+| <a name="input_queue_properties"></a> [queue\_properties](#input\_queue\_properties) | n/a | <pre>object({<br>    logging = object({<br>      delete                = optional(bool)<br>      read                  = optional(bool)<br>      write                 = optional(bool)<br>      version               = optional(string)<br>      retention_policy_days = optional(number)<br>    })<br>  })</pre> | `null` | no |
 | <a name="input_replication_type"></a> [replication\_type](#input\_replication\_type) | n/a | `string` | n/a | yes |
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | n/a | `string` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | n/a | `any` | n/a | yes |
