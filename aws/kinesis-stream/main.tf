@@ -1,5 +1,5 @@
 locals {
-  provisioned_mode = var.stream_mode == "PROVISIONED"
+  is_provisioned_mode = var.stream_mode == "PROVISIONED"
 }
 
 resource "aws_kinesis_stream" "main" {
