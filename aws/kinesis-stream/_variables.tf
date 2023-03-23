@@ -30,6 +30,6 @@ variable "shard_count" {
 }
 
 variable "shard_level_metrics" {
-  type    = list(string)
+  type    = set(string)
   default = []
 }
