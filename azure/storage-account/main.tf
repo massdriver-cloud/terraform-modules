@@ -17,9 +17,8 @@ resource "azurerm_storage_account" "main" {
   is_hns_enabled                = var.enable_data_lake
   tags                          = var.tags
 
-  # This is a recommendation from BridgeCrew to enable queue logging for storage accounts.
   dynamic "queue_properties" {
-    for_each = var.enable_queue ? [1] : []
+    for_each = var.queue_properties != null ? toset(["true"]) : toset([])
     content {
       logging {
         delete                = var.queue_properties.logging.delete
@@ -32,7 +31,7 @@ resource "azurerm_storage_account" "main" {
   }
 
   dynamic "blob_properties" {
-    for_each = var.enable_blob ? [1] : []
+    for_each = var.blob_properties != null ? toset(["true"]) : toset([])
     content {
       delete_retention_policy {
         days = var.blob_properties.delete_retention_policy

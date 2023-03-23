@@ -51,21 +51,12 @@ variable "enable_data_lake" {
   default = false
 }
 
-variable "enable_queue" {
-  type    = bool
-  default = false
-}
-
-variable "enable_blob" {
-  type    = bool
-  default = false
-}
-
 variable "blob_properties" {
   type = object({
     delete_retention_policy           = optional(number)
     container_delete_retention_policy = optional(number)
   })
+  default = null
 }
 
 variable "queue_properties" {
@@ -78,6 +69,7 @@ variable "queue_properties" {
       retention_policy_days = optional(number)
     })
   })
+  default = null
 }
 
 variable "tags" {
