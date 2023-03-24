@@ -16,10 +16,10 @@ resource "mongodbatlas_advanced_cluster" "main" {
   project_id             = mongodbatlas_project.main.id
   name                   = var.name
   mongo_db_major_version = var.mongodb_version
-  cluster_type           = "REPLICASET"
+  cluster_type           = var.cluster_type
 
   replication_specs {
-    num_shards = 1
+    num_shards = var.num_shards
     region_configs {
       auto_scaling {
         disk_gb_enabled            = true
@@ -29,7 +29,8 @@ resource "mongodbatlas_advanced_cluster" "main" {
         compute_max_instance_size  = var.max_instance_size
       }
       electable_specs {
-        ebs_volume_type = "STANDARD"
+        ebs_volume_type = var.ebs_volume_type
+        disk_iops       = var.disk_iops
         instance_size   = var.instance_size
         node_count      = var.electable_node_count
       }
@@ -39,8 +40,8 @@ resource "mongodbatlas_advanced_cluster" "main" {
     }
   }
 
-  pit_enabled    = true
-  backup_enabled = true
+  backup_enabled = var.backup_enabled
+  pit_enabled    = var.pit_enabled
   disk_size_gb   = var.disk_size_gb
 
   dynamic "labels" {
