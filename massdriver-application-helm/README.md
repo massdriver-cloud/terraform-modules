@@ -35,7 +35,7 @@ No requirements.
 
 | Name | Version |
 |------|---------|
-| <a name="provider_helm"></a> [helm](#provider\_helm) | n/a |
+| <a name="provider_helm"></a> [helm](#provider\_helm) | 2.9.0 |
 
 ## Modules
 
@@ -55,7 +55,9 @@ No requirements.
 |------|-------------|------|---------|:--------:|
 | <a name="input_additional_envs"></a> [additional\_envs](#input\_additional\_envs) | Additional environment variables to set | <pre>list(<br>    object({<br>      name  = string<br>      value = string<br>    })<br>  )</pre> | `[]` | no |
 | <a name="input_chart"></a> [chart](#input\_chart) | The path to your Helm chart | `string` | n/a | yes |
-| <a name="input_helm_additional_values"></a> [helm\_additional\_values](#input\_helm\_additional\_values) | Additional helm values to set | `map(any)` | `{}` | no |
+| <a name="input_helm_additional_values"></a> [helm\_additional\_values](#input\_helm\_additional\_values) | Additional helm values to set | `any` | `{}` | no |
+| <a name="input_helm_repository"></a> [helm\_repository](#input\_helm\_repository) | (Optional) The chart's helm repository. Required when not using a local chart. | `string` | `null` | no |
+| <a name="input_helm_version"></a> [helm\_version](#input\_helm\_version) | (Optional) The helm chart version. Required when not using a local chart. | `string` | `null` | no |
 | <a name="input_kubernetes_cluster"></a> [kubernetes\_cluster](#input\_kubernetes\_cluster) | Massdriver Kubernetes Cluster Artifact | `any` | n/a | yes |
 | <a name="input_name"></a> [name](#input\_name) | The release name of the chart, this should be your var.md\_metadata.name\_prefix | `string` | n/a | yes |
 | <a name="input_namespace"></a> [namespace](#input\_namespace) | Namespace to deploy chart into | `string` | n/a | yes |
@@ -64,5 +66,5 @@ No requirements.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_application"></a> [application](#output\_application) | The massdriver-application specification. |
+| <a name="output_identity"></a> [identity](#output\_identity) | The massdriver-application IAM entity id (AWS Role ARN, GCP Service Account email, Azure Principal ID). |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
