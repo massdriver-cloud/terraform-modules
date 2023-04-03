@@ -2,15 +2,15 @@ locals {
   automated_alarms = {
     response_metric_alert = {
       severity    = "1"
-      frequency   = "PT1M"
+      frequency   = "PT5M"
       window_size = "PT5M"
       operator    = "GreaterThan"
       aggregation = "Average"
-      threshold   = 20
+      threshold   = 60
     }
     http_4xx_metric_alert = {
       severity    = "1"
-      frequency   = "PT1M"
+      frequency   = "PT5M"
       window_size = "PT5M"
       operator    = "GreaterThan"
       aggregation = "Average"
@@ -18,7 +18,7 @@ locals {
     }
     http_5xx_metric_alert = {
       severity    = "0"
-      frequency   = "PT1M"
+      frequency   = "PT5M"
       window_size = "PT5M"
       operator    = "GreaterThan"
       aggregation = "Average"

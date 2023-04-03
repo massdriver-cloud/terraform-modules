@@ -9,7 +9,7 @@
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | n/a |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.43.0 |
 
 ## Modules
 
@@ -17,7 +17,7 @@
 |------|--------|---------|
 | <a name="module_alarm_channel"></a> [alarm\_channel](#module\_alarm\_channel) | github.com/massdriver-cloud/terraform-modules//azure-alarm-channel | 40d6e54 |
 | <a name="module_application"></a> [application](#module\_application) | github.com/massdriver-cloud/terraform-modules//massdriver-application | fc5f7b1 |
-| <a name="module_auto_cidr"></a> [auto\_cidr](#module\_auto\_cidr) | github.com/massdriver-cloud/terraform-modules//azure/auto-cidr | 93bc06c |
+| <a name="module_auto_cidr"></a> [auto\_cidr](#module\_auto\_cidr) | github.com/massdriver-cloud/terraform-modules//azure/auto-cidr | 2d85f7a |
 | <a name="module_dns"></a> [dns](#module\_dns) | github.com/massdriver-cloud/terraform-modules//azure/dns | 9df7459 |
 | <a name="module_http_4xx_metric_alert"></a> [http\_4xx\_metric\_alert](#module\_http\_4xx\_metric\_alert) | github.com/massdriver-cloud/terraform-modules//azure-monitor-metrics-alarm | 40d6e54 |
 | <a name="module_http_5xx_metric_alert"></a> [http\_5xx\_metric\_alert](#module\_http\_5xx\_metric\_alert) | github.com/massdriver-cloud/terraform-modules//azure-monitor-metrics-alarm | 40d6e54 |
