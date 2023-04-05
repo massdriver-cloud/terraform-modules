@@ -1,13 +1,5 @@
 locals {
   automated_alarms = {
-    response_metric_alert = {
-      severity    = "1"
-      frequency   = "PT5M"
-      window_size = "PT5M"
-      operator    = "GreaterThan"
-      aggregation = "Average"
-      threshold   = 60
-    }
     http_4xx_metric_alert = {
       severity    = "1"
       frequency   = "PT5M"
@@ -37,32 +29,6 @@ module "alarm_channel" {
   source              = "github.com/massdriver-cloud/terraform-modules//azure-alarm-channel?ref=40d6e54"
   md_metadata         = var.md_metadata
   resource_group_name = azurerm_resource_group.main.name
-}
-
-module "response_metric_alert" {
-  count                   = lookup(local.alarms, "response_metric_alert", null) == null ? 0 : 1
-  source                  = "github.com/massdriver-cloud/terraform-modules//azure-monitor-metrics-alarm?ref=40d6e54"
-  scopes                  = [azurerm_linux_web_app.main.id]
-  resource_group_name     = azurerm_resource_group.main.name
-  monitor_action_group_id = module.alarm_channel.id
-  severity                = local.alarms.response_metric_alert.severity
-  frequency               = local.alarms.response_metric_alert.frequency
-  window_size             = local.alarms.response_metric_alert.window_size
-
-  depends_on = [
-    azurerm_linux_web_app.main
-  ]
-
-  md_metadata  = var.md_metadata
-  display_name = "Response Time"
-  message      = "High response time"
-
-  alarm_name       = "${var.name}-highResponseTime"
-  operator         = local.alarms.response_metric_alert.operator
-  metric_name      = "HttpResponseTime"
-  metric_namespace = "microsoft.web/sites"
-  aggregation      = local.alarms.response_metric_alert.aggregation
-  threshold        = local.alarms.response_metric_alert.threshold
 }
 
 module "http_4xx_metric_alert" {

@@ -24,11 +24,6 @@ resource "azurerm_service_plan" "main" {
 }
 
 locals {
-  # https://learn.microsoft.com/en-us/azure/app-service/reference-app-settings?tabs=kudu%2Cdotnet#custom-containers
-  service_settings = {
-    # DOCKER_ENABLE_CI = "true"
-  }
-
   # App Serivce will auto-inject the User-Assigned Identity secret, but still need these env-vars added.
   identity_envs = {
     AZURE_CLIENT_ID = module.application.identity.azure_application_identity.client_id
@@ -45,7 +40,7 @@ resource "azurerm_linux_web_app" "main" {
   tags                = var.tags
 
   # environment variables
-  app_settings = merge(local.service_settings, local.identity_envs, module.application.envs)
+  app_settings = merge(local.identity_envs, module.application.envs)
 
   identity {
     type = "UserAssigned"

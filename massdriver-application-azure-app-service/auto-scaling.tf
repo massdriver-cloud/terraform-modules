@@ -4,6 +4,7 @@ resource "azurerm_monitor_autoscale_setting" "main" {
   location            = azurerm_resource_group.main.location
   target_resource_id  = azurerm_service_plan.main.id
   enabled             = true
+  tags                = var.tags
 
   profile {
     name = "autoscale-profile"
@@ -62,5 +63,4 @@ resource "azurerm_monitor_autoscale_setting" "main" {
   depends_on = [
     azurerm_service_plan.main
   ]
-  tags = var.tags
 }
