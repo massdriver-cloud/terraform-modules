@@ -8,4 +8,8 @@ locals {
 resource "massdriver_package_alarm" "package_alarm" {
   display_name      = var.display_name
   cloud_resource_id = var.cloud_resource_id
+  metric {
+    namespace  = var.alarm_configuration.resource_type
+    name       = var.alarm_configuration.metric_type
+  }
 }
