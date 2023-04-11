@@ -22,18 +22,19 @@ locals {
     "DISABLED"  = {}
     "CUSTOM"    = lookup(var.monitoring, "alarms", {})
   }
-  alarms = lookup(local.alarms_map, var.monitoring.mode, {})
+  alarms             = lookup(local.alarms_map, var.monitoring.mode, {})
+  monitoring_enabled = var.monitoring.mode != "DISABLED" ? 1 : 0
 }
 
 module "alarm_channel" {
-  source              = "github.com/massdriver-cloud/terraform-modules//azure-alarm-channel?ref=40d6e54"
+  source              = "github.com/massdriver-cloud/terraform-modules//azure/alarm-channel?ref=b6ccb88"
   md_metadata         = var.md_metadata
   resource_group_name = azurerm_resource_group.main.name
 }
 
 module "http_4xx_metric_alert" {
-  count                   = lookup(local.alarms, "http_4xx_metric_alert", null) == null ? 0 : 1
-  source                  = "github.com/massdriver-cloud/terraform-modules//azure-monitor-metrics-alarm?ref=40d6e54"
+  count                   = local.monitoring_enabled
+  source                  = "github.com/massdriver-cloud/terraform-modules//azure/monitor-metrics-alarm?ref=b6ccb88"
   scopes                  = [azurerm_linux_web_app.main.id]
   resource_group_name     = azurerm_resource_group.main.name
   monitor_action_group_id = module.alarm_channel.id
@@ -58,8 +59,8 @@ module "http_4xx_metric_alert" {
 }
 
 module "http_5xx_metric_alert" {
-  count                   = lookup(local.alarms, "http_5xx_metric_alert", null) == null ? 0 : 1
-  source                  = "github.com/massdriver-cloud/terraform-modules//azure-monitor-metrics-alarm?ref=40d6e54"
+  count                   = local.monitoring_enabled
+  source                  = "github.com/massdriver-cloud/terraform-modules//azure/monitor-metrics-alarm?ref=b6ccb88"
   scopes                  = [azurerm_linux_web_app.main.id]
   resource_group_name     = azurerm_resource_group.main.name
   monitor_action_group_id = module.alarm_channel.id

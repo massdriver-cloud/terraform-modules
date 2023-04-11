@@ -12,8 +12,9 @@ variable "md_metadata" {
 
 variable "image" {
   type = object({
-    repository = string
-    tag        = string
+    registry = string
+    name     = string
+    tag      = string
   })
 }
 
