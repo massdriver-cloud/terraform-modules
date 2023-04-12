@@ -1,4 +1,4 @@
 output "identity" {
-  description = "The massdriver-application IAM entity id (AWS Role ARN, GCP Service Account email, Azure Principal ID)."
+  description = "Cloud ID for application IAM (AWS Role, GCP Service Account, Azure Managed Identity ID, etc)"
   value       = module.application.id
 }

@@ -9,8 +9,8 @@ No requirements.
 
 | Name | Version |
 |------|---------|
-| <a name="provider_google"></a> [google](#provider\_google) | 4.52.0 |
-| <a name="provider_google-beta"></a> [google-beta](#provider\_google-beta) | 4.52.0 |
+| <a name="provider_google"></a> [google](#provider\_google) | 4.61.0 |
+| <a name="provider_google-beta"></a> [google-beta](#provider\_google-beta) | 4.61.0 |
 
 ## Modules
 
@@ -56,5 +56,5 @@ No requirements.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_application"></a> [application](#output\_application) | The massdriver-application specification. |
+| <a name="output_identity"></a> [identity](#output\_identity) | Cloud ID for application IAM (AWS Role, GCP Service Account, Azure Managed Identity ID, etc) |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
