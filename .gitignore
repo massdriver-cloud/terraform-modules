@@ -113,3 +113,8 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/terraform,osx,windows,linux
+
+### VS Code###
+# Plugins
+.infracost
+.vscode/

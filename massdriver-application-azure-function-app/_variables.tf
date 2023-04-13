@@ -10,10 +10,10 @@ variable "md_metadata" {
   type = any
 }
 
-variable "docker" {
+variable "image" {
   type = object({
     registry = string
-    image    = string
+    name     = string
     tag      = string
   })
 }

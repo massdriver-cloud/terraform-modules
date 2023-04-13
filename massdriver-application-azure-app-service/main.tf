@@ -1,5 +1,5 @@
 module "application" {
-  source              = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=fc5f7b1"
+  source              = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=d9f4961"
   name                = var.name
   service             = "function"
   resource_group_name = azurerm_resource_group.main.name
@@ -23,24 +23,18 @@ resource "azurerm_service_plan" "main" {
   tags                   = var.tags
 }
 
-locals {
-  # App Serivce will auto-inject the User-Assigned Identity secret, but still need these env-vars added.
-  identity_envs = {
-    AZURE_CLIENT_ID = module.application.identity.azure_application_identity.client_id
-    AZURE_TENANT_ID = module.application.identity.azure_application_identity.tenant_id
-  }
-}
-
 resource "azurerm_linux_web_app" "main" {
-  name                = var.name
-  location            = azurerm_resource_group.main.location
-  resource_group_name = azurerm_resource_group.main.name
-  service_plan_id     = azurerm_service_plan.main.id
-  https_only          = true
-  tags                = var.tags
+  name                       = var.name
+  location                   = azurerm_resource_group.main.location
+  resource_group_name        = azurerm_resource_group.main.name
+  service_plan_id            = azurerm_service_plan.main.id
+  https_only                 = true
+  client_certificate_enabled = true
+  client_certificate_mode    = "Optional"
+  tags                       = var.tags
 
   # environment variables
-  app_settings = merge(local.identity_envs, module.application.envs)
+  app_settings = module.application.envs
 
   identity {
     type = "UserAssigned"
@@ -101,7 +95,7 @@ resource "azurerm_linux_web_app" "main" {
     }
 
     application_stack {
-      docker_image     = var.image.repository
+      docker_image     = "${var.image.registry}/${var.image.name}"
       docker_image_tag = var.image.tag
     }
 
