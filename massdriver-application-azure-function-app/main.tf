@@ -41,7 +41,7 @@ resource "azurerm_linux_function_app" "main" {
   tags                        = var.tags
 
   app_settings = merge(module.application.envs, {
-    /* Documented workaround for an issue with functions in the function app:
+    /* Documented workaround for an issue with dockerized functions in the function app:
     https://github.com/Azure/azure-functions-docker/issues/642#issuecomment-1266230863
     https://learn.microsoft.com/en-us/azure/app-service/configure-custom-container?pivots=container-linux&tabs=debian#use-persistent-shared-storage */
     "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = "false"
