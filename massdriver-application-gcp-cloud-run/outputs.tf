@@ -1,4 +1,4 @@
 output "identity" {
-  description = "Cloud ID for application IAM (AWS Role, GCP Service Account, Azure Managed Identity ID, etc)"
+  description = "Cloud ID for application IAM. For GCP this is the Service Account email."
   value       = module.application.id
 }
