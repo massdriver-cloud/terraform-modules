@@ -40,8 +40,12 @@ resource "azurerm_linux_function_app" "main" {
   virtual_network_subnet_id   = azurerm_subnet.main.id
   tags                        = var.tags
 
-  # environment variables
-  app_settings = module.application.envs
+  app_settings = merge(module.application.envs, {
+    /* Documented workaround for an issue with dockerized functions in the function app:
+    https://github.com/Azure/azure-functions-docker/issues/642#issuecomment-1266230863
+    https://learn.microsoft.com/en-us/azure/app-service/configure-custom-container?pivots=container-linux&tabs=debian#use-persistent-shared-storage */
+    "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = "false"
+  })
 
   identity {
     type = "UserAssigned"

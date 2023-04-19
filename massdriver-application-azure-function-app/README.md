@@ -9,7 +9,7 @@
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.51.0 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.52.0 |
 
 ## Modules
 
@@ -57,5 +57,7 @@
 
 | Name | Description |
 |------|-------------|
-| <a name="output_identity"></a> [identity](#output\_identity) | Cloud ID for application IAM (AWS Role, GCP Service Account, Azure Managed Identity ID, etc) |
+| <a name="output_hostname"></a> [hostname](#output\_hostname) | Default hostname for the application runtime |
+| <a name="output_id"></a> [id](#output\_id) | Cloud ID for application IAM (AWS Role, GCP Service Account, Azure Managed Identity ID, etc) |
+| <a name="output_resource_id"></a> [resource\_id](#output\_resource\_id) | Cloud Resource ID for the resource |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

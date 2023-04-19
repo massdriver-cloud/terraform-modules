@@ -33,7 +33,6 @@ resource "azurerm_linux_web_app" "main" {
   client_certificate_mode    = "Optional"
   tags                       = var.tags
 
-  # environment variables
   app_settings = module.application.envs
 
   identity {
@@ -95,6 +94,7 @@ resource "azurerm_linux_web_app" "main" {
     }
 
     application_stack {
+      # configuring the structure this way so that the image block in massdriver.yaml is identical across azure runtimes
       docker_image     = "${var.image.registry}/${var.image.name}"
       docker_image_tag = var.image.tag
     }
