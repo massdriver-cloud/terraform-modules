@@ -1,4 +1,4 @@
-output "application" {
+output "id" {
   description = "The massdriver-application specification."
-  value       = module.application
+  value       = module.application.id
 }
