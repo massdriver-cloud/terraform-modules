@@ -40,5 +40,6 @@ No requirements.
 
 | Name | Description |
 |------|-------------|
+| <a name="output_hostname"></a> [hostname](#output\_hostname) | n/a |
 | <a name="output_id"></a> [id](#output\_id) | The massdriver-application specification. |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
