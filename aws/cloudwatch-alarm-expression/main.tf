@@ -44,6 +44,6 @@ resource "massdriver_package_alarm" "package_alarm" {
     name       = var.metric_queries[var.display_metric_key].metric_name
     namespace  = var.metric_queries[var.display_metric_key].namespace
     statistic  = try(var.metric_queries[var.display_metric_key].stat, null)
-    dimensions = var.metric_queries[var.display_metric_key].dimensions
+    dimensions = try(var.metric_queries[var.display_metric_key].dimensions, {})
   }
 }
