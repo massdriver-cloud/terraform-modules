@@ -36,6 +36,7 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_certificate_arn"></a> [certificate\_arn](#input\_certificate\_arn) | n/a | `string` | n/a | yes |
+| <a name="input_dns_enabled"></a> [dns\_enabled](#input\_dns\_enabled) | n/a | `bool` | n/a | yes |
 | <a name="input_domain"></a> [domain](#input\_domain) | n/a | `string` | n/a | yes |
 | <a name="input_endpoint_configuration"></a> [endpoint\_configuration](#input\_endpoint\_configuration) | Regional or Global API Gateway. Accepted values are "EDGE" or "REGIONAL" | `string` | n/a | yes |
 | <a name="input_hosted_zone_id"></a> [hosted\_zone\_id](#input\_hosted\_zone\_id) | n/a | `string` | n/a | yes |
@@ -47,5 +48,6 @@ No modules.
 | Name | Description |
 |------|-------------|
 | <a name="output_arn"></a> [arn](#output\_arn) | The ARN of the API Gateway |
+| <a name="output_root_resource_id"></a> [root\_resource\_id](#output\_root\_resource\_id) | The ID of the resource at the '/' route of the API Gateway |
 | <a name="output_stage_arn"></a> [stage\_arn](#output\_stage\_arn) | The ARN of the API Gateway stage |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
