@@ -30,7 +30,7 @@ No requirements.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_container"></a> [container](#input\_container) | n/a | <pre>object({<br>    image = object({<br>      repository = string<br>      name       = string<br>      tag        = string<br>    })<br>    port        = number<br>    concurrency = number<br>  })</pre> | n/a | yes |
+| <a name="input_container"></a> [container](#input\_container) | n/a | <pre>object({<br>    image = object({<br>      repository = string<br>      tag        = string<br>    })<br>    port        = number<br>    concurrency = number<br>  })</pre> | n/a | yes |
 | <a name="input_endpoint"></a> [endpoint](#input\_endpoint) | n/a | `any` | n/a | yes |
 | <a name="input_md_metadata"></a> [md\_metadata](#input\_md\_metadata) | Massdriver metadata which is provided by the Massdriver deployment runtime | `any` | n/a | yes |
 | <a name="input_platform"></a> [platform](#input\_platform) | n/a | <pre>object({<br>    location      = string<br>    max_instances = number<br>  })</pre> | n/a | yes |

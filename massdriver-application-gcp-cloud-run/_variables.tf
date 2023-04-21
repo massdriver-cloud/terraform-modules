@@ -14,7 +14,6 @@ variable "container" {
   type = object({
     image = object({
       repository = string
-      name       = string
       tag        = string
     })
     port        = number
