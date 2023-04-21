@@ -23,7 +23,7 @@ resource "google_cloud_run_service" "main" {
       service_account_name  = module.application.id
       container_concurrency = var.container.concurrency
       containers {
-        image = "${var.container.image.repository}/${var.container.image.name}:${var.container.image.tag}"
+        image = "${var.container.image.repository}:${var.container.image.tag}"
         ports {
           container_port = var.container.port
         }
