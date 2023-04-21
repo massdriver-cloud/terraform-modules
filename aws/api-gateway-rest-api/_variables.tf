@@ -27,3 +27,7 @@ variable "hosted_zone_id" {
 variable "certificate_arn" {
   type = string
 }
+
+variable "dns_enabled" {
+  type = bool
+}
