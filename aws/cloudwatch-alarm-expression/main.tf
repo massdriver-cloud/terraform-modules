@@ -41,9 +41,9 @@ resource "massdriver_package_alarm" "package_alarm" {
   display_name      = var.display_name
   cloud_resource_id = aws_cloudwatch_metric_alarm.alarm.arn
   metric {
-    name       = var.metric_queries[var.display_metric_key].metric_name
-    namespace  = var.metric_queries[var.display_metric_key].namespace
-    statistic  = try(var.metric_queries[var.display_metric_key].stat, null)
-    dimensions = try(var.metric_queries[var.display_metric_key].dimensions, {})
+    name       = var.metric_queries[var.display_metric_key].metric.metric_name
+    namespace  = var.metric_queries[var.display_metric_key].metric.namespace
+    statistic  = try(var.metric_queries[var.display_metric_key].metric.stat, null)
+    dimensions = try(var.metric_queries[var.display_metric_key].metric.dimensions, {})
   }
 }
