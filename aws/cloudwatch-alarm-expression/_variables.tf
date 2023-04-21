@@ -54,3 +54,8 @@ variable "display_name" {
   type        = string
   description = "Short name to display in the massdriver UI."
 }
+
+variable "display_metric_key" {
+  type        = string
+  description = "The expression key that should show up in metrics graphs for this alarm"
+}
