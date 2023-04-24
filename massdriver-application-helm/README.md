@@ -66,5 +66,5 @@ No requirements.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_identity"></a> [identity](#output\_identity) | The massdriver-application IAM entity id (AWS Role ARN, GCP Service Account email, Azure Principal ID). |
+| <a name="output_identity"></a> [identity](#output\_identity) | Cloud ID for application IAM (AWS Role, GCP Service Account, Azure Managed Identity ID, etc) |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

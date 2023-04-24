@@ -8,12 +8,7 @@ output "function_invoke_arn" {
   value       = module.aws_lambda_function.invoke_arn
 }
 
-output "identity_arn" {
-  description = "ARN of the workload identity created for the lambda function"
+output "identity" {
+  description = "Cloud ID for application IAM. For AWS this is an IAM Role ARN."
   value       = module.application.id
-}
-
-output "identity_name" {
-  description = "Name of the workload identity created for the lambda function"
-  value       = local.role_name
 }

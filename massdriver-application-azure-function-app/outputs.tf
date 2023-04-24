@@ -1,5 +1,5 @@
-output "id" {
-  description = "Cloud ID for application IAM (AWS Role, GCP Service Account, Azure Managed Identity ID, etc)"
+output "identity" {
+  description = "Cloud ID for application IAM. For Azure this is the Managed Identity ID."
   value       = module.application.id
 }
 
