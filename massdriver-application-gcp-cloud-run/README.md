@@ -9,14 +9,14 @@ No requirements.
 
 | Name | Version |
 |------|---------|
-| <a name="provider_google"></a> [google](#provider\_google) | 4.61.0 |
+| <a name="provider_google"></a> [google](#provider\_google) | 4.62.1 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_apis"></a> [apis](#module\_apis) | github.com/massdriver-cloud/terraform-modules//google-enable-apis | 9201b9f |
-| <a name="module_application"></a> [application](#module\_application) | github.com/massdriver-cloud/terraform-modules//massdriver-application | fc5f7b1 |
+| <a name="module_apis"></a> [apis](#module\_apis) | github.com/massdriver-cloud/terraform-modules//gcp-enable-apis | 735929b |
+| <a name="module_application"></a> [application](#module\_application) | github.com/massdriver-cloud/terraform-modules//massdriver-application | 735929b |
 | <a name="module_serverless_endpoint"></a> [serverless\_endpoint](#module\_serverless\_endpoint) | github.com/massdriver-cloud/terraform-modules//gcp-serverless-endpoint | c00db94 |
 
 ## Resources
@@ -30,13 +30,10 @@ No requirements.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_container_concurrency"></a> [container\_concurrency](#input\_container\_concurrency) | The maximum allowed in-flight (concurrent) requests per container. | `number` | `0` | no |
-| <a name="input_container_image"></a> [container\_image](#input\_container\_image) | n/a | `string` | n/a | yes |
-| <a name="input_container_port"></a> [container\_port](#input\_container\_port) | n/a | `number` | n/a | yes |
+| <a name="input_container"></a> [container](#input\_container) | n/a | <pre>object({<br>    image = object({<br>      repository = string<br>      tag        = string<br>    })<br>    port        = number<br>    concurrency = number<br>  })</pre> | n/a | yes |
 | <a name="input_endpoint"></a> [endpoint](#input\_endpoint) | n/a | `any` | n/a | yes |
-| <a name="input_location"></a> [location](#input\_location) | n/a | `string` | n/a | yes |
-| <a name="input_max_instances"></a> [max\_instances](#input\_max\_instances) | n/a | `number` | n/a | yes |
 | <a name="input_md_metadata"></a> [md\_metadata](#input\_md\_metadata) | Massdriver metadata which is provided by the Massdriver deployment runtime | `any` | n/a | yes |
+| <a name="input_platform"></a> [platform](#input\_platform) | n/a | <pre>object({<br>    location      = string<br>    max_instances = number<br>  })</pre> | n/a | yes |
 | <a name="input_vpc_connector"></a> [vpc\_connector](#input\_vpc\_connector) | n/a | `string` | n/a | yes |
 
 ## Outputs
@@ -44,4 +41,5 @@ No requirements.
 | Name | Description |
 |------|-------------|
 | <a name="output_identity"></a> [identity](#output\_identity) | Cloud ID for application IAM (AWS Role, GCP Service Account, Azure Managed Identity ID, etc) |
+| <a name="output_hostname"></a> [hostname](#output\_hostname) | n/a |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
