@@ -9,7 +9,7 @@
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.52.0 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.53.0 |
 
 ## Modules
 
@@ -26,6 +26,7 @@
 
 | Name | Type |
 |------|------|
+| [azurerm_application_insights.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/application_insights) | resource |
 | [azurerm_linux_web_app.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_web_app) | resource |
 | [azurerm_monitor_autoscale_setting.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/monitor_autoscale_setting) | resource |
 | [azurerm_resource_group.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) | resource |
@@ -58,6 +59,6 @@
 | Name | Description |
 |------|-------------|
 | <a name="output_hostname"></a> [hostname](#output\_hostname) | Default hostname for the application runtime |
-| <a name="output_id"></a> [id](#output\_id) | Cloud ID for application IAM (AWS Role, GCP Service Account, Azure Managed Identity ID, etc) |
+| <a name="output_identity"></a> [identity](#output\_identity) | Cloud ID for application IAM. For Azure this is the Managed Identity ID. |
 | <a name="output_resource_id"></a> [resource\_id](#output\_resource\_id) | Cloud Resource ID for the resource |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
