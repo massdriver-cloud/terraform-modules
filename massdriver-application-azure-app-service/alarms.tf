@@ -26,6 +26,14 @@ locals {
   monitoring_enabled = var.monitoring.mode != "DISABLED" ? 1 : 0
 }
 
+resource "azurerm_application_insights" "main" {
+  name                = var.name
+  resource_group_name = azurerm_resource_group.main.name
+  location            = azurerm_resource_group.main.location
+  application_type    = "other"
+  tags                = var.tags
+}
+
 module "alarm_channel" {
   source              = "github.com/massdriver-cloud/terraform-modules//azure/alarm-channel?ref=b6ccb88"
   md_metadata         = var.md_metadata
