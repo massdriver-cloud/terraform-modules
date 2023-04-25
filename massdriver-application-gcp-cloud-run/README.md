@@ -40,6 +40,6 @@ No requirements.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_identity"></a> [identity](#output\_identity) | Cloud ID for application IAM (AWS Role, GCP Service Account, Azure Managed Identity ID, etc) |
 | <a name="output_hostname"></a> [hostname](#output\_hostname) | n/a |
+| <a name="output_identity"></a> [identity](#output\_identity) | Cloud ID for application IAM. For GCP this is the Service Account email. |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
