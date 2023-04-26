@@ -4,5 +4,11 @@ output "identity" {
 }
 
 output "hostname" {
-  value = google_cloud_run_service.main.status.0.url
+  description = "Default hostname for the application."
+  value       = google_cloud_run_service.main.status.0.url
+}
+
+output "grn" {
+  description = "GCP Cloud Run GRN"
+  value       = google_cloud_run_service.main.id
 }
