@@ -70,7 +70,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_kubernetes"></a> [kubernetes](#input\_kubernetes) | Kubernetes configuration for binding the application identity to k8s workload identity (GCP) or federated assume role (AWS). Required if service='kubernetes'. | <pre>object({<br>    # k8s namespace workload will run in<br>    namespace = string,<br>    # Massdriver connection artifact<br>    cluster_artifact = any<br>    # Azure AKS cluster produces this URL, needed for Workload Identity<br>    oidc_issuer_url = optional(string, null)<br>  })</pre> | `null` | no |
+| <a name="input_kubernetes"></a> [kubernetes](#input\_kubernetes) | Kubernetes configuration for binding the application identity to k8s workload identity (GCP) or federated assume role (AWS). Required if service='kubernetes'. | <pre>object({<br>    # k8s namespace workload will run in<br>    namespace = string,<br>    # Massdriver connection artifact<br>    cluster_artifact = any<br>  })</pre> | `null` | no |
 | <a name="input_location"></a> [location](#input\_location) | Azure only, the location of the resource group. | `string` | `null` | no |
 | <a name="input_name"></a> [name](#input\_name) | The name of the application. This should be the Massdriver package name. var.md\_metadata.name\_prefix | `string` | n/a | yes |
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | Azure only, the name of resource group to create the Managed Identity in. | `string` | `null` | no |
@@ -87,4 +87,5 @@ No modules.
 | <a name="output_identity"></a> [identity](#output\_identity) | The full MDXC Cloud Identity object, for accessing additional values beyond the ID of the Identity. |
 | <a name="output_params"></a> [params](#output\_params) | Parameters provided to bundle. |
 | <a name="output_policies"></a> [policies](#output\_policies) | The policies parsed from massdriver.yaml |
+| <a name="output_secrets"></a> [secrets](#output\_secrets) | Secrets from the bundle. Note that secrets are also included in the 'envs' output, however this output will only be secrets. |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

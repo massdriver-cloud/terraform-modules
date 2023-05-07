@@ -21,8 +21,6 @@ variable "kubernetes" {
     namespace = string,
     # Massdriver connection artifact
     cluster_artifact = any
-    # Azure AKS cluster produces this URL, needed for Workload Identity
-    oidc_issuer_url = optional(string, null)
   })
 }
 
