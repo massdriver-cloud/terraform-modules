@@ -87,4 +87,5 @@ No modules.
 | <a name="output_identity"></a> [identity](#output\_identity) | The full MDXC Cloud Identity object, for accessing additional values beyond the ID of the Identity. |
 | <a name="output_params"></a> [params](#output\_params) | Parameters provided to bundle. |
 | <a name="output_policies"></a> [policies](#output\_policies) | The policies parsed from massdriver.yaml |
+| <a name="output_secrets"></a> [secrets](#output\_secrets) | Secrets from the bundle. Note that secrets are also included in the 'envs' output, however this output will only be secrets. |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

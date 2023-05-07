@@ -16,6 +16,11 @@ output "envs" {
   value       = local.envs
 }
 
+output "secrets" {
+  description = "Secrets from the bundle. Note that secrets are also included in the 'envs' output, however this output will only be secrets."
+  value       = local.secrets
+}
+
 output "params" {
   # We provide these as an output as its needed for passing into runtimes (helm, etc)
   # and we don't want end-developers to have to parse the write files to get them since
