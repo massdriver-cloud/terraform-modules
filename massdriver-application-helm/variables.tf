@@ -36,14 +36,3 @@ variable "helm_additional_values" {
   type        = any
   default     = {}
 }
-
-variable "additional_envs" {
-  description = "Additional environment variables to set"
-  type = list(
-    object({
-      name  = string
-      value = string
-    })
-  )
-  default = []
-}
