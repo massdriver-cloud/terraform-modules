@@ -6,7 +6,7 @@ locals {
         "md-deployment-id" = lookup(module.application.params.md_metadata.deployment, "id", "")
       }
     }
-    envs = [for key, val in local.combined_envs : { name = key, value = tostring(val) }]
+    envs = [for key, val in module.application.envs : { name = key, value = tostring(val) }]
     ingress = {
       className = "nginx" // TODO: eventually this should come from the kubernetes artifact
       annotations = {

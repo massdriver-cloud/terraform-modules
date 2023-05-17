@@ -34,10 +34,4 @@ locals {
     gcp   = local.gcp_service_account,
     azure = local.azure_service_account
   }
-
-  // Combine environment variables from application and module variables (params)
-  combined_envs = merge(
-    module.application.envs,
-    { for env in var.additional_envs : env.name => env.value }
-  )
 }

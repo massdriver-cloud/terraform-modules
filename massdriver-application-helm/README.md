@@ -41,7 +41,7 @@ No requirements.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_application"></a> [application](#module\_application) | github.com/massdriver-cloud/terraform-modules//massdriver-application | fc5f7b1 |
+| <a name="module_application"></a> [application](#module\_application) | github.com/massdriver-cloud/terraform-modules//massdriver-application | 87cc8c2 |
 
 ## Resources
 
@@ -53,7 +53,6 @@ No requirements.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_additional_envs"></a> [additional\_envs](#input\_additional\_envs) | Additional environment variables to set | <pre>list(<br>    object({<br>      name  = string<br>      value = string<br>    })<br>  )</pre> | `[]` | no |
 | <a name="input_chart"></a> [chart](#input\_chart) | The path to your Helm chart | `string` | n/a | yes |
 | <a name="input_helm_additional_values"></a> [helm\_additional\_values](#input\_helm\_additional\_values) | Additional helm values to set | `any` | `{}` | no |
 | <a name="input_helm_repository"></a> [helm\_repository](#input\_helm\_repository) | (Optional) The chart's helm repository. Required when not using a local chart. | `string` | `null` | no |
