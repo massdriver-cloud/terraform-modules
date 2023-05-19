@@ -66,4 +66,5 @@ No requirements.
 | Name | Description |
 |------|-------------|
 | <a name="output_identity"></a> [identity](#output\_identity) | Cloud ID for application IAM (AWS Role, GCP Service Account, Azure Managed Identity ID, etc) |
+| <a name="output_secrets"></a> [secrets](#output\_secrets) | Secrets from the bundle configuration |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
