@@ -11,11 +11,22 @@ locals {
   app_policies_queries = toset(lookup(local.app_block, "policies", []))
 
   # package input fields to be exposed to JQ queries
-  inputs_json = jsonencode({
-    params      = local.params
-    connections = local.connections
-    secrets     = local.secrets
-  })
+  inputs_json = merge(
+    merge(local.params, local.connections),
+    local.secrets
+  )
+
+  # TODO: params, connections, and secrets are scoped here for backwards compat
+  #   We need to add linter warnings in the CLI and deprecate their use
+  backwards_compat_inputs_json_with_legacy_scoped_inputs_json = jsonencode(
+    merge({
+      params      = local.params
+      connections = local.connections
+      secrets     = local.secrets
+      },
+      local.inputs_json
+    )
+  )
 
   application_identity_id = mdxc_application_identity.main.id
 
@@ -37,13 +48,13 @@ locals {
 
 data "jq_query" "policies" {
   for_each = local.app_policies_queries
-  data     = local.inputs_json
+  data     = local.backwards_compat_inputs_json_with_legacy_scoped_inputs_json
   query    = each.value
 }
 
 data "jq_query" "envs" {
   for_each = local.app_envs_queries
-  data     = local.inputs_json
+  data     = local.backwards_compat_inputs_json_with_legacy_scoped_inputs_json
   query    = each.value
 }
 
