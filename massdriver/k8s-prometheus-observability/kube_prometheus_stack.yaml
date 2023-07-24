@@ -2,7 +2,7 @@ alertManager:
   alertmanagerSpec:
     alertmanagerConfigSelector: {}
 
-# disable all rules, the will be installed separately
+# disable all rules, they will be installed separately
 defaultRules:
   create: false
 

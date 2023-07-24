@@ -1,4 +1,4 @@
-# kube-prometheus-stack
+# alarm-channel
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
