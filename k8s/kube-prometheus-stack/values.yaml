@@ -6,6 +6,9 @@ alertManager:
 defaultRules:
   create: false
 
+grafana:
+  enabled: false
+
 # include massdriver specific labels in kube-state-metrics
 kube-state-metrics:
   extraArgs:
