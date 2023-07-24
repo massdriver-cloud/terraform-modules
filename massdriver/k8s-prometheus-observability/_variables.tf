@@ -16,9 +16,11 @@ variable "namespace" {
 variable "kube_prometheus_stack_values" {
   description = "Map of additional values to configure the kube-prometheus-stack helm chart"
   type        = any
+  default     = {}
 }
 
 variable "prometheus_rules_values" {
   description = "Map of additional values to configure the prometheus-rules helm chart"
   type        = any
+  default     = {}
 }
