@@ -36,7 +36,7 @@ defaultRules:
     kubePrometheusGeneral: {}
     kubePrometheusNodeRecording: {}
     kubernetesApps:
-      md-package: "{{ $labels.label_md_package }}"
+      md_package: "{{ $labels.label_md_package }}"
     kubernetesResources: {}
     kubernetesStorage: {}
     kubernetesSystem: {}
