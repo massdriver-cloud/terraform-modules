@@ -25,7 +25,6 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_helm_additional_values"></a> [helm\_additional\_values](#input\_helm\_additional\_values) | Map of additional values to configure in helm chart | `any` | n/a | yes |
 | <a name="input_md_metadata"></a> [md\_metadata](#input\_md\_metadata) | Massdriver md\_metadata object | `any` | n/a | yes |
 | <a name="input_namespace"></a> [namespace](#input\_namespace) | Kubernetes namespace | `string` | n/a | yes |
 | <a name="input_release"></a> [release](#input\_release) | Release name | `string` | n/a | yes |

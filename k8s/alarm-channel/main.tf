@@ -13,9 +13,4 @@ resource "helm_release" "main" {
   chart            = "${path.module}/chart"
   namespace        = var.namespace
   create_namespace = true
-
-  values = [
-    yamlencode(local.helm_values),
-    yamlencode(var.helm_additional_values)
-  ]
 }
