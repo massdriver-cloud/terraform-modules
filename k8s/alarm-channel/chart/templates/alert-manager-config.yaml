@@ -9,7 +9,8 @@ spec:
     {{- toYaml .Values.route | nindent 4 }}
     receiver: {{ include "massdriver-alarm-channel.fullname" . }}
     matchers:
-      - md_package: {{ index .Values.md_metadata.default_tags "md-package" }}
+      - name: "md_package"
+        value: {{ index .Values.md_metadata.default_tags "md-package" }}
   receivers:
   - name: {{ include "massdriver-alarm-channel.fullname" . }}
     webhookConfigs:
