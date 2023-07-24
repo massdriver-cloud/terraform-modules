@@ -28,7 +28,8 @@ locals {
 }
 
 resource "helm_release" "prometheus_rules" {
-  name = var.release
+  name = "prometheus-rules"
+  //name = var.release
   // Use local chart for now, swap to published helm chart when ready
   // chart            = "prometheus-rules"
   // repository       = "https://massdriver-cloud.github.io/helm-charts/"
