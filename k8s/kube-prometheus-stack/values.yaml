@@ -1,0 +1,25 @@
+alertManager:
+  alertmanagerSpec:
+    alertmanagerConfigSelector: {}
+
+# disable all rules, the will be installed separately
+defaultRules:
+  create: false
+
+# include massdriver specific labels in kube-state-metrics
+kube-state-metrics:
+  extraArgs:
+    - --metric-labels-allowlist=*=[md-manifest,md-package,md-project,md-target,managed-by]
+
+prometheus:
+  prometheusSpec:
+    retention: 1d
+
+    podMonitorSelectorNilUsesHelmValues: false
+    podMonitorSelector: {}
+
+    ruleSelectorNilUsesHelmValues: false
+    ruleSelector: {}
+
+    serviceMonitorSelectorNilUsesHelmValues: false
+    serviceMonitorSelector: {}

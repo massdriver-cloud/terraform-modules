@@ -13,7 +13,7 @@ locals {
         name = local.service_account_name
       }
     }
-    additionalLabels = var.md_metadata.default_tags
+    commonLabels = var.md_metadata.default_tags
   }
 }
 
