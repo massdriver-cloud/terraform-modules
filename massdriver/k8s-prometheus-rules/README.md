@@ -1,4 +1,4 @@
-# kube-prometheus-stack
+# k8s-prometheus-rules
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
@@ -19,7 +19,7 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [helm_release.kube_prometheus_stack](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release) | resource |
+| [helm_release.prometheus_rules](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release) | resource |
 
 ## Inputs
 
