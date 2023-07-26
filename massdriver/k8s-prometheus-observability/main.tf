@@ -1,6 +1,13 @@
 locals {
   helm_additional_values = {
     commonLabels = var.md_metadata.default_tags
+    alertmanager = {
+      alertmanagerSpec = {
+        podMetadata = {
+          labels = var.md_metadata.default_tags
+        }
+      }
+    }
     grafana = {
       extraLabels = var.md_metadata.default_tags
     }
