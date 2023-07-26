@@ -1,6 +1,22 @@
 locals {
   helm_additional_values = {
     commonLabels = var.md_metadata.default_tags
+    grafana = {
+      extraLabels = var.md_metadata.default_tags
+    }
+    kube-state-metrics = {
+      customLabels = var.md_metadata.default_tags
+    }
+    prometheus-node-exporter = {
+      podLabels = var.md_metadata.default_tags
+    }
+    prometheus = {
+      prometheusSpec = {
+        podMetadata = {
+          labels = var.md_metadata.default_tags
+        }
+      }
+    }
   }
 }
 
