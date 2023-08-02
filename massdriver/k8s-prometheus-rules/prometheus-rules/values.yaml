@@ -38,7 +38,7 @@ defaultRules:
     nodeExporterRecording: false
     prometheus: false
     prometheusOperator: false
-    windows: true
+    windows: false
 
   ## Reduce app namespace alert scope
   appNamespacesTarget: ".*"
@@ -49,8 +49,7 @@ defaultRules:
   annotations: {}
 
   ## Additional labels for PrometheusRule alerts
-  additionalRuleLabels:
-    md-package: "{{ $labels.label_md_package }}"
+  additionalRuleLabels: {}
 
   ## Additional annotations for PrometheusRule alerts
   additionalRuleAnnotations: {}
@@ -71,7 +70,8 @@ defaultRules:
     kubeProxy: {}
     kubePrometheusGeneral: {}
     kubePrometheusNodeRecording: {}
-    kubernetesApps: {}
+    kubernetesApps:
+      md_package: "{{ $labels.label_md_package }}"
     kubernetesResources: {}
     kubernetesStorage: {}
     kubernetesSystem: {}

@@ -5,5 +5,5 @@ module "cluster-autoscaler" {
   md_metadata            = var.md_metadata
   release                = var.release
   namespace              = var.namespace
-  helm_additional_values = local.helm_additional_values
+  helm_additional_values = merge(local.helm_additional_values, var.helm_additional_values)
 }
