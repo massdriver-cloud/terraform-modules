@@ -12,6 +12,7 @@ defaultRules:
   create: true
   rules:
     alertmanager: false
+    clusterAutoscaler: {}
     etcd: false
     configReloaders: false
     general: false
@@ -57,6 +58,7 @@ defaultRules:
   ## Additional labels for specific PrometheusRule alert groups
   additionalRuleGroupLabels:
     alertmanager: {}
+    clusterAutoscaler: {}
     etcd: {}
     configReloaders: {}
     general: {}
@@ -88,6 +90,7 @@ defaultRules:
   ## Additional annotations for specific PrometheusRule alerts groups
   additionalRuleGroupAnnotations:
     alertmanager: {}
+    clusterAutoscaler: {}
     etcd: {}
     configReloaders: {}
     general: {}
