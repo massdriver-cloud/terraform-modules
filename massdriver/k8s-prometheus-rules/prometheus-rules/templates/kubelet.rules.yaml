@@ -9,7 +9,6 @@ apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
   name: {{ printf "%s-%s" (include "prometheus-rules.fullname" .) "kubelet.rules" | trunc 63 | trimSuffix "-" }}
-  namespace: {{ template "prometheus-rules.namespace" . }}
   labels:
     app: {{ template "prometheus-rules.name" . }}
 {{ include "prometheus-rules.labels" . | indent 4 }}
