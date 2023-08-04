@@ -32,7 +32,7 @@ spec:
       expr: cluster_autoscaler_unschedulable_pods_count > 0
       for: 5m
       labels:
-        md_package: .Values.md_metadata.name_prefix
+        md_package: {{ .Values.md_metadata.name_prefix }}
         severity: warning
       {{- if or .Values.defaultRules.additionalRuleLabels .Values.defaultRules.additionalRuleGroupLabels.clusterAutoscaler }}
         {{- with .Values.defaultRules.additionalRuleLabels }}
