@@ -4,11 +4,11 @@
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: {{ printf "%s-%s" (include "kube-prometheus-stack.fullname" .) "cluster-autoscaler" | trunc 63 | trimSuffix "-" }}
-  namespace: {{ template "kube-prometheus-stack.namespace" . }}
+  name: {{ printf "%s-%s" (include "prometheus-rules.fullname" .) "cluster-autoscaler" | trunc 63 | trimSuffix "-" }}
+  namespace: {{ template "prometheus-rules.namespace" . }}
   labels:
-    app: {{ template "kube-prometheus-stack.name" . }}
-{{ include "kube-prometheus-stack.labels" . | indent 4 }}
+    app: {{ template "prometheus-rules.name" . }}
+{{ include "prometheus-rules.labels" . | indent 4 }}
 {{- if .Values.defaultRules.labels }}
 {{ toYaml .Values.defaultRules.labels | indent 4 }}
 {{- end }}
