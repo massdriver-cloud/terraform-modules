@@ -12,17 +12,17 @@ defaultRules:
   create: true
   rules:
     alertmanager: false
-    clusterAutoscaler: {}
+    clusterAutoscaler: true
     etcd: false
     configReloaders: false
     general: false
-    k8s: false
+    k8s: true
     kubeApiserverAvailability: false
     kubeApiserverBurnrate: false
     kubeApiserverHistogram: false
     kubeApiserverSlos: false
     kubeControllerManager: false
-    kubelet: false
+    kubelet: true
     kubeProxy: false
     kubePrometheusGeneral: false
     kubePrometheusNodeRecording: false
@@ -34,7 +34,7 @@ defaultRules:
     kubeSchedulerRecording: false
     kubeStateMetrics: false
     network: false
-    node: false
+    node: true
     nodeExporterAlerting: false
     nodeExporterRecording: false
     prometheus: false
