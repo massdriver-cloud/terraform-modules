@@ -7,8 +7,7 @@ If release name contains md_metadata.name_prefix it will be used as a full name.
 {{- define "massdriver-alarm-channel.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
-{{- else }}
-{{- if .Values.md_metadata.name_prefix }}
+{{- else if .Values.md_metadata.name_prefix }}
 {{- .Values.md_metadata.name_prefix | trunc 63 | trimSuffix "-" }}
 {{- else }}
 {{- $name := default .Chart.Name .Values.nameOverride }}
@@ -33,7 +32,7 @@ Common labels
 {{- define "massdriver-alarm-channel.labels" -}}
 {{- if .Values.md_metadata.default_tags }}
 {{- toYaml .Values.md_metadata.default_tags }}
-{{- else }}
+{{- end }}
 helm.sh/chart: {{ include "massdriver-alarm-channel.chart" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
