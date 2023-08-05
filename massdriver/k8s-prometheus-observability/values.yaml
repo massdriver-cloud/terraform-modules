@@ -1,4 +1,4 @@
-alertManager:
+alertmanager:
   alertmanagerSpec:
     alertmanagerConfigMatcherStrategy:
       type: None
