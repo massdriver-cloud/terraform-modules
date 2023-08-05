@@ -6,6 +6,7 @@ variable "md_metadata" {
 variable "release" {
   description = "Release name"
   type        = string
+  default     = null
 }
 
 variable "namespace" {

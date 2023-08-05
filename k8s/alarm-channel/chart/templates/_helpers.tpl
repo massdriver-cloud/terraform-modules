@@ -8,6 +8,9 @@ If release name contains md_metadata.name_prefix it will be used as a full name.
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
+{{- if .Values.md_metadata.name_prefix }}
+{{- .Values.md_metadata.name_prefix | trunc 63 | trimSuffix "-" }}
+{{- else }}
 {{- $name := default .Chart.Name .Values.nameOverride }}
 {{- if contains $name .Release.Name }}
 {{- .Release.Name | trunc 63 | trimSuffix "-" }}
@@ -28,7 +31,9 @@ Create chart name and version as used by the chart label.
 Common labels
 */}}
 {{- define "massdriver-alarm-channel.labels" -}}
+{{- if .Values.md_metadata.default_tags }}
 {{- toYaml .Values.md_metadata.default_tags }}
+{{- else }}
 helm.sh/chart: {{ include "massdriver-alarm-channel.chart" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}

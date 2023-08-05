@@ -2,10 +2,12 @@ locals {
   helm_values = {
     md_metadata = var.md_metadata
   }
+
+  release = coalesce(var.release, var.md_metadata.name_prefix)
 }
 
 resource "helm_release" "main" {
-  name = var.release
+  name = local.release
   // Use local chart for now, swap to published helm chart when ready
   // chart            = "massdriver-alarm-channel"
   // repository       = "https://massdriver-cloud.github.io/helm-charts/"
