@@ -1,6 +1,10 @@
 alertManager:
   alertmanagerSpec:
-    alertmanagerConfigSelector: {}
+    alertmanagerConfigMatcherStrategy:
+      type: None
+    alertmanagerConfigSelector:
+      matchLabels:
+        managed-by: massdriver
 
 # disable all rules, they will be installed separately
 defaultRules:
@@ -19,10 +23,16 @@ prometheus:
     retention: 1d
 
     podMonitorSelectorNilUsesHelmValues: false
-    podMonitorSelector: {}
+    podMonitorSelector:
+      matchLabels:
+        managed-by: massdriver
 
     ruleSelectorNilUsesHelmValues: false
-    ruleSelector: {}
+    ruleSelector:
+      matchLabels:
+        managed-by: massdriver
 
     serviceMonitorSelectorNilUsesHelmValues: false
-    serviceMonitorSelector: {}
+    serviceMonitorSelector:
+      matchLabels:
+        managed-by: massdriver

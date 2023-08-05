@@ -58,7 +58,7 @@ spec:
       expr: cluster_autoscaler_cluster_safe_to_autoscale != 1
       for: 15m
       labels:
-        md_package: .Values.md_metadata.name_prefix
+        md_package: {{ .Values.md_metadata.name_prefix }}
         severity: warning
       {{- if or .Values.defaultRules.additionalRuleLabels .Values.defaultRules.additionalRuleGroupLabels.clusterAutoscaler }}
         {{- with .Values.defaultRules.additionalRuleLabels }}
@@ -84,7 +84,7 @@ spec:
       expr: cluster_autoscaler_cluster_cpu_current_cores >= cluster_autoscaler_cpu_limits_cores{direction="maximum"}
       for: 15m
       labels:
-        md_package: .Values.md_metadata.name_prefix
+        md_package: {{ .Values.md_metadata.name_prefix }}
         severity: warning
       {{- if or .Values.defaultRules.additionalRuleLabels .Values.defaultRules.additionalRuleGroupLabels.clusterAutoscaler }}
         {{- with .Values.defaultRules.additionalRuleLabels }}
@@ -110,7 +110,7 @@ spec:
       expr: cluster_autoscaler_cluster_memory_current_bytes >= cluster_autoscaler_memory_limits_bytes{direction="maximum"}
       for: 15m
       labels:
-        md_package: .Values.md_metadata.name_prefix
+        md_package: {{ .Values.md_metadata.name_prefix }}
         severity: warning
       {{- if or .Values.defaultRules.additionalRuleLabels .Values.defaultRules.additionalRuleGroupLabels.clusterAutoscaler }}
         {{- with .Values.defaultRules.additionalRuleLabels }}
