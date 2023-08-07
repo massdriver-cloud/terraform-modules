@@ -7,12 +7,10 @@ locals {
 }
 
 resource "helm_release" "main" {
-  name = local.release
-  // Use local chart for now, swap to published helm chart when ready
-  // chart            = "massdriver-alarm-channel"
-  // repository       = "https://massdriver-cloud.github.io/helm-charts/"
-  // version          = "v0.1.0"
-  chart            = "${path.module}/chart"
+  name             = local.release
+  chart            = "massdriver-alarm-channel"
+  repository       = "https://massdriver-cloud.github.io/helm-charts/"
+  version          = "v0.0.1"
   namespace        = var.namespace
   create_namespace = true
 

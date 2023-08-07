@@ -6,13 +6,10 @@ locals {
 }
 
 resource "helm_release" "prometheus_rules" {
-  name = "prometheus-rules"
-  //name = var.release
-  // Use local chart for now, swap to published helm chart when ready
-  // chart            = "prometheus-rules"
-  // repository       = "https://massdriver-cloud.github.io/helm-charts/"
-  // version          = "v0.0.1"
-  chart            = "${path.module}/prometheus-rules"
+  name             = "prometheus-rules"
+  chart            = "massdriver-prometheus-rules"
+  repository       = "https://massdriver-cloud.github.io/helm-charts/"
+  version          = "v0.0.1"
   namespace        = var.namespace
   create_namespace = true
 
