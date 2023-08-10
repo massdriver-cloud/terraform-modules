@@ -12,6 +12,7 @@ locals {
       name = local.service_account_name
     }
     additionalLabels = var.md_metadata.default_tags
+    podLabels        = var.md_metadata.default_tags
   }
 }
 

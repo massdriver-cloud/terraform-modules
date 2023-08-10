@@ -1,0 +1,46 @@
+alertmanager:
+  alertmanagerSpec:
+    alertmanagerConfigMatcherStrategy:
+      type: None
+    alertmanagerConfigSelector:
+      matchLabels:
+        managed-by: massdriver
+
+# disable all rules, they will be installed separately
+defaultRules:
+  create: false
+
+grafana:
+  enabled: false
+
+# include massdriver specific labels in kube-state-metrics
+kube-state-metrics:
+  extraArgs:
+    - --metric-labels-allowlist=*=[md-manifest,md-package,md-project,md-target,managed-by]
+
+prometheus:
+  prometheusSpec:
+    retention: 1d
+
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 50Gi
+
+    podMonitorSelectorNilUsesHelmValues: false
+    podMonitorSelector:
+      matchLabels:
+        managed-by: massdriver
+
+    ruleSelectorNilUsesHelmValues: false
+    ruleSelector:
+      matchLabels:
+        managed-by: massdriver
+
+    serviceMonitorSelectorNilUsesHelmValues: false
+    serviceMonitorSelector:
+      matchLabels:
+        managed-by: massdriver

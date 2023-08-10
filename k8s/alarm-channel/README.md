@@ -1,4 +1,4 @@
-# k8s-metrics-server
+# alarm-channel
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
@@ -19,16 +19,15 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [helm_release.metrics-server](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release) | resource |
+| [helm_release.main](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release) | resource |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_helm_additional_values"></a> [helm\_additional\_values](#input\_helm\_additional\_values) | Map of additional values to configure the helm chart | `any` | `{}` | no |
 | <a name="input_md_metadata"></a> [md\_metadata](#input\_md\_metadata) | Massdriver md\_metadata object | `any` | n/a | yes |
 | <a name="input_namespace"></a> [namespace](#input\_namespace) | Kubernetes namespace | `string` | n/a | yes |
-| <a name="input_release"></a> [release](#input\_release) | Release name | `string` | n/a | yes |
+| <a name="input_release"></a> [release](#input\_release) | Release name | `string` | `null` | no |
 
 ## Outputs
 

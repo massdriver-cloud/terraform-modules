@@ -6,15 +6,10 @@ variable "md_metadata" {
 variable "release" {
   description = "Release name"
   type        = string
+  default     = null
 }
 
 variable "namespace" {
   description = "Kubernetes namespace"
   type        = string
-}
-
-variable "helm_additional_values" {
-  description = "Map of additional values to configure the helm chart"
-  type        = any
-  default     = {}
 }
