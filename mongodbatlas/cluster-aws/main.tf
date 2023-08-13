@@ -77,6 +77,11 @@ resource "mongodbatlas_database_user" "admin" {
     database_name = mongodbatlas_advanced_cluster.main.name
   }
 
+  roles {
+    role_name     = "readWrite"
+    database_name = mongodbatlas_advanced_cluster.main.name
+  }
+
   dynamic "labels" {
     for_each = var.labels
     content {
