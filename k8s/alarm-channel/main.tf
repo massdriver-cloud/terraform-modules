@@ -3,7 +3,9 @@ locals {
     md_metadata = var.md_metadata
   }
 
-  release = coalesce(var.release, var.md_metadata.name_prefix)
+  // if a release is passed, use it. Otherwise use the name_prefix with "-alarm-channel" suffix to prevent collisions
+  // since there is likely another release (the application itself) using the name_prefix as the release
+  release = coalesce(var.release, "${var.md_metadata.name_prefix}-alarm-channel")
 }
 
 resource "helm_release" "main" {
