@@ -65,8 +65,7 @@ data "aws_iam_policy_document" "firehose_assume_role_policy" {
   }
 }
 
-resource "aws_iam_policy_attachment" "firehose_write_policy" {
-  name       = "${local.name}-write-policy-attachment"
-  roles      = [aws_iam_role.firehose_role.name]
+resource "aws_iam_role_policy_attachment" "firehose_write_policy" {
+  role       = aws_iam_role.firehose_role.name
   policy_arn = var.write_policy_arn
 }
