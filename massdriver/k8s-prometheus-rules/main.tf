@@ -9,7 +9,7 @@ resource "helm_release" "prometheus_rules" {
   name             = "prometheus-rules"
   chart            = "massdriver-prometheus-rules"
   repository       = "https://massdriver-cloud.github.io/helm-charts/"
-  version          = "v0.0.2"
+  version          = "v0.0.3"
   namespace        = var.namespace
   create_namespace = true
 
