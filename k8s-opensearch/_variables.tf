@@ -20,11 +20,13 @@ variable "namespace" {
 
 variable "helm_additional_values" {
   description = "Map of additional values to configure in opensearch helm chart"
+  type        = any
   default     = {}
 }
 
 variable "dashboards_helm_additional_values" {
   description = "Map of additional values to configure in opensearch-dashboards helm chart"
+  type        = any
   default     = {}
 }
 

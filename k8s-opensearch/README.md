@@ -11,7 +11,7 @@
 
 | Name | Version |
 |------|---------|
-| <a name="provider_helm"></a> [helm](#provider\_helm) | n/a |
+| <a name="provider_helm"></a> [helm](#provider\_helm) | 2.11.0 |
 
 ## Modules
 
@@ -28,9 +28,9 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_dashboards_helm_additional_values"></a> [dashboards\_helm\_additional\_values](#input\_dashboards\_helm\_additional\_values) | Map of additional values to configure in opensearch-dashboards helm chart | `map` | `{}` | no |
+| <a name="input_dashboards_helm_additional_values"></a> [dashboards\_helm\_additional\_values](#input\_dashboards\_helm\_additional\_values) | Map of additional values to configure in opensearch-dashboards helm chart | `any` | `{}` | no |
 | <a name="input_enable_dashboards"></a> [enable\_dashboards](#input\_enable\_dashboards) | This will additionally deploy the opensearch-dashboards helm chart | `bool` | `false` | no |
-| <a name="input_helm_additional_values"></a> [helm\_additional\_values](#input\_helm\_additional\_values) | Map of additional values to configure in opensearch helm chart | `map` | `{}` | no |
+| <a name="input_helm_additional_values"></a> [helm\_additional\_values](#input\_helm\_additional\_values) | Map of additional values to configure in opensearch helm chart | `any` | `{}` | no |
 | <a name="input_ism_policies"></a> [ism\_policies](#input\_ism\_policies) | Map of ISM policies to configure in the opensearch cluster. keys should be template names and bodies should be the ISM policy body | `map` | `{}` | no |
 | <a name="input_kubernetes_cluster"></a> [kubernetes\_cluster](#input\_kubernetes\_cluster) | A kubernetes\_cluster artifact | `any` | n/a | yes |
 | <a name="input_md_metadata"></a> [md\_metadata](#input\_md\_metadata) | md\_metadata object | `any` | n/a | yes |
