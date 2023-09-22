@@ -8,6 +8,12 @@ variable "ecs_cluster" {
   type        = any
 }
 
+variable "force_new_deployment" {
+  type        = bool
+  description = "Enable to force a new task deployment of the service. This can be used to update tasks to use a newer Docker image with same image/tag combination."
+  default     = false
+}
+
 variable "launch_type" {
   description = "Launch type on which to run your service. The valid values are `EC2` and `FARGATE`. Default is `EC2`"
   type        = string
