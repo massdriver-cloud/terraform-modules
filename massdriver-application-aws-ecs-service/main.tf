@@ -19,6 +19,8 @@ resource "aws_ecs_service" "main" {
   desired_count   = var.autoscaling.min_replicas
   launch_type     = var.launch_type
 
+  force_new_deployment = var.force_new_deployment
+
   network_configuration {
     subnets         = local.private_subnet_ids
     security_groups = [aws_security_group.main.id]
