@@ -11,6 +11,7 @@ module "external-dns" {
         "eks.amazonaws.com/role-arn" = aws_iam_role.external-dns.arn
       }
     }
+    yamlencode(var.helm_additional_values)
   }
   dns_provider = "aws"
 }
