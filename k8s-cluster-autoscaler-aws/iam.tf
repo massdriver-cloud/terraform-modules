@@ -61,6 +61,7 @@ resource "aws_iam_role" "cluster-autoscaler" {
             "autoscaling:DescribeAutoScalingGroups",
             "autoscaling:DescribeAutoScalingInstances",
             "autoscaling:DescribeLaunchConfigurations",
+            "autoscaling:DescribeScalingActivities",
             "autoscaling:DescribeTags",
             "ec2:DescribeInstanceTypes",
             "ec2:DescribeLaunchTemplateVersions"
@@ -72,7 +73,9 @@ resource "aws_iam_role" "cluster-autoscaler" {
           "Action" : [
             "autoscaling:SetDesiredCapacity",
             "autoscaling:TerminateInstanceInAutoScalingGroup",
-            "autoscaling:UpdateAutoScalingGroup"
+            "ec2:DescribeImages",
+            "ec2:GetInstanceTypesFromInstanceRequirements",
+            "eks:DescribeNodegroup"
           ],
           "Resource" : "*",
           "Condition" : {
