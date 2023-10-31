@@ -75,7 +75,7 @@ resource "aws_iam_role" "cluster-autoscaler" {
             "autoscaling:TerminateInstanceInAutoScalingGroup",
             "ec2:DescribeImages",
             "ec2:GetInstanceTypesFromInstanceRequirements",
-            "eks:DescribeNodegroup"
+            "eks:DescribeNodeGroup"
           ],
           "Resource" : "*",
           "Condition" : {
