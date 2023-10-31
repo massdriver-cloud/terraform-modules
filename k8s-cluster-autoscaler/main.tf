@@ -18,7 +18,7 @@ resource "helm_release" "cluster-autoscaler" {
   name             = var.release
   chart            = "cluster-autoscaler"
   repository       = "https://kubernetes.github.io/autoscaler"
-  version          = "9.29.2"
+  version          = "9.29.4"
   namespace        = var.namespace
   create_namespace = true
   force_update     = true
