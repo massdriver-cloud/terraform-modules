@@ -1,7 +1,7 @@
 locals {
   logging_options = {
     awslogs = {
-      awslogs-group         = aws_cloudwatch_log_group.logs.0.name
+      awslogs-group         = try(aws_cloudwatch_log_group.logs.0.name, "")
       awslogs-region        = local.region
       awslogs-stream-prefix = var.md_metadata.name_prefix
     }
