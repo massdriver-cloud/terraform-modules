@@ -6,6 +6,9 @@ alertmanager:
       matchLabels:
         managed-by: massdriver
 
+    priorityClassName: system-cluster-critical
+    replicas: 2
+
 # disable all rules, they will be installed separately
 defaultRules:
   create: false
@@ -20,7 +23,9 @@ kube-state-metrics:
 
 prometheus:
   prometheusSpec:
+    replicas: 2
     retention: 1d
+    priorityClassName: system-cluster-critical
 
     storageSpec:
       volumeClaimTemplate:
