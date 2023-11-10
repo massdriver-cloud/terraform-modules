@@ -6,6 +6,11 @@ alertmanager:
       matchLabels:
         managed-by: massdriver
 
+    podAntiAffinity: soft
+    podAntiAffinityTopologyKey: failure-domain.beta.kubernetes.io/zone
+    priorityClassName: system-cluster-critical
+    replicas: 2
+
 # disable all rules, they will be installed separately
 defaultRules:
   create: false
@@ -20,6 +25,11 @@ kube-state-metrics:
 
 prometheus:
   prometheusSpec:
+    podAntiAffinity: soft
+    podAntiAffinityTopologyKey: failure-domain.beta.kubernetes.io/zone
+    priorityClassName: system-cluster-critical
+    replicas: 2
+
     retention: 1d
 
     storageSpec:
