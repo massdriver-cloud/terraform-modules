@@ -6,6 +6,8 @@ alertmanager:
       matchLabels:
         managed-by: massdriver
 
+    podAntiAffinity: soft
+    podAntiAffinityTopologyKey: failure-domain.beta.kubernetes.io/zone
     priorityClassName: system-cluster-critical
     replicas: 2
 
@@ -23,9 +25,12 @@ kube-state-metrics:
 
 prometheus:
   prometheusSpec:
-    replicas: 2
-    retention: 1d
+    podAntiAffinity: soft
+    podAntiAffinityTopologyKey: failure-domain.beta.kubernetes.io/zone
     priorityClassName: system-cluster-critical
+    replicas: 2
+
+    retention: 1d
 
     storageSpec:
       volumeClaimTemplate:
