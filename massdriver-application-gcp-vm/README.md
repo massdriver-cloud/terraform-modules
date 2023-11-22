@@ -9,15 +9,15 @@ No requirements.
 
 | Name | Version |
 |------|---------|
-| <a name="provider_google"></a> [google](#provider\_google) | 4.61.0 |
-| <a name="provider_google-beta"></a> [google-beta](#provider\_google-beta) | 4.61.0 |
+| <a name="provider_google"></a> [google](#provider\_google) | 5.7.0 |
+| <a name="provider_google-beta"></a> [google-beta](#provider\_google-beta) | 5.7.0 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_alarm_channel"></a> [alarm\_channel](#module\_alarm\_channel) | github.com/massdriver-cloud/terraform-modules//gcp-alarm-channel | bfcf556 |
-| <a name="module_application"></a> [application](#module\_application) | github.com/massdriver-cloud/terraform-modules//massdriver-application | fc5f7b1 |
+| <a name="module_application"></a> [application](#module\_application) | github.com/massdriver-cloud/terraform-modules//massdriver-application | 61a38e9 |
 | <a name="module_cpu_alarm"></a> [cpu\_alarm](#module\_cpu\_alarm) | github.com/massdriver-cloud/terraform-modules//gcp-monitoring-utilization-threshold | cafdc89 |
 | <a name="module_endpoint"></a> [endpoint](#module\_endpoint) | github.com/massdriver-cloud/terraform-modules//gcp-endpoint | 076ecd7 |
 
@@ -56,5 +56,5 @@ No requirements.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_identity"></a> [identity](#output\_identity) | Cloud ID for application IAM (AWS Role, GCP Service Account, Azure Managed Identity ID, etc) |
+| <a name="output_identity"></a> [identity](#output\_identity) | Cloud ID for application IAM. For GCP this is the Service Account email. |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

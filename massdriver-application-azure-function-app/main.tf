@@ -4,7 +4,7 @@ locals {
 }
 
 module "application" {
-  source              = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=b6ccb88"
+  source              = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=61a38e9"
   name                = var.name
   service             = "function"
   resource_group_name = azurerm_resource_group.main.name
@@ -50,7 +50,7 @@ resource "azurerm_linux_function_app" "main" {
   identity {
     type = "UserAssigned"
     identity_ids = [
-      module.application.identity.azure_application_identity.resource_id,
+      module.application.identity_block.azure_application_identity.resource_id,
       azurerm_user_assigned_identity.container.id
     ]
   }

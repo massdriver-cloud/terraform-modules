@@ -9,17 +9,17 @@
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.52.0 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.81.0 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_alarm_channel"></a> [alarm\_channel](#module\_alarm\_channel) | github.com/massdriver-cloud/terraform-modules//azure/alarm-channel | b6ccb88 |
-| <a name="module_application"></a> [application](#module\_application) | github.com/massdriver-cloud/terraform-modules//massdriver-application | b6ccb88 |
+| <a name="module_alarm_channel"></a> [alarm\_channel](#module\_alarm\_channel) | github.com/massdriver-cloud/terraform-modules//azure/alarm-channel | 61a38e9 |
+| <a name="module_application"></a> [application](#module\_application) | github.com/massdriver-cloud/terraform-modules//massdriver-application | 61a38e9 |
 | <a name="module_auto_cidr"></a> [auto\_cidr](#module\_auto\_cidr) | github.com/massdriver-cloud/terraform-modules//azure/auto-cidr | 2d85f7a |
 | <a name="module_dns"></a> [dns](#module\_dns) | github.com/massdriver-cloud/terraform-modules//azure/dns | 9df7459 |
-| <a name="module_latency_metric_alert"></a> [latency\_metric\_alert](#module\_latency\_metric\_alert) | github.com/massdriver-cloud/terraform-modules//azure/monitor-metrics-alarm | b6ccb88 |
+| <a name="module_latency_metric_alert"></a> [latency\_metric\_alert](#module\_latency\_metric\_alert) | github.com/massdriver-cloud/terraform-modules//azure/monitor-metrics-alarm | 61a38e9 |
 
 ## Resources
 
@@ -58,6 +58,6 @@
 | Name | Description |
 |------|-------------|
 | <a name="output_hostname"></a> [hostname](#output\_hostname) | Default hostname for the application runtime |
-| <a name="output_id"></a> [id](#output\_id) | Cloud ID for application IAM (AWS Role, GCP Service Account, Azure Managed Identity ID, etc) |
+| <a name="output_identity"></a> [identity](#output\_identity) | Cloud ID for application IAM. For Azure this is the Managed Identity ID. |
 | <a name="output_resource_id"></a> [resource\_id](#output\_resource\_id) | Cloud Resource ID for the resource |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

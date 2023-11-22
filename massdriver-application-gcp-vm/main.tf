@@ -1,5 +1,5 @@
 module "application" {
-  source  = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=fc5f7b1"
+  source  = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=61a38e9"
   name    = var.md_metadata.name_prefix
   service = "vm"
 }
@@ -12,7 +12,7 @@ data "google_project" "main" {
 resource "google_project_iam_member" "containers" {
   project = data.google_project.main.project_id
   role    = "roles/artifactregistry.reader"
-  member  = "serviceAccount:${module.application.id}"
+  member  = "serviceAccount:${module.application.identity}"
 }
 
 resource "google_compute_instance_template" "main" {
@@ -77,7 +77,7 @@ resource "google_compute_instance_template" "main" {
   service_account {
     # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
     scopes = ["cloud-platform"]
-    email  = module.application.id
+    email  = module.application.identity
   }
 
   # https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_instance_template#automatic_restart

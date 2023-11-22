@@ -1,5 +1,5 @@
 module "application" {
-  source  = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=735929b"
+  source  = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=61a38e9"
   name    = var.md_metadata.name_prefix
   service = "function"
 }
@@ -20,7 +20,7 @@ resource "google_cloud_run_service" "main" {
     }
 
     spec {
-      service_account_name  = module.application.id
+      service_account_name  = module.application.identity
       container_concurrency = var.container.concurrency
       containers {
         image = "${var.container.image.repository}:${var.container.image.tag}"

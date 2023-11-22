@@ -1,12 +1,12 @@
 module "application" {
-  source  = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=fc5f7b1"
+  source  = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=61a38e9"
   name    = var.md_metadata.name_prefix
   service = "function"
 }
 
 resource "google_cloudfunctions_function" "main" {
   name                          = var.md_metadata.name_prefix
-  service_account_email         = module.application.id
+  service_account_email         = module.application.identity
   labels                        = var.md_metadata.default_tags
   region                        = var.location
   runtime                       = var.cloud_function_configuration.runtime
