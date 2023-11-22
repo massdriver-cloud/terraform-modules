@@ -35,14 +35,14 @@ resource "azurerm_application_insights" "main" {
 }
 
 module "alarm_channel" {
-  source              = "github.com/massdriver-cloud/terraform-modules//azure/alarm-channel?ref=b6ccb88"
+  source              = "github.com/massdriver-cloud/terraform-modules//azure/alarm-channel?ref=61a38e9"
   md_metadata         = var.md_metadata
   resource_group_name = azurerm_resource_group.main.name
 }
 
 module "http_4xx_metric_alert" {
   count                   = local.monitoring_enabled
-  source                  = "github.com/massdriver-cloud/terraform-modules//azure/monitor-metrics-alarm?ref=b6ccb88"
+  source                  = "github.com/massdriver-cloud/terraform-modules//azure/monitor-metrics-alarm?ref=61a38e9"
   scopes                  = [azurerm_linux_web_app.main.id]
   resource_group_name     = azurerm_resource_group.main.name
   monitor_action_group_id = module.alarm_channel.id
@@ -68,7 +68,7 @@ module "http_4xx_metric_alert" {
 
 module "http_5xx_metric_alert" {
   count                   = local.monitoring_enabled
-  source                  = "github.com/massdriver-cloud/terraform-modules//azure/monitor-metrics-alarm?ref=b6ccb88"
+  source                  = "github.com/massdriver-cloud/terraform-modules//azure/monitor-metrics-alarm?ref=61a38e9"
   scopes                  = [azurerm_linux_web_app.main.id]
   resource_group_name     = azurerm_resource_group.main.name
   monitor_action_group_id = module.alarm_channel.id

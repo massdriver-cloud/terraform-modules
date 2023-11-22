@@ -7,7 +7,7 @@ locals {
 }
 
 module "application" {
-  source  = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=36f3357"
+  source  = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=61a38e9"
   name    = var.md_metadata.name_prefix
   service = "container"
 }
@@ -51,7 +51,7 @@ resource "aws_ecs_task_definition" "main" {
   memory = var.task_memory
   cpu    = var.task_cpu
 
-  task_role_arn = module.application.id
+  task_role_arn = module.application.identity
 
   container_definitions = jsonencode(
     [for container in var.containers :

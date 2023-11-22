@@ -1,6 +1,6 @@
 
 module "application" {
-  source  = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=87cc8c2"
+  source  = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=61a38e9"
   name    = var.name
   service = "kubernetes"
 
