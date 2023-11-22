@@ -37,12 +37,12 @@ output "connections" {
   value       = local.connections
 }
 
-output "id" {
+output "identity" {
   description = "Cloud ID for application IAM (AWS Role, GCP Service Account, Azure Managed Identity, etc)"
   value       = local.application_identity_id
 }
 
-output "identity" {
+output "identity_block" {
   description = "The full MDXC Cloud Identity object, for accessing additional values beyond the ID of the Identity."
   value       = mdxc_application_identity.main
   sensitive   = true
