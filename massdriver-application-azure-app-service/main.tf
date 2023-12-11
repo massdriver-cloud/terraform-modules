@@ -81,17 +81,13 @@ resource "azurerm_linux_web_app" "main" {
         action_type = "Recycle"
       }
       trigger {
-        requests {
-          count    = 5
-          interval = "00:01:00"
-        }
         slow_request {
-          count      = 5
-          interval   = "00:01:00"
-          time_taken = "00:00:10"
+          count      = 100
+          interval   = "00:05:00"
+          time_taken = "00:00:30"
         }
         status_code {
-          count             = 5
+          count             = 10
           interval          = "00:01:00"
           status_code_range = "400-510"
         }
