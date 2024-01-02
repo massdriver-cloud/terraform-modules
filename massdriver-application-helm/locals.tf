@@ -34,4 +34,16 @@ locals {
     gcp   = local.gcp_service_account,
     azure = local.azure_service_account
   }
+
+  azure_pod_labels = {
+    "azure.workload.identity/use" = "true"
+  }
+  gcp_pod_labels = {}
+  aws_pod_labels = {}
+
+  cloud_pod_labels = {
+    aws   = local.aws_pod_labels
+    gcp   = local.gcp_pod_labels
+    azure = local.azure_pod_labels
+  }
 }

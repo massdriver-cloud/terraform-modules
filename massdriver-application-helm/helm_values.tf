@@ -5,6 +5,7 @@ locals {
       annotations = {
         "md-deployment-id" = lookup(module.application.params.md_metadata.deployment, "id", "")
       }
+      labels = local.cloud_pod_labels[module.application.cloud]
     }
     envs = [for key, val in module.application.envs : { name = key, value = tostring(val) }]
     ingress = {
