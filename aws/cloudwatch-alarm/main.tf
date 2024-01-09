@@ -25,6 +25,10 @@ resource "aws_cloudwatch_metric_alarm" "alarm" {
 resource "massdriver_package_alarm" "package_alarm" {
   display_name      = var.display_name
   cloud_resource_id = aws_cloudwatch_metric_alarm.alarm.arn
+  threshold         = var.threshold
+  period_minutes    = var.evaluation_periods
+  comparison_operator = var.comparison_operator
+
   metric {
     name       = var.metric_name
     namespace  = var.namespace
