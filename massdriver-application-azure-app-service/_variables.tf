@@ -12,11 +12,8 @@ variable "md_metadata" {
 
 variable "image" {
   type = object({
-    registry = string
     name     = string
     tag      = string
-    username = optional(string)
-    password = optional(string)
   })
 }
 
