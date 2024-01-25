@@ -26,10 +26,20 @@ locals {
   monitoring_enabled = var.monitoring.mode != "DISABLED" ? 1 : 0
 }
 
+resource "azurerm_log_analytics_workspace" "main" {
+  name                = var.name
+  location            = azurerm_resource_group.main.location
+  resource_group_name = azurerm_resource_group.main.name
+  sku                 = "PerGB2018"
+  retention_in_days   = 30
+  tags                = var.tags
+}
+
 resource "azurerm_application_insights" "main" {
   name                = var.name
   resource_group_name = azurerm_resource_group.main.name
   location            = azurerm_resource_group.main.location
+  workspace_id        = azurerm_log_analytics_workspace.main.id
   application_type    = "other"
   tags                = var.tags
 }

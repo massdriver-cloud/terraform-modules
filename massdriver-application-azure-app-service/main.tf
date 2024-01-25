@@ -95,9 +95,10 @@ resource "azurerm_linux_web_app" "main" {
     }
 
     application_stack {
-      # configuring the structure this way so that the image block in massdriver.yaml is identical across azure runtimes
-      docker_image     = "${var.image.registry}/${var.image.name}"
-      docker_image_tag = var.image.tag
+      docker_registry_url      = var.image.registry
+      docker_image_name        = "${var.image.name}/${var.image.tag}"
+      docker_registry_username = var.image.username
+      docker_registry_password = var.image.password
     }
 
     app_command_line = var.command
