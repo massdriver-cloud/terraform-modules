@@ -1,3 +1,7 @@
+locals {
+  docker_registry_url = strcontains(var.image.name, "azurecr.io") ? "https://mcr.microsoft.com" : "https://index.docker.io"
+}
+
 module "application" {
   source              = "github.com/massdriver-cloud/terraform-modules//massdriver-application?ref=61a38e9"
   name                = var.name
@@ -95,9 +99,8 @@ resource "azurerm_linux_web_app" "main" {
     }
 
     application_stack {
-      # configuring the structure this way so that the image block in massdriver.yaml is identical across azure runtimes
-      docker_image     = "${var.image.registry}/${var.image.name}"
-      docker_image_tag = var.image.tag
+      docker_registry_url      = local.docker_registry_url
+      docker_image_name        = "${var.image.name}:${var.image.tag}"
     }
 
     app_command_line = var.command

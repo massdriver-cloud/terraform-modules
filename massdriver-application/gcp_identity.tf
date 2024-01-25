@@ -3,10 +3,10 @@
 # namespace and k8s service account name
 
 locals {
-  gcp_identity = local.is_kubernetes ? {
-    kubernetes = {
+  gcp_identity = local.is_gcp ? {
+    kubernetes = local.is_kubernetes ? {
       namespace            = var.kubernetes.namespace
       service_account_name = var.name
-    }
-  } : {}
+    } : null
+  } : null
 }
