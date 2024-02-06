@@ -29,8 +29,10 @@ resource "azurerm_role_assignment" "external_dns" {
 }
 
 resource "kubernetes_secret" "external_dns" {
+  for_each = { for zone in var.azure_dns_zones.dns_zones : zone => zone }
+
   metadata {
-    name      = "external-dns-auth"
+    name      = "external-dns-auth-${each.value}"
     namespace = var.namespace
     labels    = var.md_metadata.default_tags
   }
