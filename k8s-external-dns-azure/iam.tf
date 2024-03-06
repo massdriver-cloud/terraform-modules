@@ -8,19 +8,6 @@ locals {
 data "azurerm_client_config" "current" {
 }
 
-## Azure AD application that represents the app
-# resource "azuread_application" "external_dns" {
-#   display_name = "${var.md_metadata.name_prefix}-externaldns"
-# }
-
-# ## Azure AD app is required to create the service principal
-# resource "azuread_service_principal" "external_dns" {
-#   application_id = azuread_application.external_dns.application_id
-# }
-
-# resource "azuread_service_principal_password" "external_dns" {
-#   service_principal_id = azuread_service_principal.external_dns.id
-# }
 data "azurerm_resource_group" "external_dns" {
   name = var.azure_dns_zones.resource_group
 }
