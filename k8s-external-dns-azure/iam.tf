@@ -16,6 +16,7 @@ resource "azurerm_user_assigned_identity" "external_dns" {
   location            = data.azurerm_resource_group.external_dns.location
   name                = "${var.md_metadata.name_prefix}-externaldns"
   resource_group_name = data.azurerm_resource_group.external_dns.name
+  tags                = var.md_metadata.default_tags
 }
 
 resource "azurerm_federated_identity_credential" "external_dns" {
