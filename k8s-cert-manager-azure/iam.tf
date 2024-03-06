@@ -31,19 +31,3 @@ resource "azurerm_role_assignment" "cert_manager" {
   principal_id         = azurerm_user_assigned_identity.cert_manager.principal_id
   role_definition_name = each.key
 }
-
-# resource "kubernetes_secret" "cert_manager" {
-#   metadata {
-#     name      = "cert-manager-auth"
-#     namespace = var.namespace
-#     labels    = var.md_metadata.default_tags
-#   }
-#   data = {
-#     "azure.json" = jsonencode({
-#       tenantId                     = data.azurerm_client_config.current.tenant_id
-#       subscriptionId               = data.azurerm_client_config.current.subscription_id
-#       resourceGroup                = data.azurerm_resource_group.external_dns.name
-#       useWorkloadIdentityExtension = true
-#     })
-#   }
-# }
