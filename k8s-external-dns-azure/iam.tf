@@ -27,12 +27,12 @@ data "azurerm_resource_group" "external_dns" {
 
 resource "azurerm_user_assigned_identity" "external_dns" {
   location            = data.azurerm_resource_group.external_dns.location
-  name                = var.md_metadata.name_prefix
+  name                = "${var.md_metadata.name_prefix}-externaldns"
   resource_group_name = data.azurerm_resource_group.external_dns.name
 }
 
 resource "azurerm_federated_identity_credential" "external_dns" {
-  name                = var.md_metadata.name_prefix
+  name                = "${var.md_metadata.name_prefix}-externaldns-fc"
   resource_group_name = data.azurerm_resource_group.external_dns.name
   audience            = ["api://AzureADTokenExchange"]
   issuer              = var.kubernetes_cluster.data.infrastructure.oidc_issuer_url
@@ -55,11 +55,10 @@ resource "kubernetes_secret" "external_dns" {
   }
   data = {
     "azure.json" = jsonencode({
-      tenantId                    = data.azurerm_client_config.current.tenant_id
-      subscriptionId              = data.azurerm_client_config.current.subscription_id
-      resourceGroup               = data.azurerm_resource_group.external_dns.name
-      userAssignedIdentityID      = azurerm_user_assigned_identity.external_dns.id
-      useManagedIdentityExtension = true
+      tenantId                     = data.azurerm_client_config.current.tenant_id
+      subscriptionId               = data.azurerm_client_config.current.subscription_id
+      resourceGroup                = data.azurerm_resource_group.external_dns.name
+      useWorkloadIdentityExtension = true
     })
   }
 }
