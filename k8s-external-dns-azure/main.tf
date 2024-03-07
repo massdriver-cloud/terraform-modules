@@ -6,6 +6,17 @@ module "external-dns" {
   namespace          = var.namespace
   domain_filters     = local.domain_filters
   helm_additional_values = {
+    podLabels = {
+      "azure.workload.identity/use" = "true"
+    }
+    serviceAccount = {
+      labels = {
+        "azure.workload.identity/use" = "true"
+      }
+      annotations = {
+        "azure.workload.identity/client-id" = azurerm_user_assigned_identity.external_dns.client_id
+      }
+    }
     extraVolumes = [{
       name = "azure-config-file"
       secret = {
