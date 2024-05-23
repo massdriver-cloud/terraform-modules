@@ -12,3 +12,8 @@ output "identity" {
   description = "Cloud ID for application IAM. For AWS this is an IAM Role ARN."
   value       = module.application.identity
 }
+
+output "version" {
+  description = "Latest version identifier for lambda application"
+  value       = module.aws_lambda_function.output
+}
