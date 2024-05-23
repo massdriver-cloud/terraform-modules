@@ -7,3 +7,8 @@ output "invoke_arn" {
   description = "The Amazon Resource Name of the invocation API"
   value       = aws_lambda_function.main.invoke_arn
 }
+
+output "version" {
+  description = "Most recently deployed version"
+  value       = aws_lambda_function.main.version
+}
