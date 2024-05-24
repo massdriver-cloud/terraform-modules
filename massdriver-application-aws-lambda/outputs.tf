@@ -15,5 +15,5 @@ output "identity" {
 
 output "version" {
   description = "Latest version identifier for lambda application"
-  value       = module.aws_lambda_function.output
+  value       = module.aws_lambda_function.version
 }
