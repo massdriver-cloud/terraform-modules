@@ -46,6 +46,4 @@ resource "aws_budgets_budget" "main" {
     subscriber_email_addresses = var.subscriber_email_addresses
     subscriber_sns_topic_arns  = var.subscriber_sns_topic_arns
   }
-
-  tags = var.md_metadata.default_tags
 }
