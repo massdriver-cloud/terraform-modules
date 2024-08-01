@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Forecasted Monthly Cost Budget",
+  "description": "AWS budget to monitor and manage cloud costs. Sets a monthly spending limit. If the forecasted spending exceeds 100% of this limit, it triggers notifications.",
+  "properties": {
+    "limit_amount": {
+      "type": "string",
+      "title": "Monthly Spending Limit",
+      "description": "The maximum amount of money that can be spent per month."
+    },
+    "email_addresses": {
+      "type": "array",
+      "title": "Notification Email Addresses",
+      "description": "The email addresses to which notifications will be sent when the forecasted spending exceeds the monthly spending limit.",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "limit_amount"
+  ]
+}
