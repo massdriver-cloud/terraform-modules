@@ -2,28 +2,23 @@ locals {
   # These trys are here so that terraform validate will pass in CI.
   # We dont want to require the user to pass in the path to their MD bundle and requiring
   # everyone to parse the right files and pass them in is error prone. :tada:
-  app_specification    = try(yamldecode(file("${path.root}/../massdriver.yaml")), {})
+  app_specification    = try(yamldecode(file("/massdriver/bundle/massdriver.yaml")), {})
   connections          = try(jsondecode(file("${path.root}/_connections.auto.tfvars.json")), {})
   params               = try(jsondecode(file("${path.root}/_params.auto.tfvars.json")), {})
-  secrets              = try(jsondecode(file("${path.root}/../secrets.json")), {})
+  secrets              = try(jsondecode(file("/massdriver/secrets.json")), {})
+  envs                 = try(jsondecode(file("/massdriver/envs.json")), {})
   app_block            = lookup(local.app_specification, "app", {})
-  app_envs_queries     = lookup(local.app_block, "envs", {})
   app_policies_queries = toset(lookup(local.app_block, "policies", []))
 
-  # package input fields to be exposed to JQ queries
+  application_identity_id = mdxc_application_identity.main.id
+
   inputs_json = jsonencode({
     params      = local.params
     connections = local.connections
     secrets     = local.secrets
   })
 
-  application_identity_id = mdxc_application_identity.main.id
-
-  policies  = { for p in local.app_policies_queries : p => jsondecode(data.jq_query.policies[p].result) }
-  base_envs = { for k, v in local.app_envs_queries : k => jsondecode(data.jq_query.envs[k].result) }
-
-  # Auto generate ENV Vars for each secret
-  envs = merge(local.base_envs, local.secrets)
+  policies = { for p in local.app_policies_queries : p => jsondecode(data.jq_query.policies[p].result) }
 
   is_aws   = data.mdxc_cloud.current.cloud == "aws"
   is_azure = data.mdxc_cloud.current.cloud == "azure"
@@ -37,12 +32,6 @@ locals {
 
 data "jq_query" "policies" {
   for_each = local.app_policies_queries
-  data     = local.inputs_json
-  query    = each.value
-}
-
-data "jq_query" "envs" {
-  for_each = local.app_envs_queries
   data     = local.inputs_json
   query    = each.value
 }

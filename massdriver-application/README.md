@@ -50,7 +50,7 @@ module "application" {
 | Name | Version |
 |------|---------|
 | <a name="provider_jq"></a> [jq](#provider\_jq) | 0.2.1 |
-| <a name="provider_mdxc"></a> [mdxc](#provider\_mdxc) | 0.10.3 |
+| <a name="provider_mdxc"></a> [mdxc](#provider\_mdxc) | 0.10.4 |
 
 ## Modules
 
@@ -62,7 +62,6 @@ No modules.
 |------|------|
 | [mdxc_application_identity.main](https://registry.terraform.io/providers/massdriver-cloud/mdxc/latest/docs/resources/application_identity) | resource |
 | [mdxc_application_permission.main](https://registry.terraform.io/providers/massdriver-cloud/mdxc/latest/docs/resources/application_permission) | resource |
-| [jq_query.envs](https://registry.terraform.io/providers/massdriver-cloud/jq/latest/docs/data-sources/query) | data source |
 | [jq_query.policies](https://registry.terraform.io/providers/massdriver-cloud/jq/latest/docs/data-sources/query) | data source |
 | [mdxc_cloud.current](https://registry.terraform.io/providers/massdriver-cloud/mdxc/latest/docs/data-sources/cloud) | data source |
 
