@@ -23,3 +23,10 @@ variable "route53_hosted_zones" {
   type        = map(string)
   default     = {}
 }
+
+variable "helm_additional_values" {
+  type        = any
+  description = "a map of helm variables (key) to their values, used for setting anything in values.yaml"
+  default     = {}
+}
+

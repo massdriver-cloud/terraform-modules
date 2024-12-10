@@ -5,12 +5,12 @@ module "external-dns" {
   release            = var.release
   namespace          = var.namespace
   domain_filters     = join(",", concat([for zone, name in var.route53_hosted_zones : name], []))
-  helm_additional_values = {
+  helm_additional_values = merge({
     serviceAccount = {
       annotations = {
         "eks.amazonaws.com/role-arn" = aws_iam_role.external-dns.arn
       }
     }
-  }
+  }, var.helm_additional_values)
   dns_provider = "aws"
 }
