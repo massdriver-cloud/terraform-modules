@@ -21,7 +21,7 @@ resource "helm_release" "ingress-nginx" {
   name             = var.release
   chart            = "ingress-nginx"
   repository       = "https://kubernetes.github.io/ingress-nginx"
-  version          = "4.7.1"
+  version          = "4.12.1"
   namespace        = var.namespace
   create_namespace = true
   wait_for_jobs    = true
