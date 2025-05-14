@@ -81,10 +81,11 @@ No modules.
 |------|-------------|
 | <a name="output_cloud"></a> [cloud](#output\_cloud) | The cloud provisioning executed in. |
 | <a name="output_connections"></a> [connections](#output\_connections) | Connections provided to bundle. |
-| <a name="output_envs"></a> [envs](#output\_envs) | The environment (config & secrets) parsed from massdriver.yaml |
+| <a name="output_envs"></a> [envs](#output\_envs) | A key/value map of environment variables for the bundle. |
+| <a name="output_envs_and_secrets"></a> [envs\_and\_secrets](#output\_envs\_and\_secrets) | A combined key/value map of both environment variables and secrets. This is usually used to set all the environment variables. |
 | <a name="output_identity"></a> [identity](#output\_identity) | Cloud ID for application IAM (AWS Role, GCP Service Account, Azure Managed Identity, etc) |
 | <a name="output_identity_block"></a> [identity\_block](#output\_identity\_block) | The full MDXC Cloud Identity object, for accessing additional values beyond the ID of the Identity. |
 | <a name="output_params"></a> [params](#output\_params) | Parameters provided to bundle. |
 | <a name="output_policies"></a> [policies](#output\_policies) | The policies parsed from massdriver.yaml |
-| <a name="output_secrets"></a> [secrets](#output\_secrets) | Secrets from the bundle. Note that secrets are also included in the 'envs' output, however this output will only be secrets. |
+| <a name="output_secrets"></a> [secrets](#output\_secrets) | A key/value map of secrets for the bundle. |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

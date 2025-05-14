@@ -9,16 +9,20 @@ output "policies" {
 }
 
 output "envs" {
-  # We want to make this as sensitive "true" but that breaks dynamic blocks
-  # https://github.com/hashicorp/terraform/issues/29744
-  sensitive   = false
-  description = "The environment (config & secrets) parsed from massdriver.yaml"
+  description = "A key/value map of environment variables for the bundle."
   value       = local.envs
 }
 
 output "secrets" {
-  description = "Secrets from the bundle. Note that secrets are also included in the 'envs' output, however this output will only be secrets."
+  # This should probably be marked as sensitive "true" but that breaks dynamic blocks, which are needed for setting envs in some instances
+  # https://github.com/hashicorp/terraform/issues/29744
+  description = "A key/value map of secrets for the bundle."
   value       = local.secrets
+}
+
+output "envs_and_secrets" {
+  description = "A combined key/value map of both environment variables and secrets. This is usually used to set all the environment variables."
+  value       = merge(local.envs, local.secrets)
 }
 
 output "params" {
