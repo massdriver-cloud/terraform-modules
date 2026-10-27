@@ -1,5 +1,8 @@
 # gcp-metric-alarm
 
+> [!WARNING]
+> **Deprecated:** this module will be removed from this repository. Use the official [terraform-massdriver-gcp-metric-alarm](https://github.com/massdriver-cloud/terraform-massdriver-gcp-metric-alarm) module instead.
+
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 

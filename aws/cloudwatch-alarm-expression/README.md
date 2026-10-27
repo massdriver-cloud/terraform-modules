@@ -1,5 +1,8 @@
 # cloudwatch-alarm-expression
 
+> [!WARNING]
+> **Deprecated:** this module will be removed from this repository. Use the official [terraform-massdriver-aws-metric-alarm](https://github.com/massdriver-cloud/terraform-massdriver-aws-metric-alarm) module instead.
+
 A module for creating a Massdriver-integrated AWS alarm using complex metric expressions.
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

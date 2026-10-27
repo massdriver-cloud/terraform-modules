@@ -1,5 +1,8 @@
 # azure-monitor-metrics-alarm
 
+> [!WARNING]
+> **Deprecated:** this module will be removed from this repository. Use the official [terraform-massdriver-azure-metric-alarm](https://github.com/massdriver-cloud/terraform-massdriver-azure-metric-alarm) module instead.
+
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 

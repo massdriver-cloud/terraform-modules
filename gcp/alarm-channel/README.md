@@ -1,5 +1,8 @@
 # GCP Alarm Channel for Massdriver
 
+> [!WARNING]
+> **Deprecated:** this module will be removed from this repository. Use the official [terraform-massdriver-gcp-alarm-channel](https://github.com/massdriver-cloud/terraform-massdriver-gcp-alarm-channel) module instead.
+
 Create a Monitoring Notification Channel for receiving GCP Monitoring alerts from bundles.
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

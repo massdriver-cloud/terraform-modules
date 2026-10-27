@@ -1,5 +1,8 @@
 # Azure Alarm Channel for Massdriver
 
+> [!WARNING]
+> **Deprecated:** this module will be removed from this repository. Use the official [terraform-massdriver-azure-alarm-channel](https://github.com/massdriver-cloud/terraform-massdriver-azure-alarm-channel) module instead.
+
 Create an Azure Action Group for receiving Azure Monitor metric alerts from bundles.
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
