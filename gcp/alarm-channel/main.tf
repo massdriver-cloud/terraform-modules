@@ -10,7 +10,7 @@ resource "google_monitoring_notification_channel" "main" {
     url = var.alarm_webhook_url
   }
   user_labels = {
-    md-instance = var.name
+    md-package = var.name
   }
   depends_on = [module.apis]
 }

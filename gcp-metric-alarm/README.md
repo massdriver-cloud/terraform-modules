@@ -6,14 +6,16 @@
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
-No requirements.
+| Name | Version |
+|------|---------|
+| <a name="requirement_massdriver"></a> [massdriver](#requirement\_massdriver) | >= 2.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_google"></a> [google](#provider\_google) | n/a |
-| <a name="provider_massdriver"></a> [massdriver](#provider\_massdriver) | n/a |
+| <a name="provider_google"></a> [google](#provider\_google) | 8.9.0 |
+| <a name="provider_massdriver"></a> [massdriver](#provider\_massdriver) | 2.4.0 |
 
 ## Modules
 
@@ -25,7 +27,7 @@ No modules.
 |------|------|
 | [google_monitoring_alert_policy.bool](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/monitoring_alert_policy) | resource |
 | [google_monitoring_alert_policy.main](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/monitoring_alert_policy) | resource |
-| [massdriver_package_alarm.package_alarm](https://registry.terraform.io/providers/massdriver-cloud/massdriver/latest/docs/resources/package_alarm) | resource |
+| [massdriver_instance_alarm.instance_alarm](https://registry.terraform.io/providers/massdriver-cloud/massdriver/latest/docs/resources/instance_alarm) | resource |
 
 ## Inputs
 

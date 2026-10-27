@@ -4,7 +4,8 @@ terraform {
       source = "hashicorp/google"
     }
     massdriver = {
-      source = "massdriver-cloud/massdriver"
+      source  = "massdriver-cloud/massdriver"
+      version = ">= 2.0"
     }
   }
 }
