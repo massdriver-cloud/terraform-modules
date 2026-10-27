@@ -21,8 +21,6 @@ variable "md_metadata" {
 
 locals {
   name = var.name_suffix != null ? var.md_metadata.name_prefix + "-" + var.name_suffix : var.md_metadata.name_prefix
-  # Legacy default tags have no md-instance, only md-package (the name_prefix).
-  instance_tag = can(var.md_metadata.default_tags["md-instance"]) ? "md-instance" : "md-package"
 }
 
 resource "aws_budgets_budget" "main" {
@@ -34,8 +32,9 @@ resource "aws_budgets_budget" "main" {
 
   cost_filter {
     name = "TagKeyValue"
+    # Legacy default tags have no md-instance, only md-package (the name_prefix).
     values = [
-      "${local.instance_tag}${"$"}${var.md_metadata.default_tags[local.instance_tag]}"
+      try("md-instance${"$"}${var.md_metadata.default_tags["md-instance"]}", "md-package${"$"}${var.md_metadata.default_tags["md-package"]}")
     ]
   }
 
