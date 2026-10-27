@@ -20,8 +20,8 @@ variable "md_metadata" {
 }
 
 locals {
-  name              = var.name_suffix != null ? var.md_metadata.name_prefix + "-" + var.name_suffix : var.md_metadata.name_prefix
-  package_tag_value = var.md_metadata.default_tags["md-package"]
+  name               = var.name_suffix != null ? var.md_metadata.name_prefix + "-" + var.name_suffix : var.md_metadata.name_prefix
+  instance_tag_value = var.md_metadata.default_tags["md-instance"]
 }
 
 resource "aws_budgets_budget" "main" {
@@ -34,7 +34,7 @@ resource "aws_budgets_budget" "main" {
   cost_filter {
     name = "TagKeyValue"
     values = [
-      "md-package${"$"}${local.package_tag_value}"
+      "md-instance${"$"}${local.instance_tag_value}"
     ]
   }
 
