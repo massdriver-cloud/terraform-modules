@@ -8,14 +8,16 @@ A module for creating a Massdriver-integrated AWS alarm using complex metric exp
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
-No requirements.
+| Name | Version |
+|------|---------|
+| <a name="requirement_massdriver"></a> [massdriver](#requirement\_massdriver) | >= 2.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 4.48.0 |
-| <a name="provider_massdriver"></a> [massdriver](#provider\_massdriver) | 1.1.4 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 6.70.0 |
+| <a name="provider_massdriver"></a> [massdriver](#provider\_massdriver) | 2.4.0 |
 
 ## Modules
 
@@ -26,7 +28,7 @@ No modules.
 | Name | Type |
 |------|------|
 | [aws_cloudwatch_metric_alarm.alarm](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_metric_alarm) | resource |
-| [massdriver_package_alarm.package_alarm](https://registry.terraform.io/providers/massdriver-cloud/massdriver/latest/docs/resources/package_alarm) | resource |
+| [massdriver_instance_alarm.instance_alarm](https://registry.terraform.io/providers/massdriver-cloud/massdriver/latest/docs/resources/instance_alarm) | resource |
 
 ## Inputs
 
@@ -34,6 +36,7 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_alarm_name"></a> [alarm\_name](#input\_alarm\_name) | The descriptive name for the alarm. This name must be unique within the user's AWS account | `string` | n/a | yes |
 | <a name="input_comparison_operator"></a> [comparison\_operator](#input\_comparison\_operator) | The arithmetic operation to use when comparing the specified Statistic and Threshold. | `string` | n/a | yes |
+| <a name="input_display_metric_key"></a> [display\_metric\_key](#input\_display\_metric\_key) | The expression key that should show up in metrics graphs for this alarm | `string` | n/a | yes |
 | <a name="input_display_name"></a> [display\_name](#input\_display\_name) | Short name to display in the massdriver UI. | `string` | n/a | yes |
 | <a name="input_evaluation_periods"></a> [evaluation\_periods](#input\_evaluation\_periods) | The number of periods over which data is compared to the specified threshold. | `string` | n/a | yes |
 | <a name="input_md_metadata"></a> [md\_metadata](#input\_md\_metadata) | Massdriver Variables | `any` | n/a | yes |

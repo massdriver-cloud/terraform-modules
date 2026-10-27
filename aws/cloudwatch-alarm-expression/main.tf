@@ -37,7 +37,7 @@ resource "aws_cloudwatch_metric_alarm" "alarm" {
   ok_actions      = [var.sns_topic_arn]
 }
 
-resource "massdriver_package_alarm" "package_alarm" {
+resource "massdriver_instance_alarm" "instance_alarm" {
   display_name      = var.display_name
   cloud_resource_id = aws_cloudwatch_metric_alarm.alarm.arn
   metric {

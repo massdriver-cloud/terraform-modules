@@ -3,13 +3,15 @@
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
-No requirements.
+| Name | Version |
+|------|---------|
+| <a name="requirement_massdriver"></a> [massdriver](#requirement\_massdriver) | >= 2.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_massdriver"></a> [massdriver](#provider\_massdriver) | 1.1.6 |
+| <a name="provider_massdriver"></a> [massdriver](#provider\_massdriver) | 2.4.0 |
 
 ## Modules
 
@@ -19,7 +21,7 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [massdriver_package_alarm.main](https://registry.terraform.io/providers/massdriver-cloud/massdriver/latest/docs/resources/package_alarm) | resource |
+| [massdriver_instance_alarm.main](https://registry.terraform.io/providers/massdriver-cloud/massdriver/latest/docs/resources/instance_alarm) | resource |
 
 ## Inputs
 
