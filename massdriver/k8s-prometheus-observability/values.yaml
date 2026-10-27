@@ -21,7 +21,7 @@ grafana:
 # include massdriver specific labels in kube-state-metrics
 kube-state-metrics:
   extraArgs:
-    - --metric-labels-allowlist=*=[md-manifest,md-package,md-project,md-target,managed-by]
+    - --metric-labels-allowlist=*=[md-instance,md-manifest,md-package,md-project,md-target,managed-by]
 
 prometheus:
   prometheusSpec:

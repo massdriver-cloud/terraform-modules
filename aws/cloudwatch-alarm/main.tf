@@ -1,11 +1,11 @@
 resource "aws_cloudwatch_metric_alarm" "alarm" {
   alarm_name = var.alarm_name
 
-  # We need to 'smuggle' our name_prefix for the package back to massdriver
-  # so we can show the alarms on the correct manifest in the UI
+  # CloudWatch alarm notifications carry no resource tags. Massdriver reads the
+  # instance identifier from this JSON to attach the alarm to its instance.
   alarm_description = jsonencode({
-    name_prefix = var.md_metadata.name_prefix
-    message     = var.message
+    "md-instance" = var.md_metadata.default_tags["md-instance"]
+    message       = var.message
   })
 
   comparison_operator = var.comparison_operator

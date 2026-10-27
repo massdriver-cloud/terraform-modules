@@ -1,5 +1,8 @@
 # alarm-channel
 
+> [!WARNING]
+> **Deprecated:** this module will be removed from this repository. Use the official [terraform-massdriver-aws-alarm-channel](https://github.com/massdriver-cloud/terraform-massdriver-aws-alarm-channel) module instead.
+
 Create an AWS SNS Topic for receiving Cloudwatch Metric events from bundles.
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
